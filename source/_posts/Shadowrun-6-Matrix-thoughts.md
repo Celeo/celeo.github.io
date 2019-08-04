@@ -22,7 +22,7 @@ The programs are pretty much the same, with some that grant dice bonuses instead
 
 IC is pretty much the same.
 
-For Technomancers, being able to add their Resonance to their Matrix attributes and move it around is very nice, making Technomancers less attribute-starved. Additionally, making starting Complex Form count equal to Resonance * 2 is a change for simplicity that I'm fine with. Complex Forms look almost identical to 5e, even including Transcend Grid which had to be day-0 errata'd-out. Sprites are also almost identical. Echos are a bit of a let-down: after the first submersion, most players will still take Skinlink, then Living Network, then Overclocking, and then not really bother from there. At least they wrote the right Submersion cost this time.
+For Technomancers, being able to add their Resonance to their Matrix attributes and move it around is very nice, making Technomancers less attribute-starved. Additionally, making starting Complex Form count equal to Resonance * 2 is a change for simplicity that I'm fine with. Complex Forms look almost identical to 5e, even including Transcend Grid which had to be day-0 errata'd-out. Sprites are also almost identical, though have a few new cool powers. Echos are a bit of a let-down: after the first submersion, most players will still take Skinlink, then Living Network, then Overclocking, and then not really bother from there. At least they wrote the right Submersion cost this time.
 
 Looking over my questions from reading over the QSR, I can answer some of them:
 
