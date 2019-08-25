@@ -2,6 +2,8 @@
 title: Shadowbringers day 2
 date: 2019-06-29 15:45:24
 tags:
+- games
+- ffxiv
 ---
 
 Day 2 of the FFXIV 5.0 expansion early access.

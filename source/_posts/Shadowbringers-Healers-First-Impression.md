@@ -2,6 +2,8 @@
 title: Shadowbringers Healers First Impression
 date: 2019-06-28 16:13:37
 tags:
+- games
+- ffxiv
 ---
 
 I wanted to write down some of my first thoughts from the FFXIV 5.0 Shadowbringers early access.

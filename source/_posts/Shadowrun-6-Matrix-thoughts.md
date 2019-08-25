@@ -2,6 +2,8 @@
 title: Shadowrun 6 Matrix thoughts
 date: 2019-08-03 11:15:11
 tags:
+- games
+- shadowrun
 ---
 
 The SR6 CRB is out and I've gone through the Matrix section.

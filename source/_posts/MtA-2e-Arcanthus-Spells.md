@@ -1,7 +1,10 @@
 ---
 title: MtA 2e - Arcanthus Spells
 date: 2019-05-08 18:26:00
-tags: mta
+tags:
+- games
+- cod
+- mta
 ---
 Source: _Mage the Awakening, 2nd edition_ by [White Wolf](https://www.white-wolf.com/).
 

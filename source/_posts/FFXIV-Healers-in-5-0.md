@@ -2,6 +2,8 @@
 title: 'FFXIV: Healers in 5.0'
 date: 2019-06-03 20:33:15
 tags:
+- games
+- ffxiv
 ---
 
 My thoughts on the Healer jobs in FFXIV 5.0: Shadowbringers from what we know so far.

@@ -2,6 +2,8 @@
 title: Shadowbringers week 2
 date: 2019-07-08 17:19:22
 tags:
+- games
+- ffxiv
 ---
 
 Thoughts after some time with the expansion.

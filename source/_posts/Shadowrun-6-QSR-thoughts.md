@@ -2,6 +2,8 @@
 title: Shadowrun 6 QSR thoughts
 date: 2019-07-13 13:45:45
 tags:
+- games
+- shadowrun
 ---
 
 Thoughts on the QSR rules that CGL have released.
