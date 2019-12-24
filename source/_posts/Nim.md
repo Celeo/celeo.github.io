@@ -85,7 +85,7 @@ block:
     p = newPoint(x, y)
 ```
 
-* Writing assertions via `doAssert` or `assert` - they properly through a runtime exception if the assertion fails, but don't print out any information about the assertion like in Java, JavaScript, Rust, etc. It's not a good developer UX to have to _print both sides_ of an assertion _before the assertion_ that's failing, _for every assertion_, just to debug
+* Writing assertions via `doAssert` or `assert` - they properly throw a runtime exception if the assertion fails, but don't print out any information about the assertion like in Java, JavaScript, Rust, etc. It's not a good developer UX to have to _print both sides_ of an assertion _before the assertion_ that's failing, _for every assertion_, just to debug
 * Compiler errors can be hard to understand and point to parts of the code that aren't actually the problem
 
 ## What I think now
