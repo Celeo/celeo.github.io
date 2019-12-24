@@ -23,7 +23,7 @@ I've always preferred high-level languages. Java, Python, JavaScript, C#, etc. I
 
 ## Learning Rust
 
-There were many things that drew me to Rust, including it repeadly winning StackOverflow's "most loved language", the great things that people were saying about the langauge and ecosystem on reddit, HackerNews, and other forums, and the compile-to-binary-that-runs-fast aspect (solving for the few things that I miss having when using Python). Additionally, I had wanted to learn more about functional programming, but had been burned by trying to learn FP through a solely FP language called Idris. I'd read that Rust had FP-like aspects, but made them much more approachable.
+There were many things that drew me to Rust, including it repeatedly winning StackOverflow's "most loved language", the great things that people were saying about the language and ecosystem on reddit, HackerNews, and other forums, and the compile-to-binary-that-runs-fast aspect (solving for the few things that I miss having when using Python). Additionally, I had wanted to learn more about functional programming, but had been burned by trying to learn FP through a solely FP language called Idris. I'd read that Rust had FP-like aspects, but made them much more approachable.
 
 I'm not unique in writing that learning Rust was very tough. As someone who hasn't written in a lower level language in years, I hadn't encountered many of the problems that Rust was solving for, like making sure memory was freed at the right time, making sure memory wasn't accessed by multiple procedures, etc. The languages I used always had runtimes or GCs that handled those processes. Suddenly, I had to think about things that I hadn't thought about, in ways that didn't really make sense, as I hadn't had the pain points of _not_ having the language help me with those issues. Not only did I have to learn about the issues, but I also had to learn about how Rust solved for them.
 
@@ -47,7 +47,7 @@ If you go looking into learning the language, you'll find many people writing ab
 
 Finally, [cargo](https://docs.rust-lang.org/cargo), the Rust package manager, is an absolute dream. It handles searching for, getting information on, and downloading dependencies, as well as building, running, and testing projects, and even [formatting](https://github.com/rust-lang/rustfmt) and [linting](https://github.com/rust-lang/rust-clippy)) to help programmers write better code. I wish every other language had a package manager like Cargo.
 
-Also, [`unimplemented!()`](htps://doc.rust-lang.org/std/macro.unimplemented.html) is awesome.
+Also, [`unimplemented!()`](https://doc.rust-lang.org/std/macro.unimplemented.html) is awesome.
 
 ## The bad parts
 
