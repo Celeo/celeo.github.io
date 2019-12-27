@@ -3,6 +3,7 @@ title: Thoughts on Rust
 date: 2019-12-24 14:54:52
 tags:
 - programming
+- rust
 ---
 
 Thoughts on the [Rust](https://www.rust-lang.org/) programming language after 6 months of learning and use.

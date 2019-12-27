@@ -3,6 +3,7 @@ title: Nim
 date: 2019-12-21 15:01:31
 tags:
 - programming
+- nim
 ---
 
 Thoughts on the [Nim programming language](https://nim-lang.org).
