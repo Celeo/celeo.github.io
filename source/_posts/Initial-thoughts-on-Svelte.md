@@ -49,3 +49,7 @@ There are tools I'm willing to swap out or abandon for learning Svelte, like sno
 I'm not trying to sound boisterous or authoritative, or make sound like anyone _remotely_ important in the webdev world, but just an honest statement - if it's not ready, then that's **fine** - I'll come back later. But with Svelte's 3.0 release just days ago, I'm really confused _why_ these (again, super common) tools don't work. Does the Svelte community not like them? Do they not need them (like in Elm)? _I_ like them, though, and _I_ need (kinda) them, so maybe Svelte just isn't for me (or at least, not yet?).
 
 Regardless, Svelte has some really neat concepts, and I wish the absolute best for the project.
+
+## 1/22/21 edit
+
+The testing functionality for Svelte components is ... lacking. This is a big problem for me as I _like_ writing tests, and I expect it to be a huge problem if Svelte wants to break out of "hobby" and into "professional".
