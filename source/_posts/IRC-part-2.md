@@ -6,7 +6,7 @@ tags:
 - irc
 ---
 
-In which I just discovered that RFC 2812 updates 1459 and the response format I've been playing with are wrong.
+In which I just discovered that RFC 2812 updates 1459 and the response format I've been playing with is wrong.
 
 <!-- more -->
 
