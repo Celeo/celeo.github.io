@@ -3,6 +3,7 @@ title: Implementing an IRC server from scratch, part 1
 date: 2021-06-18 12:23:28
 tags:
 - programming
+- irc
 ---
 
 Let's implement [RFC1459](https://datatracker.ietf.org/doc/html/rfc1459).
