@@ -41,11 +41,22 @@ Can this meeting-driven task creation work for some teams? Sure, I imagine so. D
 
 ## Timing
 
-Timing is such a complicated, non-specific, and ever-evolving subject that it's hard to say what works rather than just listing off everything that doesn't.
+Timing is such a complicated, non-specific, and ever-evolving subject that it's hard to say what works rather than just listing off everything that doesn't. From planning how long tasks will take, to estimating how much time is left, to planning for capacity for a month, quarter, or release, figuring out timings is something that teams spend a lot of time doing. As most developers find it difficult, if not nearly impossible, to estimate the amount of time a task will take without having completed most of it, creating accurate estimations is an activity that I've seen more often result in inaccuracies rather than success stories. As time is often what productivity is measured in, combined with a set of completed work, it's a critical factor therein, but for the purposes of this article, I'll be focusing on timing as "the amount of time _given_ for work" - a _bounding_ factor.
+
+In what developers would see as a better world, they'd have an unconstrained amount of time to complete tasks, but since that's not the world we live in, work has to be bounded _somehow_, and that's often through estimations of how long it will take. A certain amount of time is alloted for the completion of work, based (hopefully) on the level of experience of the team, the amount of parallel and ongoing work, and the specific complexity involved as measured by an experienced senior member intimately familiar with the codebase. I've seen estimates be made following this formula, and while I certainly won't lie and claim that estimates conceived in this manor are always accurate, I can confidently state that they are _more_ accurate. I've seen estimates be made by non-developers, people not on the team, people not familiar with the product, and even by people who don't understand what the goal of the work is.
+
+> When developers are bound to unrealistic time requirements, they will create faulty products.
+
+Time estimates placed on bodies of work, both for individual tasks and also at the feature level directly impact the quality of the work that gets done. A generally straightforward task with tight a time boundary may very likely result in changes that are accurate going out the door, but they won't yield completely (and very unlikely, _automatedly_) tested changes with code that is readable, explainable, and deliberate. This is unlikely to cause problems in the short-term, which unfortunately is a period that most people (developers included) are chiefly concerned with, while the long-term maintainability of features and the codebase will suffer. If your QA team reports being behind in coverage, look at the amount of time alloted for tasks - are those boundaries accounting for testing? Are they accounting for refactoring of older or tangential features that may be impacted? Is time set up for thinking about maintaining? These are hard to sell for developers and managers, who have trouble putting into business terms the value-add of tasks like these. I don't blame the business employees for not finding the value, nor do I completely blame developers for often being unable to prove the value in doing so. I know, however, that _teams_ that _do_ put thought into long-term sustainability of products and their underlying components will be more agile, confident, and productive.
 
 ## Summary
 
-TODO
+These are three areas that define developer productivity. They all work together, and problems in one area can and will bleed over into others.
 
-- all work together
-- an issue in 1 will bleed over to the others
+If developers don't have good tooling, then productivity will suffer due to low morale, lowering quality and increasing time to complete tasks.
+
+If tasks are not created with sufficient and specific information, then productivity will suffer through a barrier to entry that slows adoption of new work, likely impacting milestones and deadlines.
+
+If no time is alloted to codebase cleanliness, then productivity will suffer through maintainability issues.
+
+I'm not making the claim that solving for these three areas will result in highly productive developers, but instead that issues in any or multiple of these areas will bring out the opposite.
