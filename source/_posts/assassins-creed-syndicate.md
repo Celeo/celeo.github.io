@@ -1,5 +1,5 @@
 ---
-title: TITLE
+title: "Assassin's Creed: Syndicate"
 date: 2016-01-01 00:00:00
 tags:
 - gaming
