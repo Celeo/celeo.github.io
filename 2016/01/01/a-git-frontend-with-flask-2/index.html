@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>A Git frontend with Flask part 2 | Celeo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="In the last post I set up the app, the DB model, and the Git integration through the GitPython library. In this post, I’ll be looking at the templates that will render what the user sees.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Git frontend with Flask part 2">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-2/index.html">
+<meta property="og:site_name" content="Celeo">
+<meta property="og:description" content="In the last post I set up the app, the DB model, and the Git integration through the GitPython library. In this post, I’ll be looking at the templates that will render what the user sees.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-27T19:38:35.006Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Celeo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Celeo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://celeo.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-a-git-frontend-with-flask-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2016/01/01/a-git-frontend-with-flask-2/" class="article-date">
+  <time class="dt-published" datetime="2016-01-01T08:00:00.000Z" itemprop="datePublished">2016-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      A Git frontend with Flask part 2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>In the last post I set up the app, the DB model, and the Git integration through the GitPython library. In this post, I’ll be looking at the templates that will render what the user sees.</p>
+<a id="more"></a>
+
+<h2 id="Base-template"><a href="#Base-template" class="headerlink" title="Base template"></a>Base template</h2><p>First up is the base template from which all other pages will extend. As I wrote before, I decided to use the Bootstrap CSS framework. I nearly always use jQuery, and I’ll add in a custom CSS file as well. That all makes the <head>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;description&quot; content&#x3D;&quot;CodeWall&quot;&gt;</span><br><span class="line">    &lt;meta name&#x3D;&quot;author&quot; content&#x3D;&quot;Celeo&quot;&gt;</span><br><span class="line">    &lt;title&gt;&#123;% if title %&#125;&#123;&#123; title &#125;&#125; | CodeWall&#123;% else %&#125;CodeWall&#123;% endif %&#125;&lt;&#x2F;title&gt;</span><br><span class="line">    &lt;link href&#x3D;&quot;&#123;&#123; url_for(&#39;static&#39;, filename&#x3D;&#39;css&#x2F;bootstrap.min.css&#39;) &#125;&#125;&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;link href&#x3D;&quot;&#123;&#123; url_for(&#39;static&#39;, filename&#x3D;&#39;css&#x2F;bootstrap-theme.min.css&#39;) &#125;&#125;&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;link href&#x3D;&quot;&#123;&#123; url_for(&#39;static&#39;, filename&#x3D;&#39;css&#x2F;style.css&#39;) &#125;&#125;&quot; rel&#x3D;&quot;stylesheet&quot;&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;ajax.googleapis.com&#x2F;ajax&#x2F;libs&#x2F;jquery&#x2F;2.2.0&#x2F;jquery.min.js&quot; defer&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;&#123;&#123; url_for(&#39;static&#39;, filename&#x3D;&#39;js&#x2F;bootstrap.min.js&#39;) &#125;&#125;&quot; defer&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &#123;% block head %&#125;&#123;% endblock head %&#125;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br></pre></td></tr></table></figure>
+<p>I’ll add a simple navbar for navigating back to the index to the top of the page:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;body role&#x3D;&quot;document&quot;&gt;</span><br><span class="line">    &lt;nav class&#x3D;&quot;navbar navbar-default navbar-fixed-top&quot;&gt;</span><br><span class="line">        &lt;div class&#x3D;&quot;container&quot;&gt;</span><br><span class="line">            &lt;div class&#x3D;&quot;navbar-header&quot;&gt;</span><br><span class="line">                &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;navbar-toggle collapsed&quot; data-toggle&#x3D;&quot;collapse&quot; data-target&#x3D;&quot;#navbar&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;navbar&quot;&gt;</span><br><span class="line">                    &lt;span class&#x3D;&quot;sr-only&quot;&gt;Toggle navigation&lt;&#x2F;span&gt;</span><br><span class="line">                    &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">                    &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">                    &lt;span class&#x3D;&quot;icon-bar&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">                &lt;&#x2F;button&gt;</span><br><span class="line">                &lt;a class&#x3D;&quot;navbar-brand&quot; href&#x3D;&quot;&#123;&#123; url_for(&#39;index&#39;) &#125;&#125;&quot;&gt;CodeWall&lt;&#x2F;a&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;div id&#x3D;&quot;navbar&quot; class&#x3D;&quot;navbar-collapse collapse&quot;&gt;</span><br><span class="line">                &lt;ul class&#x3D;&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">                    &lt;li &#123;% if request.path &#x3D;&#x3D; &#39;&#x2F;&#39; %&#125;class&#x3D;&quot;active&quot;&#123;% endif %&#125;&gt;&lt;a href&#x3D;&quot;&#123;&#123; url_for(&#39;index&#39;) &#125;&#125;&quot;&gt;Home&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;&#x2F;ul&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;nav&gt;</span><br></pre></td></tr></table></figure>
+<p>We’ll finish off with a block for the content of the page and another for end-of-body code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    &lt;div class&#x3D;&quot;container&quot; role&#x3D;&quot;main&quot;&gt;</span><br><span class="line">        &#123;% block content %&#125;&#123;% endblock content %&#125;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &#123;% block bodyend %&#125;&#123;% endblock bodyend %&#125;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Index-page"><a href="#Index-page" class="headerlink" title="Index page"></a>Index page</h2><p>With a lot of the boilerplate tucked away in base.html, we’re able to write pretty small HTML templates for the other pages. index.html is only 19 lines.</p>
+<p>The goal of this page is very simple: show the user a list of the repositories in the database and let them click on the names to go browse.</p>
+<p>The Bootstrap list-group helps here:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &#39;base.html&#39; %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line"></span><br><span class="line">&lt;div class&#x3D;&quot;panel panel-default&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;panel-heading&quot;&gt;Repositories&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;ul class&#x3D;&quot;list-group&quot;&gt;</span><br><span class="line">    &#123;% for repo in repositories %&#125;</span><br><span class="line">        &lt;li class&#x3D;&quot;list-group-item&quot;&gt;&lt;a href&#x3D;&quot;&#123;&#123; url_for(&#39;repo&#39;, repo_name&#x3D;repo.name) &#125;&#125;&quot;&gt;&#123;&#123; repo.name &#125;&#125;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &#123;% else %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;panel-body&quot;&gt;</span><br><span class="line">        &lt;p&gt;No repositories found&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;&#x2F;ul&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&#123;% endblock content %&#125;</span><br></pre></td></tr></table></figure>
+<p>That for loop in the middle is the bulk of the HTML on the page (depending on how many repositories you have configured) - it lists all of the repositories, with links, as items in the list. The link leads to the repo backend method, passing the name of the repository (this is the Repository.name field from the DB model): <code>&#123;&#123; url_for('repo', repo_name=repo.name) &#125;&#125;</code>.</p>
+<p>Since the only variable that the index.html template needs is repositories, the backend method for index is only 3 lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#39;&#x2F;&#39;)</span><br><span class="line">def index():</span><br><span class="line">    return render_template(&#39;index.html&#39;, repositories&#x3D;Repository.query.filter_by(public&#x3D;True).all())</span><br></pre></td></tr></table></figure>
+<p>In the last post, I noted how Repository.public controls whether or not the repository is shown on the index page. I’m not currently limiting access to public repositories; it’s like an unlisted video on YouTube.</p>
+<p>We’ll follow the link here and look next at the repository page.</p>
+<h2 id="Repository-page"><a href="#Repository-page" class="headerlink" title="Repository page"></a>Repository page</h2><p>This is the largest page in the app, as it has to show the user the following:</p>
+<ul>
+<li>the code in the current path</li>
+<li>the commits</li>
+<li>the branches</li>
+</ul>
+<p>In the current state, I’m only showing the branches, not actually doing anything with them, so we’ll pass over that. The files and commits are larger tasks. Commits are a bit simpler, so we’ll start there.</p>
+<h2 id="Showing-commits"><a href="#Showing-commits" class="headerlink" title="Showing commits"></a>Showing commits</h2><p>If you thought that showing the commits would be as simple as a for loop in the template, you’re half right. For younger repositories, the commit log may only be 20-40 commits long, which isn’t too big to show on one page. For older repositories, though, the commit log is several hundred entries, which is too long to show at once. The solution is pagination, which GitPython already supports!</p>
+<p>Back in article 1, I showed that the Repository DB model has a commit method:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def commits(self, branch&#x3D;&#39;master&#39;, offset&#x3D;0, per_page&#x3D;20):</span><br><span class="line">    offset, per_page &#x3D; int(offset), int(per_page)</span><br><span class="line">    return list(Repo(self.path).iter_commits(branch, max_count&#x3D;per_page, skip&#x3D;offset * per_page))</span><br></pre></td></tr></table></figure>
+<p>Note that the method itself takes an offset parameter and the <code>git.Repo.iter_commits</code> method takes a <code>skip</code> parameter. I use the template-accessed offset to paginate the commits, 20 per page by default, shown in the <code>repo.html</code> template at once.</p>
+<p>In the repo backend method, I use a GET parameter to keep track of this and pass to the template:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">commit_offset &#x3D; request.args.get(&#39;offset&#39;, 0)</span><br></pre></td></tr></table></figure>
+<p>##Showing files</p>
+<p>The last thing (which is really the first thing) that the repo page has to do is show files. This is done through the DB model’s files method (<code>def files(self, path=&#39;&#39;, commit=&#39;HEAD&#39;)</code>).</p>
+<p>Here, path is what you’d expect: empty for top-level and <code>/src/com/app/templates</code> to lead down into that directory in the code. GitPython lets use browse files through <code>git_repo.tree(repo.commit(commit))[path]</code> (where <code>git_repo</code> is an instance of <code>git.Repo</code>).</p>
+<p>I take the blob and tree objects that GitPython gives us and wrap them in the custom CodeFile class from article 1 to give them the properties is_directory, name, and path for use in displaying on the template.</p>
+<p>So, taking that all together, calling <code>&#123;&#123; repo.files(code_path) &#125;&#125;</code> gives a list of objects that can be shown (<code>&#123;&#123; file.name &#125;&#125;</code>) to the user.</p>
+<h2 id="The-call-to-render-template"><a href="#The-call-to-render-template" class="headerlink" title="The call to render_template"></a>The call to render_template</h2><p>Here’s the backend method. It gets <code>commit_offset</code> and <code>show_tab</code> from the GET parameters, and repo from the URL:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#39;&#x2F;repo&#x2F;&lt;repo_name&gt;&#39;)</span><br><span class="line">@app.route(&#39;&#x2F;repo&#x2F;&lt;repo_name&gt;&#x2F;browse&#x2F;&lt;path:code_path&gt;&#39;)</span><br><span class="line">def repo(repo_name, code_path&#x3D;&#39;&#39;):</span><br><span class="line">    commit_offset &#x3D; request.args.get(&#39;offset&#39;, 0)</span><br><span class="line">    show_tab &#x3D; request.args.get(&#39;showtab&#39;, &#39;code&#39;)</span><br><span class="line">    repo &#x3D; Repository.query.filter_by(name&#x3D;repo_name).first()</span><br><span class="line">    if not repo:</span><br><span class="line">        abort(404)</span><br><span class="line">    return render_template(&#39;repo.html&#39;, repo&#x3D;repo, code_path&#x3D;code_path, commit_offset&#x3D;commit_offset, show_tab&#x3D;show_tab)</span><br></pre></td></tr></table></figure>
+<h2 id="The-template"><a href="#The-template" class="headerlink" title="The template"></a>The template</h2><p>That’s a lot of data to present to the user, so the template will be a bit lengthy (136 lines). Instead of pasting it all here, I’ll direct you to the file on Bitbucket and talk about specific parts.</p>
+<p>To display the data, I’m using Bootstrap’s nav-tabs to show the three tabs: Code, Commits, and Branches, which correspond with what I’ve written above.</p>
+<p>To display the code, I make use of the repo.files call:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class&#x3D;&quot;table table-hover&quot;&gt;</span><br><span class="line">    &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Path&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Author&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Date&lt;&#x2F;th&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &lt;&#x2F;thead&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">    &#123;% for file in repo.files(code_path) %&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">        &#123;% if file.is_directory %&#125;</span><br><span class="line">            &lt;td&gt;&lt;a href&#x3D;&quot;&#123;&#123; url_for(&#39;repo&#39;, repo_name&#x3D;repo.name, code_path&#x3D;file.path) &#125;&#125;&quot;&gt;&#123;&#123; file.name &#125;&#125;&lt;&#x2F;a&gt;&lt;&#x2F;td&gt;</span><br><span class="line">        &#123;% else %&#125;</span><br><span class="line">            &lt;td&gt;&lt;a href&#x3D;&quot;&#123;&#123; url_for(&#39;inspect&#39;, repo_name&#x3D;repo.name, code_path&#x3D;file.path) &#125;&#125;&quot;&gt;&#123;&#123; file.name &#125;&#125;&lt;&#x2F;a&gt;&lt;&#x2F;td&gt;</span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">            &lt;td&gt;&#123;&#123; file.last_commit_mesage or &quot;foo&quot; &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; file.last_commit_date or &quot;foo&quot; &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;&#x2F;tbody&gt;</span><br><span class="line">&lt;&#x2F;table&gt;</span><br></pre></td></tr></table></figure>
+<p>I have a for loop to iterate through the files in the current path and display them in the table. You’ll see that, in the current state, the <code>last_commit_message</code> and <code>last_commit_date</code> fields of the CodeFile object don’t yet exist - they’ll come later.</p>
+<p>Files that are directories lead to the same backend route, with their modified versions of the code_path. Files that aren’t directories lead to the inspect page (next article).</p>
+<p>Showing the commits is a bit simpler. Here’s the pagination code at the top of the page:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if repo.commit_count() &gt; 20 %&#125;</span><br><span class="line">    &lt;nav&gt;</span><br><span class="line">        &lt;ul class&#x3D;&quot;pagination&quot;&gt;</span><br><span class="line">        &#123;% for index in (repo.commit_count() &#x2F; 20)|int|commit_range %&#125;</span><br><span class="line">            &#123;% if index &#x3D;&#x3D; commit_offset|int + 1 %&#125;</span><br><span class="line">                &lt;li class&#x3D;&quot;active&quot;&gt;</span><br><span class="line">                    &lt;a href&#x3D;&quot;?offset&#x3D;&#123;&#123; index - 1 &#125;&#125;&amp;showtab&#x3D;commits&quot;&gt;&#123;&#123; commit_offset|int + 1&#125;&#125; &lt;span class&#x3D;&quot;sr-only&quot;&gt;(current)&lt;&#x2F;span&gt;&lt;&#x2F;a&gt;</span><br><span class="line">                &lt;&#x2F;li&gt;</span><br><span class="line">            &#123;% else %&#125;</span><br><span class="line">                &lt;li&gt;&lt;a href&#x3D;&quot;?offset&#x3D;&#123;&#123; index - 1 &#125;&#125;&amp;showtab&#x3D;commits&quot;&gt;&#123;&#123; index &#125;&#125;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;</span><br><span class="line">            &#123;% endif %&#125;</span><br><span class="line">        &#123;% endfor %&#125;</span><br><span class="line">        &lt;&#x2F;ul&gt;</span><br><span class="line">    &lt;&#x2F;nav&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>We only create the pagination section if the repository has more than 20 commits. Now, for displaying the commits:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class&#x3D;&quot;table table-hover&quot;&gt;</span><br><span class="line">    &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;SHA&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Author&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Authored on&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Committer&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Committed on&lt;&#x2F;th&gt;</span><br><span class="line">            &lt;th&gt;Summary&lt;&#x2F;th&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &lt;&#x2F;thead&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">    &#123;% for commit in repo.commits(offset&#x3D;commit_offset) %&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;&lt;a href&#x3D;&quot;&#123;&#123; url_for(&#39;commit&#39;, repo_name&#x3D;repo.name, commit_sha&#x3D;commit.hexsha) &#125;&#125;&quot;&gt;&#123;&#123; commit.hexsha|sha &#125;&#125;&lt;&#x2F;a&gt;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; commit.author &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; commit.authored_date|date &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; commit.committer &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; commit.committed_date|date &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; commit.summary &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;&#x2F;tbody&gt;</span><br><span class="line">&lt;&#x2F;table&gt;</span><br></pre></td></tr></table></figure>
+<p>Another table! This table only has 1 type of link: to the commit page, passing the name of the repository (to fetch the DB model from the database) and the commit’s SHA, which is also displayed on the page to the user, filtered to show the first 7 characters:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@app.template_filter(&#39;sha&#39;)</span><br><span class="line">def filter_sha(s):</span><br><span class="line">    return s[:7]</span><br></pre></td></tr></table></figure>
+<p>Finally, the branches:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class&#x3D;&quot;table table-hover&quot;&gt;</span><br><span class="line">    &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;&#x2F;th&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &lt;&#x2F;thead&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">    &#123;% for branch in repo.branches() %&#125;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;&#123;&#123; branch.name &#125;&#125;&lt;&#x2F;td&gt;</span><br><span class="line">        &lt;&#x2F;tr&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;&#x2F;tbody&gt;</span><br><span class="line">&lt;&#x2F;table&gt;</span><br></pre></td></tr></table></figure>
+<p>As noted previously, I’m not currently doing anything more with branches.</p>
+<p>Check the link to the repo page source for the full page, but here’s the bulk of the rendering.</p>
+<p>Next, the inspect and commit pages.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-2/" data-id="ckxp32zbs001x8gtv85hzaghh" data-title="A Git frontend with Flask part 2" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/old-blog/" rel="tag">old_blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/" rel="tag">programming</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/01/travis-codecov-vgo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Travis CI, Codecov, and vgo
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/01/a-git-frontend-with-flask-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">A Git frontend with Flask part 1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cod/" rel="tag">cod</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cryptocurrency/" rel="tag">cryptocurrency</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eve/" rel="tag">eve</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffxiv/" rel="tag">ffxiv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/games/" rel="tag">games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gaming/" rel="tag">gaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/irc/" rel="tag">irc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mta/" rel="tag">mta</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nim/" rel="tag">nim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/old-blog/" rel="tag">old_blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privacy/" rel="tag">privacy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programming/" rel="tag">programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rust/" rel="tag">rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowrun/" rel="tag">shadowrun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webdev/" rel="tag">webdev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/cod/" style="font-size: 11.67px;">cod</a> <a href="/tags/cryptocurrency/" style="font-size: 10px;">cryptocurrency</a> <a href="/tags/eve/" style="font-size: 10px;">eve</a> <a href="/tags/ffxiv/" style="font-size: 15px;">ffxiv</a> <a href="/tags/games/" style="font-size: 16.67px;">games</a> <a href="/tags/gaming/" style="font-size: 11.67px;">gaming</a> <a href="/tags/irc/" style="font-size: 13.33px;">irc</a> <a href="/tags/mta/" style="font-size: 11.67px;">mta</a> <a href="/tags/nim/" style="font-size: 11.67px;">nim</a> <a href="/tags/old-blog/" style="font-size: 18.33px;">old_blog</a> <a href="/tags/privacy/" style="font-size: 10px;">privacy</a> <a href="/tags/programming/" style="font-size: 20px;">programming</a> <a href="/tags/rust/" style="font-size: 13.33px;">rust</a> <a href="/tags/shadowrun/" style="font-size: 11.67px;">shadowrun</a> <a href="/tags/webdev/" style="font-size: 10px;">webdev</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/12/27/WSL/">WSL</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/22/Cryptocurrency-without-the-hype/">Cryptocurrency without the hype</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/18/Porting-old-blog-posts/">Porting old blog posts</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/29/MtA-2e-Operation-Railgun/">MtA 2e, Operation: Railgun</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/25/4Privacy/">4Privacy</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 Matt Boulanger<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
