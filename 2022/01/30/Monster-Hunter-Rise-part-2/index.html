@@ -4,20 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Custom Chrome start page | Etchings</title>
+  <title>Monster Hunter Rise - part 2 | Etchings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="I recently came across a small community building custom “start pages” for their browsers.">
+  <meta name="description" content="I’ve played an additional 30 hours of Monster Hunter Rise since my last post. During this time, I’ve experimented with other weapons (hammer, dual blades, and bow), crafted several end-game meta armor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Custom Chrome start page">
-<meta property="og:url" content="https://celeo.github.io/2016/01/01/custom-chrome-start-page/index.html">
+<meta property="og:title" content="Monster Hunter Rise - part 2">
+<meta property="og:url" content="https://celeo.github.io/2022/01/30/Monster-Hunter-Rise-part-2/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="I recently came across a small community building custom “start pages” for their browsers.">
+<meta property="og:description" content="I’ve played an additional 30 hours of Monster Hunter Rise since my last post. During this time, I’ve experimented with other weapons (hammer, dual blades, and bow), crafted several end-game meta armor">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.006Z">
+<meta property="article:published_time" content="2022-01-30T20:47:41.000Z">
+<meta property="article:modified_time" content="2022-01-30T20:53:47.421Z">
 <meta property="article:author" content="Matt Boulanger">
-<meta property="article:tag" content="programming">
-<meta property="article:tag" content="old_blog">
+<meta property="article:tag" content="gaming">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Etchings" type="application/atom+xml">
@@ -75,10 +74,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-custom-chrome-start-page" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Monster-Hunter-Rise-part-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2016/01/01/custom-chrome-start-page/" class="article-date">
-  <time class="dt-published" datetime="2016-01-01T08:00:00.000Z" itemprop="datePublished">2016-01-01</time>
+    <a href="/2022/01/30/Monster-Hunter-Rise-part-2/" class="article-date">
+  <time class="dt-published" datetime="2022-01-30T20:47:41.000Z" itemprop="datePublished">2022-01-30</time>
 </a>
     
   </div>
@@ -89,7 +88,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Custom Chrome start page
+      Monster Hunter Rise - part 2
     </h1>
   
 
@@ -97,38 +96,19 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>I recently came across a small community building custom “start pages” for their browsers.</p>
-<a id="more"></a>
-
-<p>When you open a new page in your browser of choice, it can be configured to show several different pages. I use Chrome, so I installed the <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna/related">New Tab Redirect</a> extension to allow me to show any page, including a file on my local PC.</p>
-<p>I’ve been working with <a target="_blank" rel="noopener" href="https://vuejs.org/">Vue.js</a> lately, so I wanted to take the opportunity to build a web page that I could use for my start page, like the people over at <a target="_blank" rel="noopener" href="https://www.reddit.com/r/startpages/">/r/startpages</a> are doing.</p>
-<p>Repo link: <a target="_blank" rel="noopener" href="https://github.com/Celeo/Start_page">github.com/Celeo/Start_page</a></p>
-<p>I have all the sites that I need to visit either on my bookmarks bar (which is always showing) or in muscle memory, so I didn’t want to have a bunch of links on my start page, although this is a common usecase of the page and it works well for many people. There are only 2 things I’m really interested in: the time and the weather.</p>
-<p>Now sure, I could just look at my taskbar for the time and go to any number of weather sites (or look outside) for the weather, but I wanted to add <em>something</em> to this page.</p>
-<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>Adding the time to the page is the simplest: <a target="_blank" rel="noopener" href="http://momentjs.com/">Moment.js</a> is an easy way to access the time and display it in a variety of formats. I added a data field in my Vue object for the time:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      time: moment()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-<p>Vue will take care of updating the DOM when the object is changed, but it won’t update on its own:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> <span class="built_in">this</span>.time = moment(), <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Just add the variable to the template and you’ll have the up-to-date time (and/or date!) on the start page.</p>
-<h3 id="Weather"><a href="#Weather" class="headerlink" title="Weather"></a>Weather</h3><p>Weather is a bit more tricky. I tried querying a variety of sites straight from the page but was repeatedly met with <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a> problems. I needed to query the weather from a server, not a webpage. Luckily, <a target="_blank" rel="noopener" href="http://expressjs.com/">Express</a> is a simple web framework for Node. I created a small, single-endpoint web app that I could run in the background on my workstation without any performance problems, just to be the go-between for my start page and the remote weather API, for which I’m using <a target="_blank" rel="noopener" href="https://darksky.net/dev/">Dark Sky</a>.</p>
-<p>The server <em>could</em> have it’s own configuration file, but I found it easier to abstract that behavior on the server’s side and leave it to the client to send the server all the configuration information it needs as part of the request (mainly because I was tired of fighting with getting files to be in the right places during development and deployment, but this is the better approach regardless).</p>
-<p>The server, when it receives a request from the client (the start page), sends a request over to Dark Sky for the weather, gets that response, parses it for the information the client wants, and sends a response back to the start page. The start page then takes this information, stores it in local storage for caching, and Vue updates the DOM. The information is cached for two reasons:</p>
-<ol>
-<li>Weather doesn’t change very fast</li>
-<li>Dark Sky has daily API access limits</li>
-</ol>
-<h3 id="Moving-forward"><a href="#Moving-forward" class="headerlink" title="Moving forward"></a>Moving forward</h3><p>I decided to use the <a target="_blank" rel="noopener" href="https://github.com/vuejs-templates/webpack-simple/">webpack-simple</a> <a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-cli">vue-cli</a> template for the Vue app and bundle it all with webpack. To use the start page, I pointed New Tab Redirect at Webpack’s build target <strong>index.html</strong>. Running the sever is a simple as using whichever mechanism your OS has for running console apps in the background without a window.</p>
-<p>To update the client app, just pull from Github and rebuild. To update the server app, you’ll have to kill the background process, build, and start it again.</p>
-<p>I started to use Google’s Maps API to track the time it’d take me to get home from work, which would only show on the page after 4 PM, but it seems that Google sends the same time, regardless of the traffic, so it’s not accurate.</p>
+        <p>I’ve played an additional 30 hours of <strong>Monster Hunter Rise</strong> since my last post. During this time, I’ve experimented with other weapons (hammer, dual blades, and bow), crafted several end-game meta armor sets, crafted many more decorations and talismen, and continued to train buddies. My hunter rank is 72.</p>
+<p>The game is still fun, though I’m relying more on the online multiplayer interactions with random people to fuel spontaneity. Dual Blades is a fun weapon, and I’ll probably focus on it after playing through Hammer more, which I am definitely enjoying. I expected to like Bow, but since I’ve played, almost exclusively, melee weapons in my time in Monster Hunter games, switching to ranged feels very weird.</p>
+<p>Hunting for better talismen is annoying; I have a few that have a skill I want and a gem slot, and that’s pretty much good enough. I’ve been able to farm monsters for decorations, which have gotten me most of the skills I want. When paired with following guides for end-game meta armor sets, I feel strong, but not overpowered. Monster Hunter is good about rewarding player skill increases, as well as character strength increases.</p>
+<p>At this point, I think I’ve seen everything in the game - the additional post-story monsters, the apex variations, and the crimson something or other that has jet engines on its body (though I haven’t fought it). I don’t have another game to play right now, so I’m still going on hunts to get materials and have fun, but as I’m generally a very goal-oriented player, I’m starting to get blurry on what’s next for me.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://celeo.github.io/2016/01/01/custom-chrome-start-page/" data-id="ckxp32zbw00298gtv109vd55d" data-title="Custom Chrome start page" class="article-share-link">Share</a>
+      <a data-url="https://celeo.github.io/2022/01/30/Monster-Hunter-Rise-part-2/" data-id="ckz1qqmcj0000matv009jaj23" data-title="Monster Hunter Rise - part 2" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/old-blog/" rel="tag">old_blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/" rel="tag">programming</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gaming/" rel="tag">gaming</a></li></ul>
 
     </footer>
   </div>
@@ -136,19 +116,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/01/01/assassins-creed-syndicate/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Assassin&#39;s Creed: Syndicate
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/01/01/docker-nginx-and-flask-its-a-circus/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/01/22/Monster-Hunter-Rise/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Docker, Nginx, and Flask - it&#39;s a Circus!</div>
+      <div class="article-nav-title">Monster Hunter Rise</div>
     </a>
   
 </nav>
