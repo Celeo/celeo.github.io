@@ -7,6 +7,10 @@ tags:
 - mta
 ---
 
+Brief ratings of the complexity of the 10 different Arcanums in _Mage the Awakening, Second Edition_.
+
+<!-- more -->
+
 ### Fate - 1/5
 
 These spells are simple, clear, effective, and nearly always useful. Most of them don't require a lot of preparation and can be performed on the fly.
