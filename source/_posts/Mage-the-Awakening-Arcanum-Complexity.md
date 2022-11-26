@@ -43,7 +43,7 @@ Many of these spells require understanding of the various types of nimbuses and 
 
 As matter surrounds the world, so too do forces. Creativity is the limit here, and the understanding entry cost is low. A basic understanding of conditions vs tilts would do well.
 
-### Sprit - 5/5
+### Spirit - 5/5
 
 Probably the least-explained set of spells, many of them effectively exclusively require continued conversations between storyteller and player. This isn't just difficult for the player, but also for the storyteller. Spirits are far more prevalent than ghosts, but far more alien to mages. Many of the spells revolve around interaction with spirits, from finding them to communicating to getting favors and cutting deals. Lots of talking, lots of reading.
 
