@@ -89,4 +89,4 @@ The book gives us a scale for speed of common beings:
 |12|Horse|
 |15|Cheetah|
 
-If we assume that a Cheetah's top speed is 120 km/h and that this table scales linearly (though it doesn't), then the speed of our projectile would be about **7,929,856** km/h, which is **2,202,738** m/s, which is **0.7% the speed of light** and **Mach 6,479**.
+If we assume that a Cheetah's top speed is 120 km/h and that this table scales linearly (though it doesn't), then the speed of our projectile would be about **7,929,856 km/h**, which is **2,202,738 m/s**, which is **0.7% the speed of light** and **Mach 6,479**.
