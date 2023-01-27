@@ -65,6 +65,6 @@ And now for the _big_ one:
 - 2 Mana
 - 2 Reach
 
-Do note the 3 Paradox dice, and that's after the Dedicated tool and 2 Mana. This spell targets **5 people** (you and your Cabal) for grants **+10 dice to 10 rolls**, including spellcasting rolls, lasting **for 1 week**. It only takes 2 turns to cast. Of course, the dice pool here would be a non-starter, but with the +7 dice and Steadfast from the _previous_ spell, the roll succeeds.
+Do note the 3 Paradox dice, and that's after the Dedicated tool and 2 Mana. This spell targets **5 people** (you and your Cabal) and grants **+10 dice to 10 rolls**, including spellcasting rolls, lasting **for 1 week**. It only takes 2 turns to cast. Of course, the dice pool here would be a non-starter, but with the +7 dice and Steadfast from the _previous_ spell, the roll succeeds.
 
 At this point, as long as the Fate mage who cast these doesn't get their spell dispelled (which would be fairly easy, given that it only uses one Arcana), the entire cabal is super-powered. This process took 3 hours and 4 turns (so, 3 hours). If the mage can deal with an additional Paradox, they can even make the first cast only take 2 turns, for a total of 6 turns (about a minute). While the caster will want to let their Paradox cool down by not casting for an hour or so, holding this spell only costs them 1 reach each on their spells during the next week.
