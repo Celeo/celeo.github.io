@@ -14,7 +14,6 @@ timezone: America/Los_Angeles
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: https://celeo.github.io
-root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -98,7 +97,19 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
+theme_config:
+  darkmode: true
+  menu:
+    home: / || fa fa-home
+    tags: /tags/ || fa fa-tags
+    archives: /archives/ || fa fa-archive
+    GitHub: https://github.com/Celeo || fa fa-link
+  motion:
+    enable: false
+
+tag_generator:
+  enable_index_page: false
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
