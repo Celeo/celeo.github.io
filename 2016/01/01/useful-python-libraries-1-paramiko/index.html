@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Useful Python libraries 1 - Paramiko | Etchings</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Paramiko is an SSH library.">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Paramiko is an SSH library.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Useful Python libraries 1 - Paramiko">
 <meta property="og:url" content="https://celeo.github.io/2016/01/01/useful-python-libraries-1-paramiko/index.html">
@@ -14,91 +27,188 @@
 <meta property="og:description" content="Paramiko is an SSH library.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.006Z">
+<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="old_blog">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Etchings" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/useful-python-libraries-1-paramiko/">
 
-  
-<meta name="generator" content="Hexo 5.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Etchings</a>
-      </h1>
-      
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/useful-python-libraries-1-paramiko/","path":"2016/01/01/useful-python-libraries-1-paramiko/","title":"Useful Python libraries 1 - Paramiko"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Useful Python libraries 1 - Paramiko | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://celeo.github.io"></form>
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Making-the-connection"><span class="nav-number">2.</span> <span class="nav-text">Making the connection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sending-commands"><span class="nav-number">3.</span> <span class="nav-text">Sending commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Authenticating-as-the-root-user"><span class="nav-number">4.</span> <span class="nav-text">Authenticating as the root user</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SCP"><span class="nav-number">5.</span> <span class="nav-text">SCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Review"><span class="nav-number">6.</span> <span class="nav-text">Review</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main"><article id="post-useful-python-libraries-1-paramiko" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2016/01/01/useful-python-libraries-1-paramiko/" class="article-date">
-  <time class="dt-published" datetime="2016-01-01T08:00:00.000Z" itemprop="datePublished">2016-01-01</time>
-</a>
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Useful Python libraries 1 - Paramiko
-    </h1>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
   
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/useful-python-libraries-1-paramiko/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Useful Python libraries 1 - Paramiko | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Useful Python libraries 1 - Paramiko
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Paramiko is an SSH library.</p>
-<a id="more"></a>
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Paramiko is an SSH library.</p>
+<span id="more"></span>
 
 <p><strong>Update</strong>: As I reviewed the code that I had written and its shortcomings, I found other people using Fabric instead of Paramiko for this high-level remote control. I’ll write up a post on Fabric soon.</p>
 <ul>
@@ -112,30 +222,40 @@
 <p>-source: readme</p>
 <p>For me, that means a scriptable method to communicate with a networked device running Linux with more control than using a bash script.</p>
 <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>First off, installation (you are using some sort of virtual environment, right?):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install paramiko</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install paramiko</span><br></pre></td></tr></table></figure>
+
 <p>You may need a supporting library in order to install PyCrypto. For Debian (specifically, Linux Mint 17.2) I needed python-dev:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install python-dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install python-dev</span><br></pre></td></tr></table></figure>
+
 <h2 id="Making-the-connection"><a href="#Making-the-connection" class="headerlink" title="Making the connection"></a>Making the connection</h2><p>Now that we have the basics setup, we can make the connection. We need an IP address, port (default for SSH is 22), username, and password. Paramiko does support using a SSH key file, but I don’t need that functionality. So, here is the basic code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">ssh &#x3D; paramiko.SSHClient()</span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br></pre></td></tr></table></figure>
+
 <p>The first line is the import - no fuss. Next, we create an instance of the <code>SSHClient</code> class. Then, we set the connection to ignore unknown hosts. If this code were going to a client, I’d make sure to properly handle known hosts, but for code connecting to many systems in a development environment, it’s fine.</p>
 <p>Now, the connection call:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh.connect(ip_address, port&#x3D;port, username&#x3D;username, password&#x3D;password)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh.connect(ip_address, port=port, username=username, password=password)</span><br></pre></td></tr></table></figure>
+
 <p>You can simply ask the user for the IP address:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip_address &#x3D; raw_input(&#39;Enter the IP address to connect to: &#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip_address = raw_input(&#x27;Enter the IP address to connect to: &#x27;)</span><br></pre></td></tr></table></figure>
+
 <p>For the password, you may want to have it entered like passwords are in the shell where the keys are not echoed to the terminal as the user types. This can be done throuh the getpass module:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from getpass import getpass</span><br><span class="line">password &#x3D; getpass(&#39;Enter the password: &#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from getpass import getpass</span><br><span class="line">password = getpass(&#x27;Enter the password: &#x27;)</span><br></pre></td></tr></table></figure>
+
 <p>Now that we have the connection, we’ll open an interactive shell with invoke_shell:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell &#x3D; ssh.invoke_shell()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell = ssh.invoke_shell()</span><br></pre></td></tr></table></figure>
+
 <p>We’ll use this to write commands to the device and read the responses.</p>
-<h2 id="Sending-commands"><a href="#Sending-commands" class="headerlink" title="Sending commands"></a>Sending commands</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from time import sleep</span><br><span class="line">shell.send(command + &#39;\n&#39;)</span><br><span class="line">sleep(1)</span><br><span class="line">buff &#x3D; &#39;&#39;</span><br><span class="line">while shell.recv_ready():</span><br><span class="line">    buff +&#x3D; shell.recv(1024)</span><br><span class="line">print buff</span><br></pre></td></tr></table></figure>
+<h2 id="Sending-commands"><a href="#Sending-commands" class="headerlink" title="Sending commands"></a>Sending commands</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from time import sleep</span><br><span class="line">shell.send(command + &#x27;\n&#x27;)</span><br><span class="line">sleep(1)</span><br><span class="line">buff = &#x27;&#x27;</span><br><span class="line">while shell.recv_ready():</span><br><span class="line">    buff += shell.recv(1024)</span><br><span class="line">print buff</span><br></pre></td></tr></table></figure>
+
 <p>Let’s break that down.</p>
 <p>First, we’ll import the sleep function from the time module. Quick note: unlike some languages, like Java and C#, Python’s sleep takes the time to wait in seconds, not milliseconds.</p>
 <p>Then, we send the command down through the connection with an appended newline character to simulate the user pressing Enter. We sleep for a second to allow processing (you may want to consider making the sleep duration dependent on your command; you’ll have to play with it to see what you need) and read the response from the connection. If you make this code into a separate method (recommended), return the buff variable. Otherwise, here we’ll just print it.</p>
 <h2 id="Authenticating-as-the-root-user"><a href="#Authenticating-as-the-root-user" class="headerlink" title="Authenticating as the root user"></a>Authenticating as the root user</h2><p>The device I am connecting to doesn’t allow root login, so we login to a user with the ability to use sudo. sudo requires that users’s password, though, so we have to send the password immediately after the sudo command. Additionally, I don’t want to store that password in the script, so we’ll use the previously-entered password the user entered to start the connection.</p>
 <p>Let’s assume we put the previous section’s code into its own method:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def command(command):</span><br><span class="line">    buff &#x3D; &#39;&#39;</span><br><span class="line">    while shell.recv_ready():</span><br><span class="line">        buff +&#x3D; shell.recv(1024)</span><br><span class="line">    shell.send(command + &#39;\n&#39;)</span><br><span class="line">    sleep(1)</span><br><span class="line">    while shell.recv_ready():</span><br><span class="line">        buff +&#x3D; shell.recv(1024)</span><br><span class="line">    return buff</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def command(command):</span><br><span class="line">    buff = &#x27;&#x27;</span><br><span class="line">    while shell.recv_ready():</span><br><span class="line">        buff += shell.recv(1024)</span><br><span class="line">    shell.send(command + &#x27;\n&#x27;)</span><br><span class="line">    sleep(1)</span><br><span class="line">    while shell.recv_ready():</span><br><span class="line">        buff += shell.recv(1024)</span><br><span class="line">    return buff</span><br></pre></td></tr></table></figure>
+
 <p>To become the root user on the device I’m using, the command is <code>$ sudo su</code>. Through paramiko, we’ll do:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">command(&#39;sudo su&#39;)</span><br><span class="line">command(password)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">command(&#x27;sudo su&#x27;)</span><br><span class="line">command(password)</span><br></pre></td></tr></table></figure>
+
 <p>This sends the command through the connection, immediately followed by the password required to confirm the command.</p>
 <h2 id="SCP"><a href="#SCP" class="headerlink" title="SCP"></a>SCP</h2><p>Well, we have the ability to connect, send commands, and authenticate as the root user so far. What about moving files?</p>
 <p>We’ll use scp to move files, one at a time, from the remote device to our current machine. You may have used a command-line utility of the same name previously.</p>
@@ -145,159 +265,107 @@
 </blockquote>
 <p>-source: readme</p>
 <p>It’s a single file, so “installation” can be just grabbing the file from the repository and having it in your working directory:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:&#x2F;&#x2F;github.com&#x2F;jbardin&#x2F;scp.py&#x2F;blob&#x2F;master&#x2F;scp.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/jbardin/scp.py/blob/master/scp.py</span><br></pre></td></tr></table></figure>
+
 <p>To use it, first import:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import scp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import scp</span><br></pre></td></tr></table></figure>
+
 <p>We’ll instantiate a <code>SCPClient</code> class using with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">with scp.SCPClient(ssh.get_transport()) as _scp:</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">with scp.SCPClient(ssh.get_transport()) as _scp:</span><br></pre></td></tr></table></figure>
+
 <p>Inside that block, we can use _scp to get file from the device and put files onto the device. Those functions, respectively, are</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_scp.get(&#39;&#x2F;path&#x2F;to&#x2F;filename&#39;)</span><br><span class="line">_scp.put(&#39;&#x2F;path&#x2F;to&#x2F;local&#x2F;filename&#39;, &#39;&#x2F;path&#x2F;to&#x2F;remote&#x2F;target&#39;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_scp.get(&#x27;/path/to/filename&#x27;)</span><br><span class="line">_scp.put(&#x27;/path/to/local/filename&#x27;, &#x27;/path/to/remote/target&#x27;)</span><br></pre></td></tr></table></figure>
+
 <h2 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h2><p>Using Paramiko, we made a connection to a device, setup how to send commands, authenticated as the root user, and got an add-on module to handle file transfer. Adding that together yields fully scriptable SSH connections to one or more devices.</p>
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="https://celeo.github.io/2016/01/01/useful-python-libraries-1-paramiko/" data-id="ckxp32zc500358gtv94ur3g7v" data-title="Useful Python libraries 1 - Paramiko" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/old-blog/" rel="tag">old_blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/" rel="tag">programming</a></li></ul>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/useful-python-libraries-2-docopt/" rel="prev" title="Useful Python libraries 2 - Docopt">
+                  <i class="fa fa-chevron-left"></i> Useful Python libraries 2 - Docopt
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/updating-ghost-on-a-tiny-digitalocean-droplet/" rel="next" title="Updating Ghost on a tiny DigitalOcean Droplet">
+                  Updating Ghost on a tiny DigitalOcean Droplet <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/01/01/ssl-tls-part-1-self-signed/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          SSL TLS part 1 - self-signed
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/01/01/useful-python-libraries-2-docopt/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Useful Python libraries 2 - Docopt</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/aviation/" rel="tag">aviation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cod/" rel="tag">cod</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cryptocurrency/" rel="tag">cryptocurrency</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eve/" rel="tag">eve</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffxiv/" rel="tag">ffxiv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/games/" rel="tag">games</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gaming/" rel="tag">gaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/irc/" rel="tag">irc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mta/" rel="tag">mta</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nim/" rel="tag">nim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/old-blog/" rel="tag">old_blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privacy/" rel="tag">privacy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/programming/" rel="tag">programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rust/" rel="tag">rust</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shadowrun/" rel="tag">shadowrun</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storytelling/" rel="tag">storytelling</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/technology/" rel="tag">technology</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webdev/" rel="tag">webdev</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/aviation/" style="font-size: 10px;">aviation</a> <a href="/tags/cod/" style="font-size: 15.71px;">cod</a> <a href="/tags/cryptocurrency/" style="font-size: 10px;">cryptocurrency</a> <a href="/tags/eve/" style="font-size: 10px;">eve</a> <a href="/tags/ffxiv/" style="font-size: 14.29px;">ffxiv</a> <a href="/tags/games/" style="font-size: 17.14px;">games</a> <a href="/tags/gaming/" style="font-size: 14.29px;">gaming</a> <a href="/tags/irc/" style="font-size: 12.86px;">irc</a> <a href="/tags/mta/" style="font-size: 15.71px;">mta</a> <a href="/tags/nim/" style="font-size: 11.43px;">nim</a> <a href="/tags/old-blog/" style="font-size: 18.57px;">old_blog</a> <a href="/tags/privacy/" style="font-size: 10px;">privacy</a> <a href="/tags/programming/" style="font-size: 20px;">programming</a> <a href="/tags/rust/" style="font-size: 12.86px;">rust</a> <a href="/tags/shadowrun/" style="font-size: 11.43px;">shadowrun</a> <a href="/tags/storytelling/" style="font-size: 10px;">storytelling</a> <a href="/tags/technology/" style="font-size: 11.43px;">technology</a> <a href="/tags/webdev/" style="font-size: 10px;">webdev</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/03/29/Mage-the-Awakening-otherworldy-entities/">Mage the Awakening: otherworldy entities</a>
-          </li>
-        
-          <li>
-            <a href="/2023/01/26/Skyrim-Alchemy-and-Mage-Exceptional-Luck/">Skyrim&#39;s Alchemy and Mage&#39;s Exceptional Luck</a>
-          </li>
-        
-          <li>
-            <a href="/2022/11/28/MtA-Time-spell-tour/">MtA Time spell tour</a>
-          </li>
-        
-          <li>
-            <a href="/2022/11/25/MtA-Fate-spell-tour/">MtA Fate spell tour</a>
-          </li>
-        
-          <li>
-            <a href="/2022/11/18/Mage-the-Awakening-Arcanum-Complexity/">Mage the Awakening Arcanum Complexity</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 Matt Boulanger<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>
