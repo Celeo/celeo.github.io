@@ -19,25 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Personal blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Etchings">
-<meta property="og:url" content="https://celeo.github.io/archives/2019/07/index.html">
+    <meta name="description" content="I’ve been working with Astro lately, and it took me a while to figure out how to implement an OAuth 2 client. Hopefully I can make it faster for you.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implementing an OAuth 2 flow in Astro">
+<meta property="og:url" content="https://celeo.github.io/2023/09/30/Implementing-an-OAuth2-flow-in-Astro/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="Personal blog">
+<meta property="og:description" content="I’ve been working with Astro lately, and it took me a while to figure out how to implement an OAuth 2 client. Hopefully I can make it faster for you.">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-01T05:45:52.000Z">
+<meta property="article:modified_time" content="2023-10-01T06:06:13.794Z">
 <meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://celeo.github.io/archives/2019/07/">
+<link rel="canonical" href="https://celeo.github.io/2023/09/30/Implementing-an-OAuth2-flow-in-Astro/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"archives/2019/07/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2023/09/30/Implementing-an-OAuth2-flow-in-Astro/","path":"2023/09/30/Implementing-an-OAuth2-flow-in-Astro/","title":"Implementing an OAuth 2 flow in Astro"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Archive | Etchings</title>
+<title>Implementing an OAuth 2 flow in Astro | Etchings</title>
   
 
 
@@ -70,7 +73,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Etchings</h1>
+      <p class="site-title">Etchings</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -143,70 +146,110 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2023/09/30/Implementing-an-OAuth2-flow-in-Astro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Implementing an OAuth 2 flow in Astro | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Implementing an OAuth 2 flow in Astro
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-30 22:45:52 / Modified: 23:06:13" itemprop="dateCreated datePublished" datetime="2023-09-30T22:45:52-07:00">2023-09-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>I’ve been working with <a target="_blank" rel="noopener" href="https://astro.build/">Astro</a> lately, and it took me a while to figure out how to implement an OAuth 2 client. Hopefully I can make it faster for you.</p>
+<span id="more"></span>
+
+<p>First off, I’m using Astro with the Node adapter for SSR. You can use any SSR adapter you want, though you’ll definitely need SSR.</p>
+<p>The standard OAuth flow is as follows:</p>
+<ul>
+<li>Register an application with the site</li>
+<li>The user clicks on a login button&#x2F;link</li>
+<li>Generate a URL to send the user to, using your OAuth application information</li>
+<li>The user logs into that site and authorizes your site</li>
+<li>The user is redirected to your site</li>
+<li>You get a <code>code</code> query parameter in the URL</li>
+<li>You exchange the code for an access token</li>
+<li>You use the access token to get information about the user and perform actions on their behalf</li>
+</ul>
+<p>All of these can be performed with simple HTTP requests, or you can use <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/oauth">a library</a> to help you.</p>
+<p>Now, in Astro.</p>
+<p>When the clicks on your login link, you could send them to a server endpoint that returns a redirect, or you could point them to a regular <code>.astro</code> page<br>that generates the URL, stores it in the DOM, and has a JavaScript function on document ready that loads the URL from the DOM and performs the redirect.</p>
+<p>When the user returns to your site, your callback <code>.astro</code> page has a fair bit of processing to do. You can handle exchanging the code for the access<br>token and using it to get information about the user, all before loading the page. Do note that if the site you’re interacting with is slow, you’ll<br>probably instead want to defer some of that to async processing via a HTTP request from the client via JavaScript.</p>
+<p>As part of generating the URL to send the user to the OAuth server site, you can include a <code>state</code> variable. I’m using<br><a target="_blank" rel="noopener" href="https://docs.astro.build/en/core-concepts/sharing-state/">nanostores</a> both in the login page and the callback page, to ensure that the flow isn’t being<br>messed with.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+          </div>
+
         
-        <span class="collection-header">Nice! 74 posts in total. Keep on posting.</span>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2019-07-13T13:45:45-07:00"
-              content="2019-07-13">
-          07-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/07/13/Shadowrun-6-QSR-thoughts/" itemprop="url">
-            <span itemprop="name">Shadowrun 6 QSR thoughts</span>
-          </a>
-      </div>
-
-      
-    </header>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/10/Starfield-a-comparison/" rel="prev" title="Starfield: a comparison">
+                  <i class="fa fa-chevron-left"></i> Starfield: a comparison
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2019-07-08T17:19:22-07:00"
-              content="2019-07-08">
-          07-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/07/08/Shadowbringers-week-2/" itemprop="url">
-            <span itemprop="name">Shadowbringers week 2</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>
