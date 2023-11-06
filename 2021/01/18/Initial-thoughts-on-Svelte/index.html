@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -15,9 +14,9 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Initial thoughts on Svelte from someone who’s played with many frameworks, likes compile-time processing, but has been (mostly) happy with React for several years.">
 <meta property="og:type" content="article">
@@ -113,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-Svelte"><span class="nav-number">2.</span> <span class="nav-text">Enter, Svelte</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-TypeScript-and-ESLint"><span class="nav-number">3.</span> <span class="nav-text">Problems with TypeScript and ESLint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-Prettier"><span class="nav-number">4.</span> <span class="nav-text">Problems with Prettier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-snowpack-maybe"><span class="nav-number">5.</span> <span class="nav-text">Problems with snowpack (maybe)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">6.</span> <span class="nav-text">Next steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-x2F-22-x2F-21-edit"><span class="nav-number">7.</span> <span class="nav-text">1&#x2F;22&#x2F;21 edit</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-Svelte"><span class="nav-number">2.</span> <span class="nav-text">Enter, Svelte</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-TypeScript-and-ESLint"><span class="nav-number">3.</span> <span class="nav-text">Problems with TypeScript and ESLint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-Prettier"><span class="nav-number">4.</span> <span class="nav-text">Problems with Prettier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-snowpack-maybe"><span class="nav-number">5.</span> <span class="nav-text">Problems with snowpack (maybe)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">6.</span> <span class="nav-text">Next steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-22-21-edit"><span class="nav-number">7.</span> <span class="nav-text">1&#x2F;22&#x2F;21 edit</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -126,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-count">76</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -224,7 +223,7 @@
 <h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps"></a>Next steps</h2><p>There are tools I’m willing to swap out or abandon for learning Svelte, like snowpack for rollup, but there are things that I <em>won’t</em> leave behind in modern webdev, like ESLint and TypeScript. If Svelte isn’t mature enough to support these extremely commonplace tools, then perhaps it’s not mature enough for me to learn it.</p>
 <p>I’m not trying to sound boisterous or authoritative, or make sound like anyone <em>remotely</em> important in the webdev world, but just an honest statement - if it’s not ready, then that’s <strong>fine</strong> - I’ll come back later. But with Svelte’s 3.0 release just days ago, I’m really confused <em>why</em> these (again, super common) tools don’t work. Does the Svelte community not like them? Do they not need them (like in Elm)? <em>I</em> like them, though, and <em>I</em> need (kinda) them, so maybe Svelte just isn’t for me (or at least, not yet?).</p>
 <p>Regardless, Svelte has some really neat concepts, and I wish the absolute best for the project.</p>
-<h2 id="1-x2F-22-x2F-21-edit"><a href="#1-x2F-22-x2F-21-edit" class="headerlink" title="1&#x2F;22&#x2F;21 edit"></a>1&#x2F;22&#x2F;21 edit</h2><p>The testing functionality for Svelte components is … lacking. This is a big problem for me as I <em>like</em> writing tests, and I expect it to be a huge problem if Svelte wants to break out of “hobby” and into “professional”.</p>
+<h2 id="1-22-21-edit"><a href="#1-22-21-edit" class="headerlink" title="1&#x2F;22&#x2F;21 edit"></a>1&#x2F;22&#x2F;21 edit</h2><p>The testing functionality for Svelte components is … lacking. This is a big problem for me as I <em>like</em> writing tests, and I expect it to be a huge problem if Svelte wants to break out of “hobby” and into “professional”.</p>
 
     </div>
 
@@ -243,12 +242,12 @@
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2020/10/01/Hacktoberfest-is-here/" rel="prev" title="Hacktoberfest is here!">
-                  <i class="fa fa-chevron-left"></i> Hacktoberfest is here!
+                  <i class="fa fa-angle-left"></i> Hacktoberfest is here!
                 </a>
             </div>
             <div class="post-nav-item">
                 <a href="/2021/01/30/Payment-models-in-MMORPGS/" rel="next" title="Payment models in MMOs">
-                  Payment models in MMOs <i class="fa fa-chevron-right"></i>
+                  Payment models in MMOs <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -267,15 +266,14 @@
   <footer class="footer">
     <div class="footer-inner">
 
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
-</div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+  </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
@@ -304,6 +302,7 @@
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
+
 
 
 
