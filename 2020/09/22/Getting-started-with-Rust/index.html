@@ -26,7 +26,7 @@
 <meta property="og:description" content="Everything you need to get started with programming in Rust.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-22T23:33:35.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.383Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="rust">
@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -214,22 +214,22 @@
 <li>The <a target="_blank" rel="noopener" href="https://play.rust-lang.org/">Rust playground</a> allows you to write and run Rust in your browser</li>
 <li>If you use <a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a>, there are official <a target="_blank" rel="noopener" href="https://hub.docker.com/_/rust">Rust images</a></li>
 </ol>
-<p>If you’re ready to get started with an actual installation, the Rust team recommends <a target="_blank" rel="noopener" href="https://rustup.rs/">rustup</a>, which is an easy-to-use toolchain installer. What’s a toolchain? Well, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Toolchain">this is what Wikipedia says</a>, but for a new Rust user, as long as you’re using a popular operating system, all you need to get is “stable”. This is the current stable version of the Rust toolchain for your system. Installing rustup installs this too, so don’t worry about it.</p>
-<p>Once you have rustup, you’ll need to modify your path, so do that however your shell handles it. Don’t know? No problem, just search “[your shell] add to path” on your favorite search engine or check the <a target="_blank" rel="noopener" href="https://www.rust-lang.org/tools/install">Rust documentation</a>.</p>
-<p>And that should be it for the installation. If you haven’t worked with compiling C at all on your system, you may get an error message about “linker <code>cc</code> not found”. If that happens, you’ll probably be good if you install “gcc” for your system (look it up).</p>
-<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>When you’re just starting off, you can absolutely use the Rust playground or any text editor that you like (anything from nano&#x2F;vim to an IDE). If you’re using an IDE, it may have Rust support. However you get code into a text file, you can compile with <code>rustc [file name]</code> to get an executable of the same name.</p>
-<p>When you’re ready for the next step and have Rust installed on your system, you’ll want to start learning <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/cargo/index.html">cargo</a>, which is the Rust package manager + build tool. Running <code>cargo new [project name]</code> will set up a new directory with a few files, bootstrapping your Rust projects. Don’t worry, this isn’t like some of the build tools in the front-end ecosystem that make a directory with a ton of files, all full of information. Cargo just creates the minimum; the rest is up to you. When you start a project with cargo, you can use <code>cargo build</code> instead of <code>rustc [file name]</code>, which should speed you up.</p>
-<h2 id="Learning-resources"><a href="#Learning-resources" class="headerlink" title="Learning resources"></a>Learning resources</h2><p>In case you haven’t heard this already, here it is:</p>
+<p>If you&#39;re ready to get started with an actual installation, the Rust team recommends <a target="_blank" rel="noopener" href="https://rustup.rs/">rustup</a>, which is an easy-to-use toolchain installer. What&#39;s a toolchain? Well, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Toolchain">this is what Wikipedia says</a>, but for a new Rust user, as long as you&#39;re using a popular operating system, all you need to get is &quot;stable&quot;. This is the current stable version of the Rust toolchain for your system. Installing rustup installs this too, so don&#39;t worry about it.</p>
+<p>Once you have rustup, you&#39;ll need to modify your path, so do that however your shell handles it. Don&#39;t know? No problem, just search &quot;[your shell] add to path&quot; on your favorite search engine or check the <a target="_blank" rel="noopener" href="https://www.rust-lang.org/tools/install">Rust documentation</a>.</p>
+<p>And that should be it for the installation. If you haven&#39;t worked with compiling C at all on your system, you may get an error message about &quot;linker <code>cc</code> not found&quot;. If that happens, you&#39;ll probably be good if you install &quot;gcc&quot; for your system (look it up).</p>
+<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>When you&#39;re just starting off, you can absolutely use the Rust playground or any text editor that you like (anything from nano&#x2F;vim to an IDE). If you&#39;re using an IDE, it may have Rust support. However you get code into a text file, you can compile with <code>rustc [file name]</code> to get an executable of the same name.</p>
+<p>When you&#39;re ready for the next step and have Rust installed on your system, you&#39;ll want to start learning <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/cargo/index.html">cargo</a>, which is the Rust package manager + build tool. Running <code>cargo new [project name]</code> will set up a new directory with a few files, bootstrapping your Rust projects. Don&#39;t worry, this isn&#39;t like some of the build tools in the front-end ecosystem that make a directory with a ton of files, all full of information. Cargo just creates the minimum; the rest is up to you. When you start a project with cargo, you can use <code>cargo build</code> instead of <code>rustc [file name]</code>, which should speed you up.</p>
+<h2 id="Learning-resources"><a href="#Learning-resources" class="headerlink" title="Learning resources"></a>Learning resources</h2><p>In case you haven&#39;t heard this already, here it is:</p>
 <blockquote>
 <p>Rust has a higher learning curve than most programming languages</p>
 </blockquote>
-<p>Don’t let that turn you away, though! To combat that learning curve, there are a ton of high-quality resources that the language team and community maintain. Check these out:</p>
+<p>Don&#39;t let that turn you away, though! To combat that learning curve, there are a ton of high-quality resources that the language team and community maintain. Check these out:</p>
 <ul>
-<li>The official “Rust Book”: <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/">https://doc.rust-lang.org/book/</a></li>
+<li>The official &quot;Rust Book&quot;: <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/">https://doc.rust-lang.org/book/</a></li>
 <li>Learning Rust: <a target="_blank" rel="noopener" href="https://learning-rust.github.io/">https://learning-rust.github.io/</a></li>
 </ul>
-<p>When you get to using other crates (libraries), you can always punch the name of the library into <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/">docs.rs</a> and you’ll see the auto-generated documentation!</p>
-<h2 id="Communities"><a href="#Communities" class="headerlink" title="Communities"></a>Communities</h2><p>Want to chat about and get help with Rust with others? The Rust team has <a target="_blank" rel="noopener" href="https://www.rust-lang.org/community">a page for that</a>! Additionally, there’s a <a target="_blank" rel="noopener" href="https://old.reddit.com/r/rust">Rust</a> subreddit, which gets a lot of good information. Finally, a good amount of Rust news makes it to <a target="_blank" rel="noopener" href="https://news.ycombinator.com/">Hacker News</a>.</p>
+<p>When you get to using other crates (libraries), you can always punch the name of the library into <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/">docs.rs</a> and you&#39;ll see the auto-generated documentation!</p>
+<h2 id="Communities"><a href="#Communities" class="headerlink" title="Communities"></a>Communities</h2><p>Want to chat about and get help with Rust with others? The Rust team has <a target="_blank" rel="noopener" href="https://www.rust-lang.org/community">a page for that</a>! Additionally, there&#39;s a <a target="_blank" rel="noopener" href="https://old.reddit.com/r/rust">Rust</a> subreddit, which gets a lot of good information. Finally, a good amount of Rust news makes it to <a target="_blank" rel="noopener" href="https://news.ycombinator.com/">Hacker News</a>.</p>
 <h2 id="Enjoy"><a href="#Enjoy" class="headerlink" title="Enjoy"></a>Enjoy</h2><p>Have fun! It can be a rough journey at times, but take advantage of the many passionate people who have come before, and know that you can do it too!</p>
 
     </div>

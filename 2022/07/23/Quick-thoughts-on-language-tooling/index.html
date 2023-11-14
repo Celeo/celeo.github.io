@@ -18,15 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="I like Zig’s syntax more than Nim’s, but Nim is much further along. Yeah, Zig isn’t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away. Zig does cross-compiling b">
+    <meta name="description" content="I like Zig&#39;s syntax more than Nim&#39;s, but Nim is much further along. Yeah, Zig isn&#39;t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away. Zig does cross">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quick thoughts on language tooling">
 <meta property="og:url" content="https://celeo.github.io/2022/07/23/Quick-thoughts-on-language-tooling/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="I like Zig’s syntax more than Nim’s, but Nim is much further along. Yeah, Zig isn’t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away. Zig does cross-compiling b">
+<meta property="og:description" content="I like Zig&#39;s syntax more than Nim&#39;s, but Nim is much further along. Yeah, Zig isn&#39;t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away. Zig does cross">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-24T03:40:12.000Z">
-<meta property="article:modified_time" content="2022-07-24T03:43:26.148Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta name="twitter:card" content="summary">
@@ -184,9 +184,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-07-23 20:40:12 / Modified: 20:43:26" itemprop="dateCreated datePublished" datetime="2022-07-23T20:40:12-07:00">2022-07-23</time>
+      <time title="Created: 2022-07-23 20:40:12" itemprop="dateCreated datePublished" datetime="2022-07-23T20:40:12-07:00">2022-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -198,25 +204,25 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>I like Zig’s syntax more than Nim’s, but Nim is much further along.</p>
-<p>Yeah, Zig isn’t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away.</p>
-<p>Zig does cross-compiling better than Rust, probably almost as good as Go, so that’s cool.</p>
+    <div class="post-body" itemprop="articleBody"><p>I like Zig&#39;s syntax more than Nim&#39;s, but Nim is much further along.</p>
+<p>Yeah, Zig isn&#39;t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away.</p>
+<p>Zig does cross-compiling better than Rust, probably almost as good as Go, so that&#39;s cool.</p>
 <p>Before Go sorted out package versions, it still had go get, which worked well enough for most people.</p>
-<p>Looks like Zig tells people to go the “.&#x2F;vendor&#x2F;“ route, cloning in your dependencies. Not awful, but without at least some tooling, kind of a bummer.</p>
+<p>Looks like Zig tells people to go the &quot;.&#x2F;vendor&#x2F;&quot; route, cloning in your dependencies. Not awful, but without at least some tooling, kind of a bummer.</p>
 <p>I like having a standard, official package management solution. Python has many usable package managers, all of which have their own merits. It took me years to find <code>poetry</code>, which is my (current) favorite.</p>
 <p>Go had a lot as well, before they sorted everything out.</p>
 <p>Rust? <code>cargo</code>. Done.</p>
-<p>Heck, even JavaScript has <code>npm</code> leading the pack, with some folks on <code>yarn</code> or <code>pnpm</code>. And, <code>npm</code> rips off the features that the other managers introduce after a while, so there’s no major reason to switch off of <code>npm</code> for most people.</p>
+<p>Heck, even JavaScript has <code>npm</code> leading the pack, with some folks on <code>yarn</code> or <code>pnpm</code>. And, <code>npm</code> rips off the features that the other managers introduce after a while, so there&#39;s no major reason to switch off of <code>npm</code> for most people.</p>
 <p>Nim has <code>nimble</code>.</p>
 <p>Elixir has <code>mix</code>.</p>
 <p>Technically you could install all Python packages to your global scope, but that is a pretty sure-fire way to dork up your entire system.</p>
-<p>Zig likes to promote that their language compiler is also a compiler for any C program, and that’s dandy, but still - fragmentation. Every Zig project comes with a build file that is 22 SLOC!</p>
-<p>Rust allows the customization of its build process via a build file, but it’s rarely required!</p>
-<p>Go has programs that can bake extra stuff into the binary. I haven’t used one in a looong time, but I remember them&#x2F;it being fairly simple.</p>
-<p>Python … doesn’t compile, which will probably forever bug me.</p>
-<p>TypeScript doesn’t either, not technically. Can webpack it down to a all-in-one runnable node file and distribute that, though still requires the user to have the runtime installed. Most devs will, sure, but users? Very unlikely. Deno moves to solve that with their executable builds, but they’re still sort of buggy.</p>
-<p>Java .jars don’t count if Python doesn’t.</p>
-<p>Plus like holy crap, ever unzip an enterprise jar? It’s like GBs of stuff. I stopped the unzip one time after like 50 GB.</p>
+<p>Zig likes to promote that their language compiler is also a compiler for any C program, and that&#39;s dandy, but still - fragmentation. Every Zig project comes with a build file that is 22 SLOC!</p>
+<p>Rust allows the customization of its build process via a build file, but it&#39;s rarely required!</p>
+<p>Go has programs that can bake extra stuff into the binary. I haven&#39;t used one in a looong time, but I remember them&#x2F;it being fairly simple.</p>
+<p>Python ... doesn&#39;t compile, which will probably forever bug me.</p>
+<p>TypeScript doesn&#39;t either, not technically. Can webpack it down to a all-in-one runnable node file and distribute that, though still requires the user to have the runtime installed. Most devs will, sure, but users? Very unlikely. Deno moves to solve that with their executable builds, but they&#39;re still sort of buggy.</p>
+<p>Java .jars don&#39;t count if Python doesn&#39;t.</p>
+<p>Plus like holy crap, ever unzip an enterprise jar? It&#39;s like GBs of stuff. I stopped the unzip one time after like 50 GB.</p>
 
     </div>
 

@@ -26,7 +26,7 @@
 <meta property="og:description" content="The programs and tools I use to be productive in the terminal.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-29T23:29:11.000Z">
-<meta property="article:modified_time" content="2022-05-30T00:05:10.348Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="technology">
@@ -186,9 +186,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-05-29 16:29:11 / Modified: 17:05:10" itemprop="dateCreated datePublished" datetime="2022-05-29T16:29:11-07:00">2022-05-29</time>
+      <time title="Created: 2022-05-29 16:29:11" itemprop="dateCreated datePublished" datetime="2022-05-29T16:29:11-07:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -203,19 +209,19 @@
     <div class="post-body" itemprop="articleBody"><p>The programs and tools I use to be productive in the terminal.</p>
 <span id="more"></span>
 
-<p>This is a setup on Mac OSX. I prefer Linux over Mac’s unix-like environment, but for the purposes of most of this, they work similarly enough to not really notice.</p>
-<h2 id="Emulator-and-shell"><a href="#Emulator-and-shell" class="headerlink" title="Emulator and shell"></a>Emulator and shell</h2><p><a target="_blank" rel="noopener" href="https://iterm2.com/">iterm2</a> running <a target="_blank" rel="noopener" href="https://www.zsh.org/">zsh</a> with <a target="_blank" rel="noopener" href="https://ohmyz.sh/">oh-my-zsh</a> (mostly because it works and I was able to optimize my shell startup in other places so that the shell spins up effectively instantly) and the <a target="_blank" rel="noopener" href="https://starship.rs/">starship</a> prompt. I’ve also used <a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty">alacritty</a> but prefer iterm2 on Mac.</p>
-<h2 id="Text-editor"><a href="#Text-editor" class="headerlink" title="Text editor"></a>Text editor</h2><p>I’m moving to <a target="_blank" rel="noopener" href="https://github.com/helix-editor/helix">helix</a> from <a target="_blank" rel="noopener" href="https://github.com/neovim/neovim">neovim</a>.</p>
+<p>This is a setup on Mac OSX. I prefer Linux over Mac&#39;s unix-like environment, but for the purposes of most of this, they work similarly enough to not really notice.</p>
+<h2 id="Emulator-and-shell"><a href="#Emulator-and-shell" class="headerlink" title="Emulator and shell"></a>Emulator and shell</h2><p><a target="_blank" rel="noopener" href="https://iterm2.com/">iterm2</a> running <a target="_blank" rel="noopener" href="https://www.zsh.org/">zsh</a> with <a target="_blank" rel="noopener" href="https://ohmyz.sh/">oh-my-zsh</a> (mostly because it works and I was able to optimize my shell startup in other places so that the shell spins up effectively instantly) and the <a target="_blank" rel="noopener" href="https://starship.rs/">starship</a> prompt. I&#39;ve also used <a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty">alacritty</a> but prefer iterm2 on Mac.</p>
+<h2 id="Text-editor"><a href="#Text-editor" class="headerlink" title="Text editor"></a>Text editor</h2><p>I&#39;m moving to <a target="_blank" rel="noopener" href="https://github.com/helix-editor/helix">helix</a> from <a target="_blank" rel="noopener" href="https://github.com/neovim/neovim">neovim</a>.</p>
 <h2 id="Locating-stuff"><a href="#Locating-stuff" class="headerlink" title="Locating stuff"></a>Locating stuff</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/ogham/exa">exa</a> to replace <code>ls</code></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/sharkdp/fd">fd</a> to replace <code>find</code></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">rg</a> to replace <code>find</code> + <code>grep</code></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/ajeetdsouza/zoxide">zoxide</a> to quickly get to folders</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/kamiyaa/joshuto">joshuto</a> because Mac’s Finder application is awful</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kamiyaa/joshuto">joshuto</a> because Mac&#39;s Finder application is awful</li>
 </ul>
-<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2><p>I have a few aliases and functions in my .zshrc file, but I’ve moved most scripts to <a target="_blank" rel="noopener" href="https://github.com/denisidoro/navi">navi</a>.</p>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>I have a global gitignore file for things like “node_modules”, “target”, “dist”, “build”, etc. directories. I use the <a target="_blank" rel="noopener" href="https://github.com/dandavison/delta">delta</a> diff visualizer. I used to handle merge conflicts by hand until I had to undertake some very complicated conflicts and I was pointed to <a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360006808659-3-way-diff-window">IntelliJ’s 3-way diff</a>. I have the <a target="_blank" rel="noopener" href="https://github.com/cli/cli">gh</a> GitHub tool installed, though I rarely use it.</p>
-<h2 id="Language-versioning"><a href="#Language-versioning" class="headerlink" title="Language versioning"></a>Language versioning</h2><p>I use <a target="_blank" rel="noopener" href="https://github.com/Schniz/fnm">fnm</a> to manage NodeJS versions, <code>npm</code> to manage Node dependencies (though I’ve used <a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/lang/en/docs/cli/">yarn v1</a> often as well) and <a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a> for Python virtual environments and dependency management. For Java and Kotlin, it’s <a target="_blank" rel="noopener" href="https://github.com/apache/maven">maven</a>, and for programming languages that have their stuff together, their official CLI tools.</p>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2><p>I have a few aliases and functions in my .zshrc file, but I&#39;ve moved most scripts to <a target="_blank" rel="noopener" href="https://github.com/denisidoro/navi">navi</a>.</p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>I have a global gitignore file for things like &quot;node_modules&quot;, &quot;target&quot;, &quot;dist&quot;, &quot;build&quot;, etc. directories. I use the <a target="_blank" rel="noopener" href="https://github.com/dandavison/delta">delta</a> diff visualizer. I used to handle merge conflicts by hand until I had to undertake some very complicated conflicts and I was pointed to <a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360006808659-3-way-diff-window">IntelliJ&#39;s 3-way diff</a>. I have the <a target="_blank" rel="noopener" href="https://github.com/cli/cli">gh</a> GitHub tool installed, though I rarely use it.</p>
+<h2 id="Language-versioning"><a href="#Language-versioning" class="headerlink" title="Language versioning"></a>Language versioning</h2><p>I use <a target="_blank" rel="noopener" href="https://github.com/Schniz/fnm">fnm</a> to manage NodeJS versions, <code>npm</code> to manage Node dependencies (though I&#39;ve used <a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/lang/en/docs/cli/">yarn v1</a> often as well) and <a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a> for Python virtual environments and dependency management. For Java and Kotlin, it&#39;s <a target="_blank" rel="noopener" href="https://github.com/apache/maven">maven</a>, and for programming languages that have their stuff together, their official CLI tools.</p>
 <h2 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/stedolan/jq">jq</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a></li>

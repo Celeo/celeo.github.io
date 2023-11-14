@@ -18,15 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="You’ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
+    <meta name="description" content="You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Writing websites in Rust">
 <meta property="og:url" content="https://celeo.github.io/2021/08/09/Writing-websites-in-Rust/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="You’ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
+<meta property="og:description" content="You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-10T00:57:59.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -204,13 +204,13 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>You’ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs?</p>
+    <div class="post-body" itemprop="articleBody"><p>You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs?</p>
 <p><strong>WARNING</strong>: this is a bit of a rant and not likely helpful.</p>
 <span id="more"></span>
 
 <p>Not for me.</p>
-<p>I’ve been playing around with the new <a target="_blank" rel="noopener" href="https://crates.io/crates/axum">axum</a> library, which builds on top of <a target="_blank" rel="noopener" href="https://crates.io/crates/tokio">tokio</a> and <a target="_blank" rel="noopener" href="https://crates.io/crates/hyper">hyper</a> and accepts middleware from <a target="_blank" rel="noopener" href="https://crates.io/crates/tower">tower</a> among others. Sounds like a good time. Their <a target="_blank" rel="noopener" href="https://docs.rs/axum/0.1.3/axum/">documentation</a> seems well constructed, the tokio Discord server is active and helpful, and they have a good collection of <a target="_blank" rel="noopener" href="https://github.com/tokio-rs/axum/tree/main/examples">examples</a>.</p>
-<p>The service I wanted to create is very simple - a pastebin-style website. I’d use templates for the HTML, and an auth-less no-edit paste system with a “delete after” date. There are only 4 endpoints:</p>
+<p>I&#39;ve been playing around with the new <a target="_blank" rel="noopener" href="https://crates.io/crates/axum">axum</a> library, which builds on top of <a target="_blank" rel="noopener" href="https://crates.io/crates/tokio">tokio</a> and <a target="_blank" rel="noopener" href="https://crates.io/crates/hyper">hyper</a> and accepts middleware from <a target="_blank" rel="noopener" href="https://crates.io/crates/tower">tower</a> among others. Sounds like a good time. Their <a target="_blank" rel="noopener" href="https://docs.rs/axum/0.1.3/axum/">documentation</a> seems well constructed, the tokio Discord server is active and helpful, and they have a good collection of <a target="_blank" rel="noopener" href="https://github.com/tokio-rs/axum/tree/main/examples">examples</a>.</p>
+<p>The service I wanted to create is very simple - a pastebin-style website. I&#39;d use templates for the HTML, and an auth-less no-edit paste system with a &quot;delete after&quot; date. There are only 4 endpoints:</p>
 <ul>
 <li>index page</li>
 <li>view paste page</li>
@@ -218,11 +218,11 @@
 <li>new paste POST page</li>
 </ul>
 <p>This is not hard, and not complicated.</p>
-<p>I’m using <a target="_blank" rel="noopener" href="https://crates.io/crates/sqlx">sqlx</a> to handle the storage in SQLite. Again, <em>simple</em>. <a target="_blank" rel="noopener" href="https://crates.io/crates/askama">askama</a> handles the templates in a not-so-simple way, but it’s not too complicated to connect with axum with the examples provided (though I had to basically write a custom implementation of the bridge function, as the code in the example didn’t work for me). <a target="_blank" rel="noopener" href="https://crates.io/crates/uuid">uuid</a> is a simple way to create UUID v4s, though I had to play around with the feature flags to get what I wanted.</p>
-<p>The list of dependencies I’m using can be seen <a target="_blank" rel="noopener" href="https://github.com/Celeo/pastey/blob/5a6837b9f585167c4c649b6f659970d1130232ca/Cargo.toml">here</a>, though keep in mind I haven’t slimmed them down at the time of writing. If I cannot slim them down, then there’s a lot.</p>
-<p>Now, the time penalty you pay for adding dependencies is only noticeable on the first compiles (via <code>cargo b</code>, <code>cargo clippy</code>, <em>and</em> by VSCode). It’s not bad. What <em>does</em> annoy me is the penalty I am paying for each compile: 5 to 10 seconds. Each. Change.</p>
-<p>Now sure, there’s a lot going on behind the scenes for this, and I get a fast, safe, single binary deployable. Right now, I have some programs that are writing in Elixir and deployed via podman images rsync’d directly to a VPS - neither release-style building time nor size are an issue right now. It’s the <em>developer UX</em> that is rough. If I make a change to a template, that’s a recompile. If I make a change to a route, that’s a recompile. If I add a log statement, that’s a recompile. Does that make sense? Yes. Is it nice? No. The size of that directory right now is 1.3GB. Yes, GB. The directory size of a Discord bot I run is 118<em>MB</em>.</p>
-<p>Is Rust a good language? Yes, absolutely! I really like many of the things that the Rust language, ecosystem, team, and community do, and I absolutely plan to continue to use Rust in many different ways. But for web servers? Nah, I’m happy with Python.</p>
+<p>I&#39;m using <a target="_blank" rel="noopener" href="https://crates.io/crates/sqlx">sqlx</a> to handle the storage in SQLite. Again, <em>simple</em>. <a target="_blank" rel="noopener" href="https://crates.io/crates/askama">askama</a> handles the templates in a not-so-simple way, but it&#39;s not too complicated to connect with axum with the examples provided (though I had to basically write a custom implementation of the bridge function, as the code in the example didn&#39;t work for me). <a target="_blank" rel="noopener" href="https://crates.io/crates/uuid">uuid</a> is a simple way to create UUID v4s, though I had to play around with the feature flags to get what I wanted.</p>
+<p>The list of dependencies I&#39;m using can be seen <a target="_blank" rel="noopener" href="https://github.com/Celeo/pastey/blob/5a6837b9f585167c4c649b6f659970d1130232ca/Cargo.toml">here</a>, though keep in mind I haven&#39;t slimmed them down at the time of writing. If I cannot slim them down, then there&#39;s a lot.</p>
+<p>Now, the time penalty you pay for adding dependencies is only noticeable on the first compiles (via <code>cargo b</code>, <code>cargo clippy</code>, <em>and</em> by VSCode). It&#39;s not bad. What <em>does</em> annoy me is the penalty I am paying for each compile: 5 to 10 seconds. Each. Change.</p>
+<p>Now sure, there&#39;s a lot going on behind the scenes for this, and I get a fast, safe, single binary deployable. Right now, I have some programs that are writing in Elixir and deployed via podman images rsync&#39;d directly to a VPS - neither release-style building time nor size are an issue right now. It&#39;s the <em>developer UX</em> that is rough. If I make a change to a template, that&#39;s a recompile. If I make a change to a route, that&#39;s a recompile. If I add a log statement, that&#39;s a recompile. Does that make sense? Yes. Is it nice? No. The size of that directory right now is 1.3GB. Yes, GB. The directory size of a Discord bot I run is 118<em>MB</em>.</p>
+<p>Is Rust a good language? Yes, absolutely! I really like many of the things that the Rust language, ecosystem, team, and community do, and I absolutely plan to continue to use Rust in many different ways. But for web servers? Nah, I&#39;m happy with Python.</p>
 
     </div>
 

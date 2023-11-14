@@ -18,15 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="I’ve written a handful of web apps using EVE Online’s Single Sign-On service, so I’m sharing an example app I’ve written to demonstrate that flow using my CREST library, Preston.">
+    <meta name="description" content="I&#39;ve written a handful of web apps using EVE Online&#39;s Single Sign-On service, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, Preston.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EVE SSO authentication flow in Python">
 <meta property="og:url" content="https://celeo.github.io/2016/01/01/eve-sso-authentication-flow-in-python/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="I’ve written a handful of web apps using EVE Online’s Single Sign-On service, so I’m sharing an example app I’ve written to demonstrate that flow using my CREST library, Preston.">
+<meta property="og:description" content="I&#39;ve written a handful of web apps using EVE Online&#39;s Single Sign-On service, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, Preston.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="old_blog">
@@ -193,7 +193,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -205,16 +205,16 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>I’ve written a handful of web apps using <a target="_blank" rel="noopener" href="https://www.eveonline.com/">EVE Online’s</a> <a target="_blank" rel="noopener" href="https://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/">Single Sign-On service</a>, so I’m sharing an example app I’ve written to demonstrate that flow using my CREST library, <a target="_blank" rel="noopener" href="https://celeodor.com/prest/">Preston</a>.</p>
+    <div class="post-body" itemprop="articleBody"><p>I&#39;ve written a handful of web apps using <a target="_blank" rel="noopener" href="https://www.eveonline.com/">EVE Online&#39;s</a> <a target="_blank" rel="noopener" href="https://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/">Single Sign-On service</a>, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, <a target="_blank" rel="noopener" href="https://celeodor.com/prest/">Preston</a>.</p>
 <span id="more"></span>
 
-<p>First off, I’d like to point to the <a target="_blank" rel="noopener" href="https://eveonline-third-party-documentation.readthedocs.io/en/latest/sso/authentication.html">community-supported documentation on the SSO authentication flow</a> over at readthedocs as it’s what I used to learn the process (and a fair bit of trial and error, which is what I’d like to save you from).</p>
-<p>Second, you can find the repository demonstrating this flow at <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python">github.com&#x2F;Celeo&#x2F;EVE-SSO-Python</a>. If you create your own EVE third party app at <a target="_blank" rel="noopener" href="http://developers.eveonline.com/">developers.eveonline.com</a> and fill in the <code>config.cfg</code> file, you’ll have a working example.</p>
+<p>First off, I&#39;d like to point to the <a target="_blank" rel="noopener" href="https://eveonline-third-party-documentation.readthedocs.io/en/latest/sso/authentication.html">community-supported documentation on the SSO authentication flow</a> over at readthedocs as it&#39;s what I used to learn the process (and a fair bit of trial and error, which is what I&#39;d like to save you from).</p>
+<p>Second, you can find the repository demonstrating this flow at <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python">github.com&#x2F;Celeo&#x2F;EVE-SSO-Python</a>. If you create your own EVE third party app at <a target="_blank" rel="noopener" href="http://developers.eveonline.com/">developers.eveonline.com</a> and fill in the <code>config.cfg</code> file, you&#39;ll have a working example.</p>
 <p>Preston handles most of this authentication flow for us, including</p>
 <ul>
 <li>generating the URL to redirect the user to</li>
 <li>generating the API token from the code returned by the service</li>
-<li>getting the user’s character information from the EVE APIs</li>
+<li>getting the user&#39;s character information from the EVE APIs</li>
 </ul>
 <p>The job of the controller code wrapping this process is to:</p>
 <ol>
@@ -225,31 +225,31 @@
 <li>handle user login from the available character data</li>
 </ol>
 <p>5 steps is not bad for authenticating a user against a service on another site.</p>
-<p>First off, getting the URL from Preston is a call to <code>get_authorize_url</code>. I include this in the <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python/blob/bc697dd2f1201254147b63a7bbf1a04669357d82/eve_sso/app.py#L64"><code>Flask.render_template</code> call to a template</a> that acts as the launch page for the user’s trip to the EVE SSO:</p>
+<p>First off, getting the URL from Preston is a call to <code>get_authorize_url</code>. I include this in the <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python/blob/bc697dd2f1201254147b63a7bbf1a04669357d82/eve_sso/app.py#L64"><code>Flask.render_template</code> call to a template</a> that acts as the launch page for the user&#39;s trip to the EVE SSO:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> render_template(<span class="string">&#x27;login.html&#x27;</span>, url=preston.get_authorize_url())</span><br></pre></td></tr></table></figure>
 
-<p>When you set up an EVE third part application, you have to provide a <strong>callback URL</strong>. This is where that comes into play: when your user logs into their account and selects their character to authenticate with for your app, the SSO sends the user a redirect to your callback URL which needs to come back to your web app. Your controller’s responsibilities 2 through 5 from the list above are handled at this point.</p>
+<p>When you set up an EVE third part application, you have to provide a <strong>callback URL</strong>. This is where that comes into play: when your user logs into their account and selects their character to authenticate with for your app, the SSO sends the user a redirect to your callback URL which needs to come back to your web app. Your controller&#39;s responsibilities 2 through 5 from the list above are handled at this point.</p>
 <p>When the SSO sends your user back to your site, the code that Preston needs is in the query string, so the URL will look something like <code>[your_callback_url]?code=[auth_code]</code>. Grab the code from the URL with a <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python/blob/bc697dd2f1201254147b63a7bbf1a04669357d82/eve_sso/app.py#L86"><code>request.args</code> lookup</a> and pass it to Preston:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth = preston.authenticate(request.args[<span class="string">&#x27;code&#x27;</span>])</span><br></pre></td></tr></table></figure>
 
-<p>It’s worth noting that this code can be absent if something when wrong, so you’ll want to either wrap this line in a <code>try-except</code> or use the <code>request.args.get</code> method to return <code>None</code> if the key isn’t in the dictionary and then check for <code>if not code:</code>. I opt for the <code>try-except</code> as it can also catch anything that goes wrong as part of the process of getting the API token from the code inside Preston.</p>
-<p>Now that you have an <code>auth</code> variable that’s an instance of <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L270"><code>preston.crest.preston.AuthPreston</code></a>, you can access the user’s authenticated character’s basic information. Preston gives you access to this information through a call to <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L293"><code>whoami</code></a>:</p>
+<p>It&#39;s worth noting that this code can be absent if something when wrong, so you&#39;ll want to either wrap this line in a <code>try-except</code> or use the <code>request.args.get</code> method to return <code>None</code> if the key isn&#39;t in the dictionary and then check for <code>if not code:</code>. I opt for the <code>try-except</code> as it can also catch anything that goes wrong as part of the process of getting the API token from the code inside Preston.</p>
+<p>Now that you have an <code>auth</code> variable that&#39;s an instance of <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L270"><code>preston.crest.preston.AuthPreston</code></a>, you can access the user&#39;s authenticated character&#39;s basic information. Preston gives you access to this information through a call to <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L293"><code>whoami</code></a>:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_info = auth.whoami()</span><br></pre></td></tr></table></figure>
 
-<p>The returned dictionary contains the character’s name, which this example is using for <a target="_blank" rel="noopener" href="https://flask-login.readthedocs.io/en/latest/">flask-login</a>, and their API ID, which is useful for making additional lookups on the EVE XML API like their corporation:</p>
+<p>The returned dictionary contains the character&#39;s name, which this example is using for <a target="_blank" rel="noopener" href="https://flask-login.readthedocs.io/en/latest/">flask-login</a>, and their API ID, which is useful for making additional lookups on the EVE XML API like their corporation:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;Scopes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterID&quot;</span><span class="punctuation">:</span> <span class="number">91316135</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;ExpiresOn&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2016-09-04T03:56:11&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;TokenType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Character&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Celeo Servasse&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;IntellectualProperty&quot;</span><span class="punctuation">:</span> <span class="string">&quot;EVE&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterOwnerHash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hCgR7LGm...&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>When solely using the SSO to authenticate a user, the <code>Scopes</code> field is always empty.</p>
-<p>From here, it’s as simple as taking the character’s name and checking for an existing <code>User</code> model:</p>
+<p>From here, it&#39;s as simple as taking the character&#39;s name and checking for an existing <code>User</code> model:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user = User.query.filter_by(name=character_name).first()</span><br></pre></td></tr></table></figure>
 
-<p>If <code>user</code> isn’t <code>None</code>, then this character has been used to authenticate a user before. Log the user in with that model and send them off to the rest of the app:</p>
+<p>If <code>user</code> isn&#39;t <code>None</code>, then this character has been used to authenticate a user before. Log the user in with that model and send them off to the rest of the app:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> user:</span><br><span class="line">    login_user(user)</span><br><span class="line">    flash(<span class="string">&#x27;Logged in&#x27;</span>, <span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br></pre></td></tr></table></figure>
 
 <p>If <code>user is None</code>, however, this is the first time that this character has been used for authentication on the app, so a new <code>User</code> model will need to be created before logging them in and sending them off:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user = User(character_name)</span><br><span class="line">db.session.add(user)</span><br><span class="line">db.session.commit()</span><br><span class="line">login_user(user)</span><br><span class="line">flash(<span class="string">&#x27;Logged in&#x27;</span>, <span class="string">&#x27;success&#x27;</span>)</span><br><span class="line"><span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br></pre></td></tr></table></figure>
 
-<p>That’s really it. Add some <code>flask_login.login_required</code> decorators to endpoints that you don’t want just anyone to see and you have an app that restricts access using EVE’s SSO.</p>
+<p>That&#39;s really it. Add some <code>flask_login.login_required</code> decorators to endpoints that you don&#39;t want just anyone to see and you have an app that restricts access using EVE&#39;s SSO.</p>
 <p>If you want to see a larger app that uses this flow, my <a target="_blank" rel="noopener" href="https://github.com/Celeo/GETIN-HR">GETIN-HR</a> app is a good example.</p>
 
     </div>
@@ -268,13 +268,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2016/01/01/pypi-pitfalls-versioning/" rel="prev" title="PyPI pitfall versioning">
-                  <i class="fa fa-chevron-left"></i> PyPI pitfall versioning
+                <a href="/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/" rel="prev" title="Flask, flask-socketio, Celery, and Redis - background task processing">
+                  <i class="fa fa-chevron-left"></i> Flask, flask-socketio, Celery, and Redis - background task processing
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2016/01/01/prest/" rel="next" title="Prest">
-                  Prest <i class="fa fa-chevron-right"></i>
+                <a href="/2016/01/01/docker-nginx-and-flask-its-a-circus/" rel="next" title="Docker, Nginx, and Flask - it's a Circus!">
+                  Docker, Nginx, and Flask - it's a Circus! <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

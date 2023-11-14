@@ -18,15 +18,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="I’ve made a good bit of progress, including figuring out things I noted in the last post.">
+    <meta name="description" content="I&#39;ve made a good bit of progress, including figuring out things I noted in the last post.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IRC, part 3">
 <meta property="og:url" content="https://celeo.github.io/2021/07/02/IRC-part-3/index.html">
 <meta property="og:site_name" content="Etchings">
-<meta property="og:description" content="I’ve made a good bit of progress, including figuring out things I noted in the last post.">
+<meta property="og:description" content="I&#39;ve made a good bit of progress, including figuring out things I noted in the last post.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-03T02:05:43.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.383Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="irc">
@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -206,22 +206,22 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>I’ve made a good bit of progress, including figuring out things I noted in the last post.</p>
+    <div class="post-body" itemprop="articleBody"><p>I&#39;ve made a good bit of progress, including figuring out things I noted in the last post.</p>
 <span id="more"></span>
 
-<h2 id="RFC-differences"><a href="#RFC-differences" class="headerlink" title="RFC differences"></a>RFC differences</h2><p>Now that I’m looking at the IRC RFC that modern clients &amp; servers are using, things are making more sense and what I’m recording on the IRC client I’m using to connect to Libera.Chat is matching up with RFC 2812.</p>
-<p>I still don’t get how sending the user’s nick back to them is documented in the semi-BNF for messages in the RFC document, but at least it seems consistent enough for me to model my implementation after. One of the goals of this project was to see how far I could get <em>just</em> with the RFC, so this is an interesting experience, and I’m not discouraged by having to look at logs for existing client&#x2F;server interaction.</p>
-<h2 id="Code-improvements"><a href="#Code-improvements" class="headerlink" title="Code improvements"></a>Code improvements</h2><p>In the last article, I noted how I was confused about having to use <code>Task</code>s to wrap intra-<code>GenServer</code> communications. I didn’t understand why I could make <em>some</em> cross-process calls without a <code>Task</code> but others would give an error along the lines of “process cannot call itself”. The issue was pretty simple, and I’ll break down the code flow for you here so you don’t have to go searching through the code.</p>
+<h2 id="RFC-differences"><a href="#RFC-differences" class="headerlink" title="RFC differences"></a>RFC differences</h2><p>Now that I&#39;m looking at the IRC RFC that modern clients &amp; servers are using, things are making more sense and what I&#39;m recording on the IRC client I&#39;m using to connect to Libera.Chat is matching up with RFC 2812.</p>
+<p>I still don&#39;t get how sending the user&#39;s nick back to them is documented in the semi-BNF for messages in the RFC document, but at least it seems consistent enough for me to model my implementation after. One of the goals of this project was to see how far I could get <em>just</em> with the RFC, so this is an interesting experience, and I&#39;m not discouraged by having to look at logs for existing client&#x2F;server interaction.</p>
+<h2 id="Code-improvements"><a href="#Code-improvements" class="headerlink" title="Code improvements"></a>Code improvements</h2><p>In the last article, I noted how I was confused about having to use <code>Task</code>s to wrap intra-<code>GenServer</code> communications. I didn&#39;t understand why I could make <em>some</em> cross-process calls without a <code>Task</code> but others would give an error along the lines of &quot;process cannot call itself&quot;. The issue was pretty simple, and I&#39;ll break down the code flow for you here so you don&#39;t have to go searching through the code.</p>
 <ol>
 <li>The user (the person using a client) connects to the TCP server</li>
-<li>They type a message and send it through their client (an actual IRC client or telnet client, doesn’t matter)</li>
-<li>The IRC server I’m writing gets that in the process for <em>that</em> user’s TCP socket, which I call <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/client_connection.ex">IRC.ClientConnection</a>, at <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/client_connection.ex#L28">handle_info with a <code>&#123;:tcp, socket, message&#125;</code> shape</a></li>
-<li>That function does the parsing of the message and puts it in a tuple that’s easier to work with down the line</li>
+<li>They type a message and send it through their client (an actual IRC client or telnet client, doesn&#39;t matter)</li>
+<li>The IRC server I&#39;m writing gets that in the process for <em>that</em> user&#39;s TCP socket, which I call <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/client_connection.ex">IRC.ClientConnection</a>, at <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/client_connection.ex#L28">handle_info with a <code>&#123;:tcp, socket, message&#125;</code> shape</a></li>
+<li>That function does the parsing of the message and puts it in a tuple that&#39;s easier to work with down the line</li>
 <li>The client process then <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/client_connection.ex#L43">sends it</a> to the single server process</li>
-<li>The server <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/server.ex#L33">gets the command</a>, <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/server.ex#L37-L42">builds the module name for the command, and calls it</a>, passing in the command information along with the calling client’s state and the server’s state</li>
-<li>The individual module’s function handles other processing and process communication</li>
+<li>The server <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/server.ex#L33">gets the command</a>, <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/fb7d7c1f5bc7be6ff5b9ca303a061462b4398330/lib/server.ex#L37-L42">builds the module name for the command, and calls it</a>, passing in the command information along with the calling client&#39;s state and the server&#39;s state</li>
+<li>The individual module&#39;s function handles other processing and process communication</li>
 </ol>
-<p>With this setup, I needed to wrap any process calls in the command modules with <code>Task.start(...)</code>, otherwise I’d get the aforementioned error. It’s important to note that steps 3, 5, and 7 use <strong>cross-process communication</strong>, while step 6 uses a <strong>direct function call</strong>. Since most of these steps are already using cross-process communication, I didn’t need to do anything to enable that. Since step 6 is using a direct function call, it’s not taking advantage of <em>any</em> of the cross-process communication features of the language and runtime.</p>
+<p>With this setup, I needed to wrap any process calls in the command modules with <code>Task.start(...)</code>, otherwise I&#39;d get the aforementioned error. It&#39;s important to note that steps 3, 5, and 7 use <strong>cross-process communication</strong>, while step 6 uses a <strong>direct function call</strong>. Since most of these steps are already using cross-process communication, I didn&#39;t need to do anything to enable that. Since step 6 is using a direct function call, it&#39;s not taking advantage of <em>any</em> of the cross-process communication features of the language and runtime.</p>
 <p>To fix this, I simply wrapped that single call from the server to the command module with a <code>Task.start(...)</code> so that it would align with the rest of the code flow, and that worked. I was able to remove all <code>Task</code> process usage in the command modules and am able to use cross-process communication with any other process. Instead of running the command from the server process and wrapping messages <em>back</em> to the server with a <code>Task</code>, I wrap the command processing in a <code>Task</code> so that it <em>is</em> a process and can communicate with other processes like the rest of the application.</p>
 
     </div>

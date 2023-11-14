@@ -26,7 +26,7 @@
 <meta property="og:description" content="Prest now supports refresh tokens.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="old_blog">
@@ -193,7 +193,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -209,19 +209,19 @@
 <span id="more"></span>
 
 <p>In the exceptionally well-<em>*cough</em>*-documented <a target="_blank" rel="noopener" href="https://github.com/Celeo/Prest/issues/4">GitHub Issue #4</a>, I added support for refresh tokens to Prest.</p>
-<p>When accessing the EVE CREST API, <strong>access tokens</strong> are used to actually show CREST that you’re acting on behalf of a specific character and have the right to do so. This access token is returned from the EVE SSO.</p>
-<p>Here’s the catch though - the access token is only valid for 20 minutes.</p>
-<p>When the only thing you’re using CREST for is authenticating a user as the owner of a character, this doesn’t matter, so you don’t need to bother with refresh tokens. In fact, just using the SSO to authenticate won’t even return a refresh token.</p>
-<p>If you’re requesting any <a target="_blank" rel="noopener" href="https://eveonline-third-party-documentation.readthedocs.io/en/latest/crest/authentication.html#scopes">scopes</a>, though, you’ll probably want more than 20 minutes with that character’s data. Thus, the <strong>refresh token</strong>.</p>
-<p>When your app authenticates with the EVE SSO and you exchange the returned code for the access token, you’ll get a refresh token back as well:</p>
+<p>When accessing the EVE CREST API, <strong>access tokens</strong> are used to actually show CREST that you&#39;re acting on behalf of a specific character and have the right to do so. This access token is returned from the EVE SSO.</p>
+<p>Here&#39;s the catch though - the access token is only valid for 20 minutes.</p>
+<p>When the only thing you&#39;re using CREST for is authenticating a user as the owner of a character, this doesn&#39;t matter, so you don&#39;t need to bother with refresh tokens. In fact, just using the SSO to authenticate won&#39;t even return a refresh token.</p>
+<p>If you&#39;re requesting any <a target="_blank" rel="noopener" href="https://eveonline-third-party-documentation.readthedocs.io/en/latest/crest/authentication.html#scopes">scopes</a>, though, you&#39;ll probably want more than 20 minutes with that character&#39;s data. Thus, the <strong>refresh token</strong>.</p>
+<p>When your app authenticates with the EVE SSO and you exchange the returned code for the access token, you&#39;ll get a refresh token back as well:</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;CharacterID&quot;</span><span class="punctuation">:</span> <span class="number">91316135</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CharacterName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Celeo Servasse&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;CharacterOwnerHash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;...&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ExpiresOn&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2016-07-04T05:08:39&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;IntellectualProperty&quot;</span><span class="punctuation">:</span> <span class="string">&quot;EVE&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Scopes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;characterLocationRead&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;TokenType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Character&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;access_token&quot;</span><span class="punctuation">:</span> <span class="string">&quot;...&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;expires_in&quot;</span><span class="punctuation">:</span> <span class="number">1200</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;refresh_token&quot;</span><span class="punctuation">:</span> <span class="string">&quot;...&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;token_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Bearer&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 <p><sup><sup>private information stripped</sup></sup></p>
-<p>From the time that this response is generated, you have 20 minutes with that access token. In this response, I’ve had the user grant my app access to reading their character’s location while they’re online - useful for fleet ops or wormhole mapping.</p>
-<p>Just like when using CREST to authenticate character ownership, though, the access token expires in 20 minutes. When this happens, you’ll need to use the refresh token to get a new access token. The refresh token does not expire and will last until the user revokes access to your app.</p>
+<p>From the time that this response is generated, you have 20 minutes with that access token. In this response, I&#39;ve had the user grant my app access to reading their character&#39;s location while they&#39;re online - useful for fleet ops or wormhole mapping.</p>
+<p>Just like when using CREST to authenticate character ownership, though, the access token expires in 20 minutes. When this happens, you&#39;ll need to use the refresh token to get a new access token. The refresh token does not expire and will last until the user revokes access to your app.</p>
 <p>So yeah, the refresh token is very powerful.</p>
 <p>Prest will now automatically get a new access token from CREST using the stored refresh token (if it exists) when the access token expires and then continue on with what you asked it to do.</p>
-<p>What’s next for Prest?</p>
-<p>I want to continue work on the unit tests. I haven’t had a lot of experience with unit testing, so I’m still getting used to it. In this last commit (which was a multi-commit feature branch squash-merged back into master), I broke some testable functionality out into separate methods, so they’re prime targets for some unit tests. Also, I want to look into coverage - I know Pytest has a <a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/pytest-cov">coverage plugin</a>, so I want to use it.</p>
+<p>What&#39;s next for Prest?</p>
+<p>I want to continue work on the unit tests. I haven&#39;t had a lot of experience with unit testing, so I&#39;m still getting used to it. In this last commit (which was a multi-commit feature branch squash-merged back into master), I broke some testable functionality out into separate methods, so they&#39;re prime targets for some unit tests. Also, I want to look into coverage - I know Pytest has a <a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/pytest-cov">coverage plugin</a>, so I want to use it.</p>
 
     </div>
 
@@ -239,13 +239,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2016/01/01/eve-sso-authentication-flow-in-js-and-python/" rel="prev" title="EVE SSO authentication flow in JS and Python">
-                  <i class="fa fa-chevron-left"></i> EVE SSO authentication flow in JS and Python
+                <a href="/2016/01/01/prest-to-preston/" rel="prev" title="Prest to Preston">
+                  <i class="fa fa-chevron-left"></i> Prest to Preston
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/" rel="next" title="Flask, flask-socketio, Celery, and Redis - background task processing">
-                  Flask, flask-socketio, Celery, and Redis - background task processing <i class="fa fa-chevron-right"></i>
+                <a href="/2016/01/01/eve-sso-authentication-flow-in-js-and-python/" rel="next" title="EVE SSO authentication flow in JS and Python">
+                  EVE SSO authentication flow in JS and Python <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

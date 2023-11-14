@@ -26,7 +26,7 @@
 <meta property="og:description" content="Better than Paramiko for what I needed.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-27T19:38:35.000Z">
+<meta property="article:modified_time" content="2023-11-14T18:47:01.393Z">
 <meta property="article:author" content="Matt Boulanger">
 <meta property="article:tag" content="programming">
 <meta property="article:tag" content="old_blog">
@@ -194,7 +194,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2021-12-27 11:38:35" itemprop="dateModified" datetime="2021-12-27T11:38:35-08:00">2021-12-27</time>
+      <time title="Modified: 2023-11-14 10:47:01" itemprop="dateModified" datetime="2023-11-14T10:47:01-08:00">2023-11-14</time>
     </span>
 
   
@@ -210,7 +210,7 @@
 <span id="more"></span>
 
 <blockquote>
-<p>“Fabric is a Python (2.5-2.7) library and command-line tool for streamlining the use of SSH for application deployment or systems administration tasks.”</p>
+<p>&quot;Fabric is a Python (2.5-2.7) library and command-line tool for streamlining the use of SSH for application deployment or systems administration tasks.&quot;</p>
 </blockquote>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/fabric/fabric">GitHub link</a></li>
@@ -219,39 +219,39 @@
 <li><a target="_blank" rel="noopener" href="http://docs.fabfile.org/en/1.11/">Docs</a></li>
 </ul>
 <p>A while back, I wrote about using Paramiko to control several devices through SSH and SCP. Unfortunately, the code I used had some shortcomings, most notably I had no way to determine if a command had finished. I was using some low-level communication methods to persist a login to the root user account.</p>
-<p>There’s a better way to do that, and it’s with Fabric.</p>
+<p>There&#39;s a better way to do that, and it&#39;s with Fabric.</p>
 <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>First off, installation (as the homepage notes, Fabric runs on 2.5-2.7, not 3.X):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install fabric</span><br></pre></td></tr></table></figure>
 
 <p>You may need a supporting library in order to install PyCrypto. For Debian (specifically, Linux Mint 17.2) I needed python-dev:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install python-dev</span><br></pre></td></tr></table></figure>
 
-<h2 id="Making-the-connection"><a href="#Making-the-connection" class="headerlink" title="Making the connection"></a>Making the connection</h2><p>Fabric is much more than a simple tool to execute SSH commands to a target, but that’s what I needed it for, so that’s what we’ll take a look at.</p>
+<h2 id="Making-the-connection"><a href="#Making-the-connection" class="headerlink" title="Making the connection"></a>Making the connection</h2><p>Fabric is much more than a simple tool to execute SSH commands to a target, but that&#39;s what I needed it for, so that&#39;s what we&#39;ll take a look at.</p>
 <p>First, imports:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from fabric.api import env, run as _run, sudo as _sudo</span><br><span class="line">from fabric.tasks import execute</span><br><span class="line">from fabric.network import disconnect_all</span><br><span class="line">from fabric.state import connections</span><br><span class="line">I imported the run and sudo methods as _run and _sudo, respectively, because I&#x27;m going to wrap them to give them some default parameters.</span><br><span class="line"></span><br><span class="line">def run(command, **kwargs):</span><br><span class="line">    kwargs[&#x27;quiet&#x27;] = kwargs.get(&#x27;quiet&#x27;, True)</span><br><span class="line">    kwargs[&#x27;combine_stderr&#x27;] = kwargs.get(&#x27;combine_stderr&#x27;, False)</span><br><span class="line">    kwargs[&#x27;pty&#x27;] = kwargs.get(&#x27;pty&#x27;, False)</span><br><span class="line">    return _run(command, **kwargs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def sudo(command, **kwargs):</span><br><span class="line">    kwargs[&#x27;quiet&#x27;] = kwargs.get(&#x27;quiet&#x27;, True)</span><br><span class="line">    kwargs[&#x27;combine_stderr&#x27;] = kwargs.get(&#x27;combine_stderr&#x27;, False)</span><br><span class="line">    return _sudo(command, **kwargs)</span><br></pre></td></tr></table></figure>
 
-<p>I’ve found this combination of arguments to the run and sudo methods to produce the cleanest output on the systems that I’m testing it on. With these wrappers, I can call run(‘df -h’) without having to pass the other arguments that I usually want, though, if I wanted to, I could overwrite any of them.</p>
+<p>I&#39;ve found this combination of arguments to the run and sudo methods to produce the cleanest output on the systems that I&#39;m testing it on. With these wrappers, I can call run(&#39;df -h&#39;) without having to pass the other arguments that I usually want, though, if I wanted to, I could overwrite any of them.</p>
 <p>Next, configuration.</p>
-<p>Fabric uses an “environment dictionary” called <code>env</code> to hold the configuration, which we imported from <code>fabric.api</code> above. We need to add a few things to the <code>env</code> variable:</p>
+<p>Fabric uses an &quot;environment dictionary&quot; called <code>env</code> to hold the configuration, which we imported from <code>fabric.api</code> above. We need to add a few things to the <code>env</code> variable:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">env.hosts = [&#x27;10.10.7.100&#x27;, &#x27;10.10.7.101&#x27;, &#x27;10.10.7.102&#x27;]</span><br><span class="line">env.user = &#x27;admin&#x27;</span><br><span class="line">env.key_filename = &#x27;id_rsa&#x27;</span><br><span class="line">For this example, I&#x27;m using key-based authentication for 3 target systems. The SSH login uses the username &#x27;admin&#x27;. That&#x27;s it for configuration! When we call our method to actually go and perform actions on the target systems, Fabric will perform all the instructions for the first system at 10.10.7.100, then the next at 10.10.7.101, and so on.</span><br></pre></td></tr></table></figure>
 
-<h2 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h2><p>The syntax for executing commands is extremely simple since we’ve wrapped those methods with our default arguments:</p>
+<h2 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h2><p>The syntax for executing commands is extremely simple since we&#39;ve wrapped those methods with our default arguments:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run(&#x27;command&#x27;)</span><br><span class="line">sudo(&#x27;root command&#x27;)</span><br><span class="line">sudo(&#x27;command as other user&#x27;, user=&#x27;otheruser&#x27;)</span><br></pre></td></tr></table></figure>
 
-<p>That’s it. When we first run a superuser command, assuming that the user we’re logged into, ‘admin’, requires a password, Fabric will prompt the user to enter the password from the command line (and it’ll hide it as the user types, just like entering the password locally).</p>
+<p>That&#39;s it. When we first run a superuser command, assuming that the user we&#39;re logged into, &#39;admin&#39;, requires a password, Fabric will prompt the user to enter the password from the command line (and it&#39;ll hide it as the user types, just like entering the password locally).</p>
 <p>What about running commands locally? We could import <code>subprocess</code> and execute from there, but Fabric has a wrapper for us to use:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">local(&#x27;command&#x27;, capture=False, shell=None)</span><br></pre></td></tr></table></figure>
 
-<p>You should normally be fine omitting shell, as it defaults to ‘&#x2F;bin&#x2F;sh’, unless you need bash. I set capture to True, as I’d like to capture the output from the command and display it if needed instead of it immediately being written to the console, potentially adding clutter.</p>
+<p>You should normally be fine omitting shell, as it defaults to &#39;&#x2F;bin&#x2F;sh&#39;, unless you need bash. I set capture to True, as I&#39;d like to capture the output from the command and display it if needed instead of it immediately being written to the console, potentially adding clutter.</p>
 <h2 id="SCP"><a href="#SCP" class="headerlink" title="SCP"></a>SCP</h2><p>Fabric uses Paramiko, which means that we can too! Remember this from the Paramiko post?</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import scp</span><br><span class="line">with scp.SCPClient(ssh.get_transport()) as _scp:</span><br><span class="line">    _scp.get(&#x27;/path/to/filename&#x27;)</span><br></pre></td></tr></table></figure>
 
 <p>With a few modifications, we can still use this module to perform our SCP gets and puts:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">with support_scp.SCPClient(connections[&#x27;%s@%s:22&#x27; % (env.user, env.host_string)].get_transport()) as _scp:</span><br><span class="line">        _scp.get(&#x27;/path/to/filename&#x27;)</span><br></pre></td></tr></table></figure>
 
-<p>Here, we don’t have access to a <code>SSHClient</code> from Paramiko directly, so we use Fabric’s connections variable to access those lower-level variables. connections is (effectively) a dictionary, so we can access the connection variables with the currently-targeted IP address as the key, which we get from <code>env.host_string</code>.</p>
-<p>Fabric has built-in methods to get and put files through the existing connection, but the transport method is SFTP. I needed SCP, so I used this module. If you can work with SFTP, then here’s the link to the documentation for those methods.</p>
-<h2 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h2><p>It seems like I didn’t look hard enough when I went searching for an SSH library to control devices in Python originally. Since Fabric uses Paramiko, it wasn’t a loss, though. I was able to apply what I learned with Paramiko to Fabric, as I couldn’t use Fabric’s SFTP protocol to move files - I had to go down a level and use Paramiko with the SCP library I found previously.</p>
+<p>Here, we don&#39;t have access to a <code>SSHClient</code> from Paramiko directly, so we use Fabric&#39;s connections variable to access those lower-level variables. connections is (effectively) a dictionary, so we can access the connection variables with the currently-targeted IP address as the key, which we get from <code>env.host_string</code>.</p>
+<p>Fabric has built-in methods to get and put files through the existing connection, but the transport method is SFTP. I needed SCP, so I used this module. If you can work with SFTP, then here&#39;s the link to the documentation for those methods.</p>
+<h2 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h2><p>It seems like I didn&#39;t look hard enough when I went searching for an SSH library to control devices in Python originally. Since Fabric uses Paramiko, it wasn&#39;t a loss, though. I was able to apply what I learned with Paramiko to Fabric, as I couldn&#39;t use Fabric&#39;s SFTP protocol to move files - I had to go down a level and use Paramiko with the SCP library I found previously.</p>
 <p>Regardless of how I got here, Fabric is definitely the better tool for this job.</p>
 
     </div>
