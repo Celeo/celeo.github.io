@@ -107,6 +107,9 @@ theme_config:
   motion:
     enable: false
 
+marked:
+  smartypants: false
+
 tag_generator:
   enable_index_page: false
 
