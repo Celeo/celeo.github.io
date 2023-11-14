@@ -99,7 +99,6 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: next
 theme_config:
-  darkmode: true
   menu:
     home: / || fa fa-home
     tags: /tags/ || fa fa-tags
