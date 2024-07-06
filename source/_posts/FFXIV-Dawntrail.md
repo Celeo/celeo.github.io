@@ -26,7 +26,7 @@ Oh, yeah: can we please change the login screen to something that doesn't flash-
 
 In short: they slap! In both meanings of the word. They are interesting, exciting, visually beautiful and unique, the bosses have interesting mechanics, and the gear drops look good. Additionally, the mobs slap, hard! While tanking the dungeons, I had to make sure I was keeping my mitigation cooldowns rotating well to reduce the healer's workload, and while healing, I had to keep _my own_ cooldowns readily on hand to make sure people didn't die. Several of the dungeon boss mechanics will easily 2-shot players, so healers (and the appropriate DoM classes) will be keeping their rez spells warmed up.
 
-Similarly with the trial bosses, which can be done in trusts, Square Enix isn't pulling punches. These trials are pretty difficult until you start to recognize the mechanics and prepare accordingly. The DF groups I was in wiped at least once on both trials, the last one twice, but then we got through them and everyone remarked about how much they enjoyed it.
+Similarly with the trial bosses, which can be done in trusts, Square Enix isn't pulling punches. These trials are pretty difficult until you start to recognize the mechanics and prepare accordingly. The DF groups I was in wiped at least once on all 3 trials, the second one three times, but then we got through them and everyone remarked about how much they enjoyed them.
 
 ## Music
 
@@ -108,6 +108,7 @@ Some highlights:
 - Most stuff with Sphene
 - Bakool Ja Ja's redemption (even if pretty ham-fisted)
 - Krile's parents (though it dragged on)
+- Erenville's mom
 - Everything with Gulool Ja Ja
 - Most of the scenes dealing with conflict (unsurprisingly)
 - WoL sassy dialog options
