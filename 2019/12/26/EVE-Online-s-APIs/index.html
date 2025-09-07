@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Eve Online&#39;s APIs and how they got me interested in SQL, Python, webdev, yaml, Linux, Nginx, DigitalOcean, and more.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The APIs of Eve Online">
+<meta property="og:url" content="https://celeo.github.io/2019/12/26/EVE-Online-s-APIs/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Eve Online&#39;s APIs and how they got me interested in SQL, Python, webdev, yaml, Linux, Nginx, DigitalOcean, and more.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-27T03:02:34.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.485Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="games">
+<meta property="article:tag" content="eve">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2019/12/26/EVE-Online-s-APIs/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2019/12/26/EVE-Online-s-APIs/","path":"2019/12/26/EVE-Online-s-APIs/","title":"The APIs of Eve Online"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>The APIs of Eve Online | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-into-EVE"><span class="nav-number">2.</span> <span class="nav-text">Getting into EVE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-a-problem"><span class="nav-number">3.</span> <span class="nav-text">Finding a problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-into-EVE-39-s-APIs"><span class="nav-number">4.</span> <span class="nav-text">Getting into EVE&#39;s APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-APIs-and-what-they-taught-me"><span class="nav-number">4.1.</span> <span class="nav-text">The APIs and what they taught me</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IGB"><span class="nav-number">5.</span> <span class="nav-text">IGB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XMLAPI"><span class="nav-number">6.</span> <span class="nav-text">XMLAPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDE"><span class="nav-number">7.</span> <span class="nav-text">SDE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CREST"><span class="nav-number">8.</span> <span class="nav-text">CREST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESI"><span class="nav-number">9.</span> <span class="nav-text">ESI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">10.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2019/12/26/EVE-Online-s-APIs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="The APIs of Eve Online | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The APIs of Eve Online
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-26 19:02:34" itemprop="dateCreated datePublished" datetime="2019-12-26T19:02:34-08:00">2019-12-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://www.eveonline.com/">Eve Online&#39;s</a> APIs and how they got me interested in SQL, Python, webdev, yaml, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ubuntu_version_history#1204">Linux</a>, <a target="_blank" rel="noopener" href="https://www.nginx.com/">Nginx</a>, <a target="_blank" rel="noopener" href="https://www.digitalocean.com/">DigitalOcean</a>, and more.</p>
+<span id="more"></span>
+
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ul>
+<li>Getting into EVE</li>
+<li>Finding a problem</li>
+<li>Getting into EVE&#39;s APIs</li>
+<li>The APIs and what they taught me<ul>
+<li>XMLAPI</li>
+<li>SDE</li>
+<li>CREST</li>
+<li>ESI</li>
+</ul>
+</li>
+<li>Conclusion</li>
+</ul>
+<h2 id="Getting-into-EVE"><a href="#Getting-into-EVE" class="headerlink" title="Getting into EVE"></a>Getting into EVE</h2><p>I first got into Eve back in October of 2011. I&#39;ve always liked space and spaceships, maybe that&#39;s what got me interested? Maybe it was other people talking about how much fun they were having? Maybe it was one of <a target="_blank" rel="noopener" href="https://duckduckgo.com/?q=eve+online+battle">EVE&#39;s huge thousand+ player battles</a>? I think I had heard of it from reddit, but it&#39;s so long ago now that I really can&#39;t pinpoint what got me to pay for (it was subscription-only back then) and play the game.</p>
+<p>Regardless of how I stumbled across EVE, I played it off and on for a year before getting into <a target="_blank" rel="noopener" href="https://wiki.eveuniversity.org/Wormholes">wormholes</a>. Without spending hours explaining what that entails, basically I had gotten interested in a part of the game that was built on randomness - who you were near, who was near you, and what was going on all fluctuated on a day-to-day, hour-to-hour basis. You never knew what was going to be happening in a few hours. In September of 2012, just shy of a year since I started playing, I entered a corporation (a guild, effectively) called <em>Wormbro</em>, a corporation that was designed to help players new to the game or new to wormholes to get their &quot;space legs&quot; and get used to the gameplay. It&#39;s there that I found a community to really be a part of, something I hadn&#39;t had for years (since helping run a Minecraft server for several years, which is where I picked up Java).</p>
+<h2 id="Finding-a-problem"><a href="#Finding-a-problem" class="headerlink" title="Finding a problem"></a>Finding a problem</h2><p>A big part of &quot;wormholes&quot; was tracking them - if players didn&#39;t explore them and record where they led, then other players would have no way of knowing what was going on (wormholes appeared and disappeared (mostly) randomly). We recorded this information in an in-game chat channel <em>message of the day</em> (effectively a notepad that anyone in the corporation could see but only a few could edit). It is in this &quot;notepad&quot; that we kept track of everything that was going on. As our experience and exploration increased though, we ran into a problem - this &quot;notepad&quot; had a character limit.</p>
+<p>Although many people these days are used to character limits (Twitter basically having been built on one), the character limit in these &quot;notepads&quot; did <em>not</em> have a good user experience: when the editor would go over the limit, there was no visual indicator that they were over. When the editor saved, the game would simply trim the content size down to the limit, and save that; whatever was over the limit was lost. As tracking this information was critical to players&#39; (in-game) safety, this invisible deletion of hard-earned information was quite debilitating.</p>
+<p>The leaders of the corporation searched for alternatives, but came up short, as the requirements for what we needed were pretty strict: must be visible by a group of people, but editable by a subset of that group; must have a higher character limit than the in-game one; must allow coloring and formatting. There were a few options that provided everything <em>except</em> the authentication &amp; authorization, but as those two feature were the most important, no alternative was found.</p>
+<h2 id="Getting-into-EVE-39-s-APIs"><a href="#Getting-into-EVE-39-s-APIs" class="headerlink" title="Getting into EVE&#39;s APIs"></a>Getting into EVE&#39;s APIs</h2><p>As a budding programmer, actively searching for some place to delve into and continue writing code for other people, I figured that it&#39;d be a good time to start learning web development. Back when I coded for Minecraft servers, a fellow programmer had suggested that I get into Python, as it was their favorite language, certainly more than Java. A quick web searched showed that Python had several active frameworks for building web servers, so I picked the biggest - <a target="_blank" rel="noopener" href="https://www.djangoproject.com/">Django</a> - and got to work.</p>
+<p>This first app didn&#39;t really require anything specific from EVE other than the authentication &amp; authorization; everything else was generic enough. Instead of representing the data in a text form, I&#39;d store everything as individual rows in an SQLite DB and retrieve data to present to the user when they loaded up the web page. This allowed for many more features, including edit history, which eliminated the need for editing to be restricted to a trusted group.</p>
+<p>At the time, the simplest way for a website to tell if a user was a player in the game was through HTTP headers. EVE&#39;s in-game browser would send <a target="_blank" rel="noopener" href="https://wiki.eveuniversity.org/In_Game_Browser_Development#Request_Headers">a set of headers</a> to any website that the player navigated to that had previously added the domain to their &quot;trusted sites&quot; list. The simplest use of these headers was to get the player&#39;s name, corporation, and alliance (&quot;guild of guilds&quot;). These data could be checked against a configuration to see if the player had access to special information. For my site, these was used to either allow the user access to the site, or block them completely.</p>
+<blockquote>
+<p><strong>Side note</strong>: readers may have spotted a problem with this authentication approach in how I&#39;ve described it and by reading the eveuni link - <em>there was no authentication</em>! Headers could simply be sent with other player&#39;s names or information.</p>
+</blockquote>
+<p>Once I had a working version of the site and had shared with the alliance leadership, everyone started editing the in-game &quot;notepad&quot; <em>and</em> my site to keep track of the information. My site was good at storing any amount of data, but the &quot;notepad&quot; was better at providing information at a glance.</p>
+<blockquote>
+<p><strong>Side note</strong>: if your users are still using their old way, then your solution isn&#39;t good enough to replace the old way (or the users are just very stubborn). My solution suffered from the former.</p>
+</blockquote>
+<p>From there, I branched out. I started using the <a target="_blank" rel="noopener" href="https://github.com/ccpgames/eveonline-third-party-documentation/blob/c0ff7ec8799b1d25847ac73cbb1af017e2ef72c9/docs/xmlapi/index.md">XMLAPI</a> to get more information on characters based on access they granted me (technically the alliance, but effectively me). I started using the <a target="_blank" rel="noopener" href="https://github.com/ccpgames/eveonline-third-party-documentation/tree/c0ff7ec8799b1d25847ac73cbb1af017e2ef72c9/docs/sde/index.md">static data export</a> to get information on the in-game universe and its non-player inhabitants. Eventually, when the XMLAPI was deprecated in favor of the new JSON-based <a target="_blank" rel="noopener" href="https://github.com/ccpgames/eveonline-third-party-documentation/tree/c0ff7ec8799b1d25847ac73cbb1af017e2ef72c9/docs/crest/index.md">CREST</a> API, I switched over to that (but only sort of: CREST was pretty much only a failure or a proving ground for what came after, depending on your viewpoint). Finally, when the <a target="_blank" rel="noopener" href="https://github.com/esi/esi-docs">ESI</a> came out, I switch over (mostly) to using that.</p>
+<h3 id="The-APIs-and-what-they-taught-me"><a href="#The-APIs-and-what-they-taught-me" class="headerlink" title="The APIs and what they taught me"></a>The APIs and what they taught me</h3><p>As each of EVE&#39;s APIs were different in both how they were interacted with and with what they each provided, each one taught me different skills, most of which I still use today, both in my personal projects and also my professional work.</p>
+<h2 id="IGB"><a href="#IGB" class="headerlink" title="IGB"></a>IGB</h2><p>The &quot;in-game browser&quot; wasn&#39;t an API, but I want to call it out here because of what I learned, driven and encouraged by what I could do with the IGB. The IGB didn&#39;t really enable me to do anything that I otherwise could not have, but it was a catalyst for motivating me to jump head-first into an area of the software field that I hadn&#39;t explored: web development.</p>
+<p>Things I learned (at the time):</p>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>Flask (later)</li>
+<li>HTML &amp; CSS</li>
+<li>Ubuntu</li>
+<li>VPSs through DigitalOcean</li>
+<li>Nginx</li>
+<li>Supervisord</li>
+<li>Vim</li>
+<li>A bunch more Unix stuff</li>
+</ul>
+<h2 id="XMLAPI"><a href="#XMLAPI" class="headerlink" title="XMLAPI"></a>XMLAPI</h2><p>The XML API was the first EVE API that I dealt with. Other players would generate an API key, selecting which &quot;permissions&quot; they wanted to include in that key, and then give it to our alliance. I&#39;d use that key to build an HTTP request that was sent to EVE&#39;s API. Assuming the key was valid for the endpoint I requested, I&#39;d get back data on the character or corporation in a big block of XML. Documentation existed, but there was a lot of trial and error required in order to become familiar with the API.</p>
+<p>Things I learned:</p>
+<ul>
+<li>Sending HTTP requests, including headers and querystrings</li>
+<li>Parsing XML</li>
+<li>Trying to convince people that there data was safe with me</li>
+</ul>
+<h2 id="SDE"><a href="#SDE" class="headerlink" title="SDE"></a>SDE</h2><p>The SDE (&quot;static data export&quot;) was an SQL dump of a ton of information about the game that didn&#39;t change, like starsystems, information on stars, links between systems, item information, crafting information, etc. The XMLAPI provided information that <em>could</em> change, while CCP (the makers of the game) requested that developers make use of the SDE whenever possible to reduce traffic to the XMLAPI.</p>
+<p>Things I learned:</p>
+<ul>
+<li>Not all SQL dumps are the same</li>
+<li>MySQL dumps are not compatible with SQLite</li>
+<li>Trying to set up a LAMP stack just to pull data out of a MySQL dump was too painful to do, even though I tried multiple times</li>
+<li>Manually typing commands into the SQLite prompt to load data from CSV into a new DB was very error-prone</li>
+<li>The developer who runs <a target="_blank" rel="noopener" href="http://www.fuzzwork.co.uk/">www.fuzzwork.co.uk</a> was a hero - they provide data conversions of the official export for easier use by other developers</li>
+</ul>
+<h2 id="CREST"><a href="#CREST" class="headerlink" title="CREST"></a>CREST</h2><p>Like I wrote above, CREST was either a failure or a proving ground, depending on who you asked. For me, it was the former, right up until CCP announced ESI, which turned CREST into ... well, both a failure and a proving ground. Either way, it was definitely a step in the right direction. It was intended to be a discovery-based JSON REST API which would replace the XMLAPI.</p>
+<p>Things I learned:</p>
+<ul>
+<li>XML is awful</li>
+<li>JSON is great</li>
+<li>Discovery-based API layouts are NOT substitutes for documentation</li>
+</ul>
+<h2 id="ESI"><a href="#ESI" class="headerlink" title="ESI"></a>ESI</h2><p>Finally, CCP announced ESI - the &quot;EVE Swagger Interface&quot;. No longer would documentation have to be maintained by the community! No longer would we have to wonder at the stars to know what data we could get from the API! No longer would we hav-------- Well, that was the intention.</p>
+<p>ESI started rough: it was slow (both the Swagger site and the API itself), the endpoint documentation in Swagger wasn&#39;t very helpful, it didn&#39;t provide any interesting new data, and the data it <em>did</em> provide was already covered by either the XMLAPI or CREST (and sometimes both). I remember seeing it, talking about it with a few other developers I had met in-game, and largely ignoring it for several years. Unfortunately, by the time that it lived up to everything that was promised, I&#39;d taken a step away from the game.</p>
+<p>Things I learned:</p>
+<ul>
+<li>Swagger is great</li>
+<li>Swagger is not <em>automatically</em> a replacement for documentation</li>
+<li>Swagger can help developers explore your API to help adoption</li>
+<li>Proving a new and shiny alternative to an existing API, deprecating the old one, and asking people to migrate <em>won&#39;t</em> actually get them to migrate until the new API is better than the now-deprecated one</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>I owe a great deal of my knowledge today to what I learned during my time playing <a target="_blank" rel="noopener" href="https://www.eveonline.com/article/internet-spaceship-crashes-are-serious-business">internet spaceships</a>. The EVE APIs allowed me to access information about <strong>something I was interested in</strong>, which helped me push forward whenever I got stuck. There was always another endpoint I hadn&#39;t explored yet, always another SQL table to examine, always more documentation to read and contribute to. As the in-game universe of EVE was always changing, so too was the information I could query for. As I was actively playing the game, the <strong>data that I got back was meaningful</strong> to me, both as a developer and as a player. Finally, the years I spent writing websites for my alliance actually <strong>helped the users</strong>, and I was one of them. All these contributed to a time of unparalleled learning in my journey to become a professional software developer.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/games/" rel="tag"># games</a>
+              <a href="/tags/eve/" rel="tag"># eve</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/24/Thoughts-on-Rust/" rel="prev" title="Thoughts on Rust">
+                  <i class="fa fa-chevron-left"></i> Thoughts on Rust
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/01/04/Unit-testing-in-Nim/" rel="next" title="Unit testing in Nim">
+                  Unit testing in Nim <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="In which I just discovered that RFC 2812 updates 1459 and the response format I&#39;ve been playing with is wrong.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IRC, part 2">
+<meta property="og:url" content="https://celeo.github.io/2021/07/01/IRC-part-2/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="In which I just discovered that RFC 2812 updates 1459 and the response format I&#39;ve been playing with is wrong.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-02T05:43:04.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.485Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="irc">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2021/07/01/IRC-part-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2021/07/01/IRC-part-2/","path":"2021/07/01/IRC-part-2/","title":"IRC, part 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>IRC, part 2 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2812"><span class="nav-number">1.</span> <span class="nav-text">2812</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Progress"><span class="nav-number">2.</span> <span class="nav-text">Progress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">3.</span> <span class="nav-text">Next steps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/07/01/IRC-part-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="IRC, part 2 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          IRC, part 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-01 22:43:04" itemprop="dateCreated datePublished" datetime="2021-07-01T22:43:04-07:00">2021-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>In which I just discovered that RFC 2812 updates 1459 and the response format I&#39;ve been playing with is wrong.</p>
+<span id="more"></span>
+
+<h2 id="2812"><a href="#2812" class="headerlink" title="2812"></a>2812</h2><p>First off, yeah, I just discoverd <a target="_blank" rel="noopener" href="https://www.rfcreader.com/#rfc2812">RFC 2812</a>. At least section 6 contains this:</p>
+<blockquote>
+<p>Because of the small amount of changes in the client protocol since the publication of RFC 1459 [IRC], implementations that follow it are likely to be compliant with this protocol or to require a small amount of changes to reach compliance.</p>
+</blockquote>
+<p>So that&#39;s nice.</p>
+<h2 id="Progress"><a href="#Progress" class="headerlink" title="Progress"></a>Progress</h2><p>Not a whole lot, really. Most of the time I&#39;ve put into the <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server">code</a> has been for working with Elixir and OTP rather than quickly implementing IRC concepts. I have an <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/22f867484817d2db45e7f4a1e2ad9bd939f916d0/lib/commands/nick.ex">implementation of the NICK command</a> that should cover the various conditions (new vs already-connected client &amp; unused vs in-use nickname). I need to do USER next, but I took a shortcut and played around with WHO to make sure that two users could actually connect and have two different nicknames (as they&#39;re required to by the protocol). That worked, but then I discovered that the (albiet few) messages I&#39;ve been sending haven&#39;t been in keeping with the messages I&#39;ve actually received from Libera.Chat.</p>
+<p>Hexchat has a nice feature where it&#39;ll log the raw IRC commands (incoming and outgoing) to a separate window that you can save to a file on your computer. It&#39;s a bit of a shame that this isn&#39;t <em>always</em> logging to an in-memory buffer and the user has the option to save to a file, but it&#39;s not really a problem since I can connect to a server, then disconnect, then open that logging window, and then reconnect to the server to see the handshake process and all of the information that goes into that.</p>
+<p>The commands I&#39;ve been sending back to the client have looked like this:</p>
+<blockquote>
+<p>:server 436 :Nickname collision KILL</p>
+</blockquote>
+<p>Which I thought, based on <a target="_blank" rel="noopener" href="https://www.rfcreader.com/#rfc2812_line2404">section 5.2</a> was accurate, but based on the commands I see in the IRC client I use to connect to an actual IRC server that&#39;s not correct. For example, this is what I get if I connect to Freenode with two telnet clients and send the same NICK command:</p>
+<blockquote>
+<p>:kodama.freenode.net 433 asdtwr asdtwr :Nickname overruled.</p>
+</blockquote>
+<p>Note that I&#39;m not actually using Freenode because it&#39;s <em>good</em>, but because it&#39;s easy to connect to and I&#39;m not concerned about sending them bad commands.</p>
+<p>Here, I&#39;ve got the first bit (effectively) correct, I&#39;m responding with <code>:&lt;server name&gt; &lt;code&gt;</code> but then the server here is including my nick twice. Based on <a target="_blank" rel="noopener" href="https://www.rfcreader.com/#rfc2812_line252">RFC 2812 section 2.3.1</a>, I see where the &quot;prefix&quot; would <em>either</em> be the servername or nick&#x2F;user, but I don&#39;t see where <em>both</em> are included.</p>
+<p>Thankfully I now see the details for numeric replies 001-099 that I saw in my client logs for Libera, so that removes some confusion. Scanning through the other numeric replies, I see some that I haven&#39;t looked at so far.</p>
+<p>For a note on Elixir &amp; OTP, I&#39;m having to do some work in <code>Task</code>s, as I thought I was able to send <code>cast</code> calls to other processes while &quot;in&quot; processing for a call&#x2F;cast. They&#39;re separate processes, so I should be able to have them do work in parallel, right? Apparently that&#39;s <em>sort of</em> true, because I can have a <em>task</em> send the commands to another process, but not call it directly from, for example, a GenServer process. I doubt it really makes a different for the implementation, but it makes the code more complicated&#x2F;busy.</p>
+<h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps"></a>Next steps</h2><p>A few things need to happen to move forward:</p>
+<ul>
+<li>I need to gain a better understanding of the IRC messaging format</li>
+<li>I need to improve the functions I&#39;m using to send data to client TCP connections both to comply with the IRC standard and also so that those functions aren&#39;t annoying to use</li>
+<li>I&#39;d like to figure out why I have to use <code>Task</code>s to send commands cross-process</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/irc/" rel="tag"># irc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/" rel="prev" title="Implementing an IRC server from scratch, part 1">
+                  <i class="fa fa-chevron-left"></i> Implementing an IRC server from scratch, part 1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/02/IRC-part-3/" rel="next" title="IRC, part 3">
+                  IRC, part 3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

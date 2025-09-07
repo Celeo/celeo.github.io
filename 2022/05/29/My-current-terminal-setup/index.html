@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="The programs and tools I use to be productive in the terminal.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My terminal setup">
+<meta property="og:url" content="https://celeo.github.io/2022/05/29/My-current-terminal-setup/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="The programs and tools I use to be productive in the terminal.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-29T23:29:11.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="technology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2022/05/29/My-current-terminal-setup/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2022/05/29/My-current-terminal-setup/","path":"2022/05/29/My-current-terminal-setup/","title":"My terminal setup"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>My terminal setup | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Emulator-and-shell"><span class="nav-number">1.</span> <span class="nav-text">Emulator and shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Text-editor"><span class="nav-number">2.</span> <span class="nav-text">Text editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Locating-stuff"><span class="nav-number">3.</span> <span class="nav-text">Locating stuff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scripts"><span class="nav-number">4.</span> <span class="nav-text">Scripts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">5.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Language-versioning"><span class="nav-number">6.</span> <span class="nav-text">Language versioning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other"><span class="nav-number">7.</span> <span class="nav-text">Other</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2022/05/29/My-current-terminal-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="My terminal setup | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          My terminal setup
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-29 16:29:11" itemprop="dateCreated datePublished" datetime="2022-05-29T16:29:11-07:00">2022-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>The programs and tools I use to be productive in the terminal.</p>
+<span id="more"></span>
+
+<p>This is a setup on Mac OSX. I prefer Linux over Mac&#39;s unix-like environment, but for the purposes of most of this, they work similarly enough to not really notice.</p>
+<h2 id="Emulator-and-shell"><a href="#Emulator-and-shell" class="headerlink" title="Emulator and shell"></a>Emulator and shell</h2><p><a target="_blank" rel="noopener" href="https://iterm2.com/">iterm2</a> running <a target="_blank" rel="noopener" href="https://www.zsh.org/">zsh</a> with <a target="_blank" rel="noopener" href="https://ohmyz.sh/">oh-my-zsh</a> (mostly because it works and I was able to optimize my shell startup in other places so that the shell spins up effectively instantly) and the <a target="_blank" rel="noopener" href="https://starship.rs/">starship</a> prompt. I&#39;ve also used <a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty">alacritty</a> but prefer iterm2 on Mac.</p>
+<h2 id="Text-editor"><a href="#Text-editor" class="headerlink" title="Text editor"></a>Text editor</h2><p>I&#39;m moving to <a target="_blank" rel="noopener" href="https://github.com/helix-editor/helix">helix</a> from <a target="_blank" rel="noopener" href="https://github.com/neovim/neovim">neovim</a>.</p>
+<h2 id="Locating-stuff"><a href="#Locating-stuff" class="headerlink" title="Locating stuff"></a>Locating stuff</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ogham/exa">exa</a> to replace <code>ls</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sharkdp/fd">fd</a> to replace <code>find</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">rg</a> to replace <code>find</code> + <code>grep</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ajeetdsouza/zoxide">zoxide</a> to quickly get to folders</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kamiyaa/joshuto">joshuto</a> because Mac&#39;s Finder application is awful</li>
+</ul>
+<h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2><p>I have a few aliases and functions in my .zshrc file, but I&#39;ve moved most scripts to <a target="_blank" rel="noopener" href="https://github.com/denisidoro/navi">navi</a>.</p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><p>I have a global gitignore file for things like &quot;node_modules&quot;, &quot;target&quot;, &quot;dist&quot;, &quot;build&quot;, etc. directories. I use the <a target="_blank" rel="noopener" href="https://github.com/dandavison/delta">delta</a> diff visualizer. I used to handle merge conflicts by hand until I had to undertake some very complicated conflicts and I was pointed to <a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360006808659-3-way-diff-window">IntelliJ&#39;s 3-way diff</a>. I have the <a target="_blank" rel="noopener" href="https://github.com/cli/cli">gh</a> GitHub tool installed, though I rarely use it.</p>
+<h2 id="Language-versioning"><a href="#Language-versioning" class="headerlink" title="Language versioning"></a>Language versioning</h2><p>I use <a target="_blank" rel="noopener" href="https://github.com/Schniz/fnm">fnm</a> to manage NodeJS versions, <code>npm</code> to manage Node dependencies (though I&#39;ve used <a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/lang/en/docs/cli/">yarn v1</a> often as well) and <a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a> for Python virtual environments and dependency management. For Java and Kotlin, it&#39;s <a target="_blank" rel="noopener" href="https://github.com/apache/maven">maven</a>, and for programming languages that have their stuff together, their official CLI tools.</p>
+<h2 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/stedolan/jq">jq</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/XAMPPRocky/tokei">tokei</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/watchexec/watchexec">watchexec</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/httpie/httpie">httpie</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/technology/" rel="tag"># technology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/13/The-use-of-decline-in-storytelling/" rel="prev" title="Telling the story of decline">
+                  <i class="fa fa-chevron-left"></i> Telling the story of decline
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/13/Getting-into-VATSIM/" rel="next" title="Getting into VATSIM">
+                  Getting into VATSIM <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

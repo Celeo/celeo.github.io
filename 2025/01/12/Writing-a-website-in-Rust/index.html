@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="And how it compares to the previous sites I&#39;ve written in other languages.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writing a website in Rust">
+<meta property="og:url" content="https://celeo.github.io/2025/01/12/Writing-a-website-in-Rust/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="And how it compares to the previous sites I&#39;ve written in other languages.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-13T00:27:07.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2025/01/12/Writing-a-website-in-Rust/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2025/01/12/Writing-a-website-in-Rust/","path":"2025/01/12/Writing-a-website-in-Rust/","title":"Writing a website in Rust"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Writing a website in Rust | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-Rust"><span class="nav-number">2.</span> <span class="nav-text">Enter: Rust</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Picking-libraries"><span class="nav-number">3.</span> <span class="nav-text">Picking libraries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Organizing-the-code"><span class="nav-number">4.</span> <span class="nav-text">Organizing the code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-good"><span class="nav-number">5.</span> <span class="nav-text">The good</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-bad"><span class="nav-number">6.</span> <span class="nav-text">The bad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">7.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2025/01/12/Writing-a-website-in-Rust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Writing a website in Rust | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Writing a website in Rust
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-01-12 16:27:07" itemprop="dateCreated datePublished" datetime="2025-01-12T16:27:07-08:00">2025-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>And how it compares to the previous sites I&#39;ve written in other languages.</p>
+<span id="more"></span>
+
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>I like aviation. I&#39;m a member of the Virtual Denver ARTCC of <a target="_blank" rel="noopener" href="https://www.vatusa.net/">VATUSA</a>, a division of <a target="_blank" rel="noopener" href="https://vatsim.net/">VATSIM</a>, where I am the Jr Staff member responsible for maintaining the group&#39;s tech infrastructure. Namely, that means making, maintaining, and updating a website. The previous site was written by someone who moved onto another subdivision, and while it worked fine 99% of the time, I was nearly entirely unable to push fixes or make changes. This was in part due to the website running across several different Kubernetes pods, all hosted in a shared cluster that I had very limited access to. When seeking to make a new site, I had a few objectives:</p>
+<ul>
+<li>Provide a website solution for the vZDV VATUSA ARTCC.</li>
+<li>Be both fast and lightweight.</li>
+<li>Be easy to use.</li>
+<li>Follow good software development practices.</li>
+<li>Be easy to develop, deploy, and run.</li>
+</ul>
+<h2 id="Enter-Rust"><a href="#Enter-Rust" class="headerlink" title="Enter: Rust"></a>Enter: Rust</h2><p>I really like the <a target="_blank" rel="noopener" href="https://www.rust-lang.org/">Rust programming language</a>. <em>Really</em> like it. It does so much so well:</p>
+<ul>
+<li>Strongly and statically typed</li>
+<li>Compiles to a binary</li>
+<li>Excellent tooling, both built-in and community-built</li>
+<li>Fantastic error messages</li>
+<li>Great first- and third-party libraries</li>
+<li>Runs fast and safe</li>
+</ul>
+<p>Previously, I&#39;ve written simple websites in Go, Java, JavaScript, and PHP, and a pretty large site in Python. Given my appreciation of Rust, I choose it as the starting point for this new site.</p>
+<h2 id="Picking-libraries"><a href="#Picking-libraries" class="headerlink" title="Picking libraries"></a>Picking libraries</h2><p>I&#39;ve followed <a target="_blank" rel="noopener" href="https://www.arewewebyet.org/">Are we web yet?</a> for a while and read plenty of discussions about the best Rust web frameworks. I selected <a target="_blank" rel="noopener" href="https://github.com/tokio-rs/axum">Axum</a> for its performance and ergonomics.</p>
+<p>For data persistence, I selected (again, with a <em>strong</em> goal of simplicity) SQLite with <a target="_blank" rel="noopener" href="https://github.com/launchbadge/sqlx">sqlx</a> as the library to access it alongside raw SQL statements that I&#39;d write and maintain rather than use an ORM or query builder.</p>
+<p>The third big piece was how I&#39;d render HTML. Not wanting to bring in a full SPA&#x2F;MPA JS app, I decided to throw back to my Python days and use an HTML rendering engine to feed full HTML documents to browsers with <a target="_blank" rel="noopener" href="https://github.com/mitsuhiko/minijinja">minijinja</a> to have familiar syntax to Jinja2 in Python.</p>
+<p>Toss in some caching, emailing, error handling, JSON and TOML processing, and a small collection of other things, and I had myself a website.</p>
+<h2 id="Organizing-the-code"><a href="#Organizing-the-code" class="headerlink" title="Organizing the code"></a>Organizing the code</h2><p>I knew that I would need both a website and a Discord bot to replace the existing tech. I could have the Discord bot communicate with the website via REST API calls, but given that they&#39;d both be written in the same language and I didn&#39;t want to have to <em>create</em> a separate REST API in the website, I decided to have the discord bot directly read&#x2F;write to&#x2F;from the database. I put a chunk of shared code to read the combined app configuration and access the database into a library, turning the project into a Cargo workspace (i.e. monorepo): I&#39;d have a shared library, a website, a Discord bot, and a separate &quot;task runner&quot; to do scheduled tasks like pulling data from upstream data sources. This works quite well, and I don&#39;t have to fuss with any sort of weird versioning between the library and binaries; it just works.</p>
+<h2 id="The-good"><a href="#The-good" class="headerlink" title="The good"></a>The good</h2><p>As expected, the parts of Rust that I like (most of it), I still very much liked working on this website. Dealing with data was great with Rust&#39;s <code>iter</code> functions, working with the database was smooth enough (after applying SQLite tweaks to make it better, but that&#39;s outside of Rust), checking for nulls (<code>None</code>) was easy, making the app fast and safe was free, and more. Working with Cargo made everything easy, and I was able to <code>scp</code> the 3 binaries to my server and run them directly - no fussing around with Docker or installing a runtime on the server.</p>
+<h2 id="The-bad"><a href="#The-bad" class="headerlink" title="The bad"></a>The bad</h2><p>My main complaint doesn&#39;t <em>directly</em> have to do with Rust, rather with most compiled languages, but was the chief source of frustration and friction when building the app. Whenever I made a change, I&#39;d have to stop the server and rerun, waiting for the compilation and linking. Thankfully this was only a few seconds, but after each change? It adds up, quickly. Thankfully I got the auto-reload feature in the templating library working (eventually; it&#39;s not simple) so I could make changes to templates and just refresh the page. But still, needing to pass any additional or different information to the template required stopping and rerunning, again incurring the cost of waiting for compilation.</p>
+<p>Having to wait for compilation these days, now that the site is done and deployed, seems a small price to pay for being able to make changes and push them to my server without fuss or worry. Given the nature of what I was using the site for - pushing full HTML documents rather than supplying a REST API that a JS SPA would consume - I&#39;m certainly not faulting tokio&#x2F;axum&#x2F;minijinja; I guess it&#39;s just the nature of what I was doing. When thinking back to building sites with Python, template changes were automatically uptaken, debugging was easier and more powerful, and there was no compilation step to wait for. Alas, Python came with it&#39;s own (IMO) shortcomings, of course - deployment was harder (basically requiring Docker), changes were less safe, the code was harder to come back without types, etc.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>I made a site with Rust, and I don&#39;t regret it.</p>
+<p>I suppose I&#39;m still ... watching and waiting for what I&#39;d consider a perfect programming language. I&#39;d want something quite close to Rust, but with garbage collection (I generally have no use for <em>not</em> having GC) to make the code simpler, and near-instant compilation time like Go. Some readers might reason: why not just use Go, then? I like parts of Go (the tooling especially) and dislike others (syntax, unfortunately). Many people like Go, and that&#39;s great! I wish writing Rust was easier, or writing Python was safer. Zig is the new hotness, but I&#39;m happy with Rust as a systems programming language. I suppose I&#39;m looking for my next favorite &quot;general&quot; application programming language. Is it already out there - Lua, Ruby, Nim? - or still to come? I don&#39;t know. Should be exciting!</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/rust/" rel="tag"># rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/21/Prism-Minecraft-modding-guide/" rel="prev" title="Prism Minecraft modding guide">
+                  <i class="fa fa-chevron-left"></i> Prism Minecraft modding guide
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/06/22/Enshrouded/" rel="next" title="Enshrouded">
+                  Enshrouded <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

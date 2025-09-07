@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Thoughts on how to (and not to) make developers productive in the workplace.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Making developers productive">
+<meta property="og:url" content="https://celeo.github.io/2021/07/16/Making-developers-productive/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Thoughts on how to (and not to) make developers productive in the workplace.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-17T03:15:37.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2021/07/16/Making-developers-productive/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2021/07/16/Making-developers-productive/","path":"2021/07/16/Making-developers-productive/","title":"Making developers productive"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Making developers productive | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tooling"><span class="nav-number">1.</span> <span class="nav-text">Tooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tasks"><span class="nav-number">2.</span> <span class="nav-text">Tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Timing"><span class="nav-number">3.</span> <span class="nav-text">Timing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">4.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/07/16/Making-developers-productive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Making developers productive | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Making developers productive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-16 20:15:37" itemprop="dateCreated datePublished" datetime="2021-07-16T20:15:37-07:00">2021-07-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Thoughts on how to (and not to) make developers productive in the workplace.</p>
+<span id="more"></span>
+
+<p>Over my (still relatively short) career in the programming &#x2F; software development &#x2F; software engineering industry, I&#39;ve encountered many environments, processes, and setups. Some of these were great boons to developer productivity, and others weren&#39;t. Without going into so much detail that I&#39;d be pointing fingers, I&#39;ll attempt to highlight the high and low points of environments I&#39;ve worked in that directly influenced productivity. I&#39;m breaking &quot;environment&quot; into 3 segments: tooling, tasks, and timing.</p>
+<h2 id="Tooling"><a href="#Tooling" class="headerlink" title="Tooling"></a>Tooling</h2><p>Tooling is the hardware (workstations, peripherals) and software (programs, websites, command-line tools, IDEs, editors, etc.) that people use to write software.</p>
+<p>Hardware usually changes far less frequently as compared to software, likely both due to the cost and effort involved in changing hardware. Developers are usually assigned a workstation (be it desktop or laptop) on their first or first few days of employment, and this remains in their possession and use until either a scheduled upgrade, or the device malfunctions to the point of needing replacing. For the corporations I&#39;ve worked for, I&#39;ve used a variety of computer brands, models, and setups, both desktop and laptop. I dramatically prefer the laptop model, despite it most often being an Apple laptop (which, though they sport an excellent size and hardware, I don&#39;t much like the OS) as it gives the freedom to work from anywhere, be it a desk, a conference room, outside, or from home, without hassle. All in all, I&#39;ve had very few issues with hardware in and out of the office.</p>
+<p>Software on those workstations, build platforms, and source control platforms can be a huge boon to productivity, or completely crush it by tanking morale. A &quot;proper&quot; setup that <em>empowers</em> the developer (or for that matter, any employee) to do their job is a key factor of a workforce&#39;s ability to complete their work. Software underlines a huge part of a developer&#39;s job, as they&#39;re constantly interacting with it in one facet or another. A &quot;proper&quot; setup is one that enables a developer to turn their knowledge, experience, and creativity into correct, accurate, and legible code that furthers the corporation&#39;s goals in the industry. Lack of such a setup will constantly and dramatically hamper employees&#39; ability to complete tasks.</p>
+<blockquote>
+<p>When developers don&#39;t have to fight the tools to get their jobs done, they&#39;ll be able to actually do their jobs.</p>
+</blockquote>
+<p>Generally, companies and organizations will each align on the <em>baseline</em> toolset to be used in the workplace. I&#39;d group the both the source control and build platforms in this baseline, as they are often globally used and complicated. Developers are used to many of these: for source control platforms, GitHub and GitLab are likely the most popular followed by Bitbucket and the cloud-providers, with Perforce and SVN fading out, and FOSS-developed tools like Gitea and Gogs rounding out the selection. I vastly prefer git over other such tools, and as most of the git-supporting platforms share similar feature sets, switching between them isn&#39;t particularly difficult or cumbersome.</p>
+<p>Next in line comes the product-specific software selections, like programming language, framework, main libraries, and supporting programs like databases, caches, and servers. Usually, once selected, these choices are permanent for the lifetime of the product, pending large ground-up rewrites to redefine the structure, flexibility, velocity, or feature-set. Individual developer style can show between these pillars, but even that is sometimes brushed away through tools like linters and formatters that seek to make all code in a project look and feel the same despite having different logic to complete tasks. I find this code homogeneity helpful to lowering the mental overhead of diving through code, but many don&#39;t care for the removal of the individual from a codebase. Thankfully, many of these tools are highly configurable, so individual development teams can opt for whatever works best for them. Hopefully.</p>
+<p>Finally, we get to the software that is often the individual employee&#39;s choice: IDE, terminal setup, and other workflow-supporting tools. While most teams (should) sport onboarding documentation that minimizes the amount of time it takes to get started with a codebase, individualism plays out in this arena most strongly, as many developers will garner their preferred &quot;working environment&quot; for how they like to visualize and change software. Above all of the other choices, as this choice plays out most at the individual level without requiring buy-in from others, this is the area where there are the most options available to developers, both for within companies and on their solo endeavors. Developers can and do select their IDEs for speed, freedom, conformity and nonconformity, and above all, personal taste. From minimal-appearing editors like Sublime Text and vanilla vim, to &quot;full&quot; editors like VS Code and Atom, to all-in-one IDEs like IntelliJ and Visual Studio, developers can select how much they want their editor to constantly give them feedback or stand to the side to allow the developer to drive the process. Each of these editors, especially the non-all-in-one options, sport a vast bounty of configuration options that can both inspire and overwhelm users. I use IntelliJ to run Java applications as it is commonplace in the enterprise environment, but VS Code for everything else. I&#39;m currently writing this article in Markdown in VS Code with several community-developed extensions to check my spelling and conformity to Markdown best practices.</p>
+<p>I encourage all developers to spent a few hours diving deep into their editor or IDE of choice and its configuration menus and extensions&#x2F;plugins, as there are so many incredible options that can lessen or remove frustration, lower cognitive overhead, minimize distractions, improve organization, and more, allowing the developer to do what they&#39;re paid to do, write code, without having to worry about much else. This is an area I&#39;m very passionate about, and frequently read articles and watch videos from other people sharing their setups to see if there&#39;s anything I can adopt for my workflows both at work and at home. Allowing developers to choose, and also <em>configure</em> their tooling at this level is a huge boon to productivity directly and also through providing large boosts to morale and comfort.</p>
+<h2 id="Tasks"><a href="#Tasks" class="headerlink" title="Tasks"></a>Tasks</h2><p>Developers are not unique in that they must get things done to warrant their continued employment, and that shouldn&#39;t be news to anyone. Software development is often a high-paid field, and employers expect to receive a corresponding amount of revenue through improvements to their products. How tasks are created, monitored, updated, and completed is a huge part of productivity. When tasks are self-contained, explained, clear, understandable, and achievable, developers are empowered to take them on without having to think about the cost of doing so. A task that requires changing some component of the product in a specific way to complete some specific outcome has the makings of a great task, as it contains most everything that a developer and hopefully a Quality Assurance teammate will need to complete it. Tasks that don&#39;t have some or any of these create a barrier to entry for starting on the work, as the developer, before even getting to think about how they may go about completing the task, have to talk to other employees often outside their immediate team who have their own schedules and deliverables. This means emails, chat messages, and meetings. This means paperwork. This means <strong>time</strong> - time that isn&#39;t spend doing work. Here, a strong argument can be made that this <em>is</em> work, that the idea of &quot;work&quot; absolutely contains the effort of defining and understanding what needs to be done as well as actually completing that, and in general I agree. For <em>this article</em> however, I&#39;m separating them into &quot;work&quot;, actually completing tasks and changing code, and &quot;pre-work&quot; and &quot;post-work&quot; which are the other auxiliary efforts that are in service of getting things done.</p>
+<p>Any hurdle to completing a task is a drain to productivity for the individual, team, product, and eventually the company. That statement can certainly be viewed as hyperbolic, as sometimes getting clarification on the requirements on a task is as simple as a 30 second back-and-forth over text chat, but as it&#39;s most often significantly more than that, it adds up. A 30 second text chat is both quick and largely non-intrusive, but a 30 minute meeting with 5 people requires dramatically more effort from all involved, as that meeting requires the physical or virtual presence and focus of all participants, getting around often-complicated schedules and meeting hours, and face to face (or ~ish) communication. While I prefer to have some meetings &quot;in person&quot; to go over more complicated product deliverables and goals, having to set up something like this for every or many tasks that could otherwise go without will quickly drain all involved, especially developers, and cement the workflow hurdles of starting new bodies of work.</p>
+<p>Can this meeting-driven task creation work for some teams? Sure, I imagine so. Does it work for all teams? Absolutely not.</p>
+<blockquote>
+<p>When developers don&#39;t have to undertake a lot of auxillary effort to begin a task, they&#39;ll be more active in starting new work.</p>
+</blockquote>
+<h2 id="Timing"><a href="#Timing" class="headerlink" title="Timing"></a>Timing</h2><p>Timing is such a complicated, non-specific, and ever-evolving subject that it&#39;s hard to say what works rather than just listing off everything that doesn&#39;t. From planning how long tasks will take, to estimating how much time is left, to planning for capacity for a month, quarter, or release, figuring out timings is something that teams spend a lot of time doing. As most developers find it difficult, if not nearly impossible, to estimate the amount of time a task will take without having completed most of it, creating accurate estimations is an activity that I&#39;ve seen more often result in inaccuracies rather than success stories. As time is often what productivity is measured in, combined with a set of completed work, it&#39;s a critical factor therein, but for the purposes of this article, I&#39;ll be focusing on timing as &quot;the amount of time <em>given</em> for work&quot; - a <em>bounding</em> factor.</p>
+<p>In what developers would see as a better world, they&#39;d have an unconstrained amount of time to complete tasks, but since that&#39;s not the world we live in, work has to be bounded <em>somehow</em>, and that&#39;s often through estimations of how long it will take. A certain amount of time is alloted for the completion of work, based (hopefully) on the level of experience of the team, the amount of parallel and ongoing work, and the specific complexity involved as measured by an experienced senior member intimately familiar with the codebase. I&#39;ve seen estimates be made following this formula, and while I certainly won&#39;t lie and claim that estimates conceived in this manor are always accurate, I can confidently state that they are <em>more</em> accurate. I&#39;ve seen estimates be made by non-developers, people not on the team, people not familiar with the product, and even by people who don&#39;t understand what the goal of the work is.</p>
+<blockquote>
+<p>When developers are bound to unrealistic time requirements, they will create faulty products.</p>
+</blockquote>
+<p>Time estimates placed on bodies of work, both for individual tasks and also at the feature level directly impact the quality of the work that gets done. A generally straightforward task with tight a time boundary may very likely result in changes that are accurate going out the door, but they won&#39;t yield completely (and very unlikely, <em>automatedly</em>) tested changes with code that is readable, explainable, and deliberate. This is unlikely to cause problems in the short-term, which unfortunately is a period that most people (developers included) are chiefly concerned with, while the long-term maintainability of features and the codebase will suffer. If your QA team reports being behind in coverage, look at the amount of time alloted for tasks - are those boundaries accounting for testing? Are they accounting for refactoring of older or tangential features that may be impacted? Is time set up for thinking about maintaining? These are hard to sell for developers and managers, who have trouble putting into business terms the value-add of tasks like these. I don&#39;t blame the business employees for not finding the value, nor do I completely blame developers for often being unable to prove the value in doing so. I know, however, that <em>teams</em> that <em>do</em> put thought into long-term sustainability of products and their underlying components will be more agile, confident, and productive.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>These are three areas that define developer productivity. They all work together, and problems in one area can and will bleed over into others.</p>
+<p>If developers don&#39;t have good tooling, then productivity will suffer due to low morale, lowering quality and increasing time to complete tasks.</p>
+<p>If tasks are not created with sufficient and specific information, then productivity will suffer through a barrier to entry that slows adoption of new work, likely impacting milestones and deadlines.</p>
+<p>If no time is alloted to codebase cleanliness, then productivity will suffer through maintainability issues.</p>
+<p>I&#39;m not making the claim that solving for these three areas will result in highly productive developers, but instead that issues in any or multiple of these areas will bring out the opposite.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/14/Initial-thoughts-on-SOLO/" rel="prev" title="Initial thoughts on SOLO">
+                  <i class="fa fa-chevron-left"></i> Initial thoughts on SOLO
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/17/The-Pitfalls-of-Customization/" rel="next" title="The Pitfalls of Customization">
+                  The Pitfalls of Customization <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

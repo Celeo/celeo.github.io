@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writing websites in Rust">
+<meta property="og:url" content="https://celeo.github.io/2021/08/09/Writing-websites-in-Rust/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs? WARNING: this is a bit of a rant and not likely helpful.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-10T00:57:59.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2021/08/09/Writing-websites-in-Rust/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2021/08/09/Writing-websites-in-Rust/","path":"2021/08/09/Writing-websites-in-Rust/","title":"Writing websites in Rust"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Writing websites in Rust | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/08/09/Writing-websites-in-Rust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Writing websites in Rust | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Writing websites in Rust
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-09 17:57:59" itemprop="dateCreated datePublished" datetime="2021-08-09T17:57:59-07:00">2021-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>You&#39;ll certainly end up with a fast, safe, and easy-to-deploy service, but is it worth the tradeoffs?</p>
+<p><strong>WARNING</strong>: this is a bit of a rant and not likely helpful.</p>
+<span id="more"></span>
+
+<p>Not for me.</p>
+<p>I&#39;ve been playing around with the new <a target="_blank" rel="noopener" href="https://crates.io/crates/axum">axum</a> library, which builds on top of <a target="_blank" rel="noopener" href="https://crates.io/crates/tokio">tokio</a> and <a target="_blank" rel="noopener" href="https://crates.io/crates/hyper">hyper</a> and accepts middleware from <a target="_blank" rel="noopener" href="https://crates.io/crates/tower">tower</a> among others. Sounds like a good time. Their <a target="_blank" rel="noopener" href="https://docs.rs/axum/0.1.3/axum/">documentation</a> seems well constructed, the tokio Discord server is active and helpful, and they have a good collection of <a target="_blank" rel="noopener" href="https://github.com/tokio-rs/axum/tree/main/examples">examples</a>.</p>
+<p>The service I wanted to create is very simple - a pastebin-style website. I&#39;d use templates for the HTML, and an auth-less no-edit paste system with a &quot;delete after&quot; date. There are only 4 endpoints:</p>
+<ul>
+<li>index page</li>
+<li>view paste page</li>
+<li>new paste page</li>
+<li>new paste POST page</li>
+</ul>
+<p>This is not hard, and not complicated.</p>
+<p>I&#39;m using <a target="_blank" rel="noopener" href="https://crates.io/crates/sqlx">sqlx</a> to handle the storage in SQLite. Again, <em>simple</em>. <a target="_blank" rel="noopener" href="https://crates.io/crates/askama">askama</a> handles the templates in a not-so-simple way, but it&#39;s not too complicated to connect with axum with the examples provided (though I had to basically write a custom implementation of the bridge function, as the code in the example didn&#39;t work for me). <a target="_blank" rel="noopener" href="https://crates.io/crates/uuid">uuid</a> is a simple way to create UUID v4s, though I had to play around with the feature flags to get what I wanted.</p>
+<p>The list of dependencies I&#39;m using can be seen <a target="_blank" rel="noopener" href="https://github.com/Celeo/pastey/blob/5a6837b9f585167c4c649b6f659970d1130232ca/Cargo.toml">here</a>, though keep in mind I haven&#39;t slimmed them down at the time of writing. If I cannot slim them down, then there&#39;s a lot.</p>
+<p>Now, the time penalty you pay for adding dependencies is only noticeable on the first compiles (via <code>cargo b</code>, <code>cargo clippy</code>, <em>and</em> by VSCode). It&#39;s not bad. What <em>does</em> annoy me is the penalty I am paying for each compile: 5 to 10 seconds. Each. Change.</p>
+<p>Now sure, there&#39;s a lot going on behind the scenes for this, and I get a fast, safe, single binary deployable. Right now, I have some programs that are writing in Elixir and deployed via podman images rsync&#39;d directly to a VPS - neither release-style building time nor size are an issue right now. It&#39;s the <em>developer UX</em> that is rough. If I make a change to a template, that&#39;s a recompile. If I make a change to a route, that&#39;s a recompile. If I add a log statement, that&#39;s a recompile. Does that make sense? Yes. Is it nice? No. The size of that directory right now is 1.3GB. Yes, GB. The directory size of a Discord bot I run is 118<em>MB</em>.</p>
+<p>Is Rust a good language? Yes, absolutely! I really like many of the things that the Rust language, ecosystem, team, and community do, and I absolutely plan to continue to use Rust in many different ways. But for web servers? Nah, I&#39;m happy with Python.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/17/The-Pitfalls-of-Customization/" rel="prev" title="The Pitfalls of Customization">
+                  <i class="fa fa-chevron-left"></i> The Pitfalls of Customization
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/12/Initial-thoughts-on-New-World/" rel="next" title="Initial thoughts on New World">
+                  Initial thoughts on New World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

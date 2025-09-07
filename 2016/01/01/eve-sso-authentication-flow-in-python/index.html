@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="I&#39;ve written a handful of web apps using EVE Online&#39;s Single Sign-On service, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, Preston.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EVE SSO authentication flow in Python">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/eve-sso-authentication-flow-in-python/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="I&#39;ve written a handful of web apps using EVE Online&#39;s Single Sign-On service, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, Preston.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/eve-sso-authentication-flow-in-python/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/eve-sso-authentication-flow-in-python/","path":"2016/01/01/eve-sso-authentication-flow-in-python/","title":"EVE SSO authentication flow in Python"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>EVE SSO authentication flow in Python | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/eve-sso-authentication-flow-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="EVE SSO authentication flow in Python | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EVE SSO authentication flow in Python
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>I&#39;ve written a handful of web apps using <a target="_blank" rel="noopener" href="https://www.eveonline.com/">EVE Online&#39;s</a> <a target="_blank" rel="noopener" href="https://community.eveonline.com/news/dev-blogs/eve-online-sso-and-what-you-need-to-know/">Single Sign-On service</a>, so I&#39;m sharing an example app I&#39;ve written to demonstrate that flow using my CREST library, <a target="_blank" rel="noopener" href="https://celeodor.com/prest/">Preston</a>.</p>
+<span id="more"></span>
+
+<p>First off, I&#39;d like to point to the <a target="_blank" rel="noopener" href="https://eveonline-third-party-documentation.readthedocs.io/en/latest/sso/authentication.html">community-supported documentation on the SSO authentication flow</a> over at readthedocs as it&#39;s what I used to learn the process (and a fair bit of trial and error, which is what I&#39;d like to save you from).</p>
+<p>Second, you can find the repository demonstrating this flow at <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python">github.com&#x2F;Celeo&#x2F;EVE-SSO-Python</a>. If you create your own EVE third party app at <a target="_blank" rel="noopener" href="http://developers.eveonline.com/">developers.eveonline.com</a> and fill in the <code>config.cfg</code> file, you&#39;ll have a working example.</p>
+<p>Preston handles most of this authentication flow for us, including</p>
+<ul>
+<li>generating the URL to redirect the user to</li>
+<li>generating the API token from the code returned by the service</li>
+<li>getting the user&#39;s character information from the EVE APIs</li>
+</ul>
+<p>The job of the controller code wrapping this process is to:</p>
+<ol>
+<li>get the URL from Preston</li>
+<li>redirect the user to that URL</li>
+<li>catch the returned response</li>
+<li>give Preston the code</li>
+<li>handle user login from the available character data</li>
+</ol>
+<p>5 steps is not bad for authenticating a user against a service on another site.</p>
+<p>First off, getting the URL from Preston is a call to <code>get_authorize_url</code>. I include this in the <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python/blob/bc697dd2f1201254147b63a7bbf1a04669357d82/eve_sso/app.py#L64"><code>Flask.render_template</code> call to a template</a> that acts as the launch page for the user&#39;s trip to the EVE SSO:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> render_template(<span class="string">&#x27;login.html&#x27;</span>, url=preston.get_authorize_url())</span><br></pre></td></tr></table></figure>
+
+<p>When you set up an EVE third part application, you have to provide a <strong>callback URL</strong>. This is where that comes into play: when your user logs into their account and selects their character to authenticate with for your app, the SSO sends the user a redirect to your callback URL which needs to come back to your web app. Your controller&#39;s responsibilities 2 through 5 from the list above are handled at this point.</p>
+<p>When the SSO sends your user back to your site, the code that Preston needs is in the query string, so the URL will look something like <code>[your_callback_url]?code=[auth_code]</code>. Grab the code from the URL with a <a target="_blank" rel="noopener" href="https://github.com/Celeo/EVE-SSO-Python/blob/bc697dd2f1201254147b63a7bbf1a04669357d82/eve_sso/app.py#L86"><code>request.args</code> lookup</a> and pass it to Preston:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth = preston.authenticate(request.args[<span class="string">&#x27;code&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>It&#39;s worth noting that this code can be absent if something when wrong, so you&#39;ll want to either wrap this line in a <code>try-except</code> or use the <code>request.args.get</code> method to return <code>None</code> if the key isn&#39;t in the dictionary and then check for <code>if not code:</code>. I opt for the <code>try-except</code> as it can also catch anything that goes wrong as part of the process of getting the API token from the code inside Preston.</p>
+<p>Now that you have an <code>auth</code> variable that&#39;s an instance of <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L270"><code>preston.crest.preston.AuthPreston</code></a>, you can access the user&#39;s authenticated character&#39;s basic information. Preston gives you access to this information through a call to <a target="_blank" rel="noopener" href="https://github.com/Celeo/Preston/blob/master/preston/crest/preston.py#L293"><code>whoami</code></a>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_info = auth.whoami()</span><br></pre></td></tr></table></figure>
+
+<p>The returned dictionary contains the character&#39;s name, which this example is using for <a target="_blank" rel="noopener" href="https://flask-login.readthedocs.io/en/latest/">flask-login</a>, and their API ID, which is useful for making additional lookups on the EVE XML API like their corporation:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;Scopes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterID&quot;</span><span class="punctuation">:</span> <span class="number">91316135</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;ExpiresOn&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2016-09-04T03:56:11&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;TokenType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Character&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Celeo Servasse&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;IntellectualProperty&quot;</span><span class="punctuation">:</span> <span class="string">&quot;EVE&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;CharacterOwnerHash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hCgR7LGm...&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>When solely using the SSO to authenticate a user, the <code>Scopes</code> field is always empty.</p>
+<p>From here, it&#39;s as simple as taking the character&#39;s name and checking for an existing <code>User</code> model:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user = User.query.filter_by(name=character_name).first()</span><br></pre></td></tr></table></figure>
+
+<p>If <code>user</code> isn&#39;t <code>None</code>, then this character has been used to authenticate a user before. Log the user in with that model and send them off to the rest of the app:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> user:</span><br><span class="line">    login_user(user)</span><br><span class="line">    flash(<span class="string">&#x27;Logged in&#x27;</span>, <span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>If <code>user is None</code>, however, this is the first time that this character has been used for authentication on the app, so a new <code>User</code> model will need to be created before logging them in and sending them off:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user = User(character_name)</span><br><span class="line">db.session.add(user)</span><br><span class="line">db.session.commit()</span><br><span class="line">login_user(user)</span><br><span class="line">flash(<span class="string">&#x27;Logged in&#x27;</span>, <span class="string">&#x27;success&#x27;</span>)</span><br><span class="line"><span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>That&#39;s really it. Add some <code>flask_login.login_required</code> decorators to endpoints that you don&#39;t want just anyone to see and you have an app that restricts access using EVE&#39;s SSO.</p>
+<p>If you want to see a larger app that uses this flow, my <a target="_blank" rel="noopener" href="https://github.com/Celeo/GETIN-HR">GETIN-HR</a> app is a good example.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/prest-refresh-tokens/" rel="prev" title="Prest refresh tokens">
+                  <i class="fa fa-chevron-left"></i> Prest refresh tokens
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/eve-sso-authentication-flow-in-js-and-python/" rel="next" title="EVE SSO authentication flow in JS and Python">
+                  EVE SSO authentication flow in JS and Python <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

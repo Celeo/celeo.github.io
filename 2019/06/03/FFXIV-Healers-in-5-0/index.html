@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="My thoughts on the Healer jobs in FFXIV 5.0: Shadowbringers from what we know so far.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFXIV: Healers in 5.0">
+<meta property="og:url" content="https://celeo.github.io/2019/06/03/FFXIV-Healers-in-5-0/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="My thoughts on the Healer jobs in FFXIV 5.0: Shadowbringers from what we know so far.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-06-04T03:33:15.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.485Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="games">
+<meta property="article:tag" content="ffxiv">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2019/06/03/FFXIV-Healers-in-5-0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2019/06/03/FFXIV-Healers-in-5-0/","path":"2019/06/03/FFXIV-Healers-in-5-0/","title":"FFXIV: Healers in 5.0"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FFXIV: Healers in 5.0 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">2.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resources-for-5-0-changes"><span class="nav-number">3.</span> <span class="nav-text">Resources for 5.0 changes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Initial-reaction"><span class="nav-number">4.</span> <span class="nav-text">Initial reaction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Concerns"><span class="nav-number">5.</span> <span class="nav-text">Concerns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Counter-arguments"><span class="nav-number">6.</span> <span class="nav-text">Counter arguments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2019/06/03/FFXIV-Healers-in-5-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="FFXIV: Healers in 5.0 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FFXIV: Healers in 5.0
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-03 20:33:15" itemprop="dateCreated datePublished" datetime="2019-06-03T20:33:15-07:00">2019-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>My thoughts on the Healer jobs in FFXIV 5.0: Shadowbringers from what we know so far.</p>
+<span id="more"></span>
+
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ol>
+<li>Background</li>
+<li>Resources for 5.0 changes</li>
+<li>Initial reaction</li>
+<li>Concerns</li>
+<li>Counter arguments</li>
+<li>Summary</li>
+</ol>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>I&#39;ve been playing FFXIV since 3.0: Heavensward, off and on. It&#39;s been <em>mostly</em> my main MMORPG for 2 years. During that time, I&#39;ve mostly played the healers, especially in raiding content. For the jobs I have at level 70, this is the order of how much time I&#39;ve spent on each:</p>
+<ol>
+<li>AST</li>
+<li>SCH</li>
+<li>WAR</li>
+<li>PLD</li>
+<li>BRD</li>
+<li>DRG</li>
+<li>DRK</li>
+<li>RDM</li>
+<li>WHM</li>
+<li>SMN</li>
+</ol>
+<p>As you can see, I have all 3 healers and all 3 tanks at level 70. I&#39;m what most would probably categorize as a &quot;mid-core raider&quot;. I&#39;ve farmed all of the normal and Ex primals as well as all the normal raids. I&#39;ve cleared and farmed (almost always in PUGs) Savage for O1-3&#x2F;5&#x2F;6. At each raid tier that I&#39;ve participated in, I&#39;ve geared at least 6 jobs to as high of an ilvl that I could with the content that I was willing to subject myself to PUGs to clear. I&#39;ve been in several short-lived static groups.</p>
+<p>In FFXIV, (good) healers have always filled downtime during fights with DPS. Sometimes, like during progression raiding, this isn&#39;t possible, as the healers are constantly on their toes fixing the lost health of the party. When the group learns the fights, however, there is downtime between mechanics that cause damage to the party. During this time, the healers can use their job&#39;s skills to support the party with extra buffing and damage. After all, it doesn&#39;t matter if everyone in the party is at 100% health or if only 1 person is up at the end of the fight as long as the boss dies. This isn&#39;t a TTRPG - there&#39;s no damage penalties from being at low health.</p>
+<h2 id="Resources-for-5-0-changes"><a href="#Resources-for-5-0-changes" class="headerlink" title="Resources for 5.0 changes"></a>Resources for 5.0 changes</h2><p>There&#39;s a lot of information about the changes coming to healers in 5.0. Rather than regurgitating all that info here, I&#39;ll include links to resources that I found helpful.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yAS-pGutt4o">https://www.youtube.com/watch?v=yAS-pGutt4o</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=tHRj7pSKm6c">https://www.youtube.com/watch?v=tHRj7pSKm6c</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=k5YOQIGc2Fs">https://www.youtube.com/watch?v=k5YOQIGc2Fs</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=bM2km4GpWoc">https://www.youtube.com/watch?v=bM2km4GpWoc</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=q9udCnUboGE">https://www.youtube.com/watch?v=q9udCnUboGE</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=h9GVqjPeSrI">https://www.youtube.com/watch?v=h9GVqjPeSrI</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LipyQ0tJr7Y">https://www.youtube.com/watch?v=LipyQ0tJr7Y</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=uc2X2MuOL-M">https://www.youtube.com/watch?v=uc2X2MuOL-M</a></li>
+</ul>
+<p>Additionally, many of those videos have threads on <a target="_blank" rel="noopener" href="https://old.reddit.com/r/ffxiv">&#x2F;r&#x2F;ffxiv</a>.</p>
+<h2 id="Initial-reaction"><a href="#Initial-reaction" class="headerlink" title="Initial reaction"></a>Initial reaction</h2><p>When I first saw the <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jaGxC7wnBDo">Job Actions</a> video from Square Enix, I was really excited for all the jobs - the animations did, and still do, look fantastic. I think the art and animation teams did a wonderful job. Specifially, the WHM&#39;s wings and the SCH&#39;s new pet really caught my eye. Additionally, all of AST&#39;s skills look great, per usual. When I saw the new AST card system in the preview though, I was both confused and concerned. I <em>like</em> the 4.0 AST card system. When the videos came out from the content creators about the changes to the individual jobs that are coming in 5.0, including tooltip screenshots and gameplay, I became even more confused and very, very concerned.</p>
+<h2 id="Concerns"><a href="#Concerns" class="headerlink" title="Concerns"></a>Concerns</h2><p>For the purpose of this post, I&#39;ll be focusing on AST and SCH, as I don&#39;t feel comfortable enough with WHM to present an opinion.</p>
+<p>Starting with <strong>AST</strong>, I can firmly state that I greatly dislike the new card system. As I said above, I like the 4.0 system. Fishing for the right card (notice how I didn&#39;t say &quot;fishing for <strong>Balance</strong>&quot;) <em>is</em> a lot of RNG, but with Redraw, Spread, Royal Road, and Sleeve Draw, there are a lot of <em>different</em> ways to get buffs through the class&#39;s mechanics, and it&#39;s up to the player to decide when and on whom to use those buffs. A lot of players say that the only way to play AST is to <em>only</em> play AoE Balance, as that&#39;s the best way to contribute to a party. If ASTs could always draw AoE Balance 100% of the time in 8-man content, they would. In 8-man content that&#39;s going well, AoE Balance is definitely the king.</p>
+<p>The benefit of AST having cards that aren&#39;t just Balance and Royal Road fodder is for all of the situations that aren&#39;t 8-man-going-well content. In 4-man content, I&#39;d much rather use an improved duration or potency Arrow&#x2F;Spear on a DPS job than doing an AoE anything. Even in 8-man content, using a Bole on the tank if they&#39;re low on CDs can save the pull, or using Ewer on myself or the other healer if we&#39;re getting low can allow us to get the group back on track. <strong>While Balance is universally good, it&#39;s not the only card that&#39;s good</strong>.</p>
+<p>The new cards are all mini-Balances, giving a 6% damage increase to either melee or ranged jobs (depending on the card) and 3% damage up to the other group. Minor Arcana can be used on transform these cards to Lord&#x2F;Lady which grant 8%&#x2F;4% to the same group, instead of being direct damage or oGCD heal abilites. Each card has 1 of 3 new &quot;seals&quot;, which are put into a new part of the job gauge. Every 180s, a new skill called Divination can be used to consume those seals and grant a damage up buff to the party of either 3% or 6%, depending on how many of the unique seals the AST has in their job gauge at the time. So, looking at these changes, we can see that SE removed all of the unique effects from the cards to just be damage increases that are less than what Balance is now. The new seal mechanic is a less-powerful AoE Balance on a significantly longer cooldown. We no longer have the ability to grant regen of any type, or damage reduction, or speed&#x2F;crit increases.</p>
+<p>Additionally, the change to Celestial Opposition (which is now a pretty bad ability overall) and the removal of Time Dialation remove the AST&#39;s ability to extend durations on any effects. As a side note, Draw and Play being seprated and Redraw being given 3 charges are both really nice changes. The stance-dependent healing changes are interesting, including the abilities that grant the <em>other</em> Sect&#39;s effect. I&#39;m not opposed to those, though the potencies on a lot of AST&#39;s abilities look low when compared to the other healers. AST didn&#39;t lose any DPS abilities directly, as the job only had the now-common &quot;1 DoT, 1 AoE, 1 spammable&quot; setup that the other 2 healer jobs are getting treated to.</p>
+<p>All in all, I don&#39;t like the new card system <strong>because it reduces the amount of thinking we do in combat</strong>. If SE is trying to reduce the amount of damage that healers contribute to in group content, then I&#39;m not automatically opposed to that (though I don&#39;t understand <em>why</em>). I&#39;m opposed to the reduction of in-combat mechanics for the purpose of simplifying the job because <strong>those mechanics were what we used to keep us from getting bored in between healing the group</strong>.</p>
+<p>SCH primarily sees SE confirming it to the 3-skill-DPS-kit that AST had. SCH has always had a strong oGCD healing kit that allowed it to put out a strong amount of personal DPS between healing. The 5.0 changes completely remove this identity in favor of increasing the amount of healing that SCH can output, which was already top of the line. Additionally, since many players only used Selene for pre-pull buffs, SE apparently thought it better to just make Selene a carbon-copy of Eos. Yes, there is now only a cosmetic difference between the two fairies. Additionally, Embrace has had its potency reduced, which is annoying. SCH, like AST, got a couple of new nice things, including a HoT to Sacred Soil and an auto fair summon after Dissipation (though with the new Aetherflow mechanics, SCH&#39;s will likely need this ability even less than they currently do, which is very rarely). The new fairy looks great, but its abilities are a little underwhelming.</p>
+<h2 id="Counter-arguments"><a href="#Counter-arguments" class="headerlink" title="Counter arguments"></a>Counter arguments</h2><ol>
+<li>You&#39;re a healer, just heal!</li>
+</ol>
+<p>We <em>are</em> healing - the loss of these mechanics mean that we&#39;ll be bored in between the times that we are and will be healing.</p>
+<ol start="2">
+<li>ASTs were just going to search for a Balance anyway!</li>
+</ol>
+<p>Since cards are RNG, refusing to use <em>potentially</em> less applicable cards in the moment rather than discarding to search for Balances is a DPS loss. Part of 4.0 AST is knowing when to use each card, rather than just using Balance.</p>
+<ol start="3">
+<li>The encounters will require more healing, so that&#39;s why you&#39;re getting more healing!</li>
+</ol>
+<p>We have no idea what the 70-80 content will require in terms of healing. Additionally, even if this is true, this won&#39;t solve for the 1-70 group content or any solo content. Additionally, if SE increases the amount of healing in normal-mode dungeons and trials such that even soft-core raiders are kept busy, they will have gated off a large part of the community that already finds that sort of content challenging. Healers having DPS abilities raises the <strong>skill ceiling</strong>, not the skill floor.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Overall, I&#39;m pretty concerned about the changes coming to healers in 5.0. I&#39;m not looking forward to how AST and SCH are going to play, especially AST. I hear WHM didn&#39;t get hurt too bad, but they got abilities that are largely what they already had, so WHM mains are pretty confused too. I&#39;ll definitely skill <em>play</em> a healer in 5.0, though I don&#39;t know if I&#39;ll <em>main</em> a healer.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/games/" rel="tag"># games</a>
+              <a href="/tags/ffxiv/" rel="tag"># ffxiv</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/08/MtA-2e-Arcanthus-Spells/" rel="prev" title="MtA 2e - Arcanthus Spells">
+                  <i class="fa fa-chevron-left"></i> MtA 2e - Arcanthus Spells
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/28/Shadowbringers-Healers-First-Impression/" rel="next" title="Shadowbringers Healers First Impression">
+                  Shadowbringers Healers First Impression <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

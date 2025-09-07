@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Thoughts on the Nim programming language.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nim">
+<meta property="og:url" content="https://celeo.github.io/2019/12/21/Nim/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Thoughts on the Nim programming language.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-21T23:01:31.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="nim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2019/12/21/Nim/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2019/12/21/Nim/","path":"2019/12/21/Nim/","title":"Nim"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nim | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#First-attempt"><span class="nav-number">2.</span> <span class="nav-text">First attempt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coming-back"><span class="nav-number">3.</span> <span class="nav-text">Coming back</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-through-Advent-of-Code"><span class="nav-number">4.</span> <span class="nav-text">Working through Advent of Code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Notable-good-parts"><span class="nav-number">4.1.</span> <span class="nav-text">Notable good parts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Things-that-I-don-39-t-like"><span class="nav-number">4.2.</span> <span class="nav-text">Things that I don&#39;t like</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-I-think-now"><span class="nav-number">5.</span> <span class="nav-text">What I think now</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-resources"><span class="nav-number">6.</span> <span class="nav-text">Learning resources</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2019/12/21/Nim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nim | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nim
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-21 15:01:31" itemprop="dateCreated datePublished" datetime="2019-12-21T15:01:31-08:00">2019-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Thoughts on the <a target="_blank" rel="noopener" href="https://nim-lang.org/">Nim programming language</a>.</p>
+<span id="more"></span>
+
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ol>
+<li>First attempt to learn</li>
+<li>Coming back</li>
+<li>Working through Advent of Code</li>
+<li>What I think now</li>
+<li>Learning resources</li>
+</ol>
+<h2 id="First-attempt"><a href="#First-attempt" class="headerlink" title="First attempt"></a>First attempt</h2><p>I first started playing around with Nim about a year ago, having been drawn to it&#39;s Python-like syntax, speed, and compile-to-binary capabilities. I love the Python language, but I have grown far more fond of static typing in recent years, and Python&#39;s deployment strategies have always irked me. Nim seemed like a perfect language to solve for the problems that I had with Python, while not abandoning the parts I like (I&#39;ve never had a problem with whitespace-dependent languages, for instance).</p>
+<p>My initial impression was good - the syntax is simple enough, it ran fast, and the compiler pointed out if I did something wrong. I started to get tripped up when it came to objects though, as that&#39;s when I first came across Nim&#39;s <a target="_blank" rel="noopener" href="https://nim-lang.org/docs/manual.html#procedures-method-call-syntax">&quot;unified call syntax&quot;</a>. If you&#39;re unaware, the following are all equivalent (taken from the link):</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo len <span class="string">&quot;abc&quot;</span></span><br><span class="line">echo <span class="string">&quot;abc&quot;</span>.len</span><br><span class="line">echo(<span class="string">&quot;abc&quot;</span>.len())</span><br><span class="line">e_ch_O(len(<span class="string">&quot;abc&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>Yeah, it&#39;s weird.</p>
+<p>Unfortunately, the lack of uniformity soured the language pretty drastically for me. Combined with the <code>import</code> functionality, which is pretty different than Python, I decided that Nim wasn&#39;t for me. I ended up turning to learn <a target="_blank" rel="noopener" href="https://www.rust-lang.org/">Rust</a>, still searching for a fast-to-run, compile-to-binary language (I&#39;m not a big fan of Go, though it solves both of those requirements).</p>
+<h2 id="Coming-back"><a href="#Coming-back" class="headerlink" title="Coming back"></a>Coming back</h2><p>On Sept 23, 2019, Nim had its 1.0 release. First off, congratulations to the team for hitting that milestone!</p>
+<p>I found out about the 1.0 release from reddit and figured that it was time to give the language another (better) chance. Installation was simple with the <a target="_blank" rel="noopener" href="https://nim-lang.org/install_unix.html">choosenim</a> (sort of like <a target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm">nvm</a> or <a target="_blank" rel="noopener" href="https://rustup.rs/">rustup</a>) tool (though I used <a target="_blank" rel="noopener" href="https://brew.sh/">brew</a> on mac). I spend some time going through some tutorials and rewriting some CLI utilities I&#39;d written in Rust or Go into Nim (they&#39;re part of my job, so I can&#39;t share them).</p>
+<p>I played with the language off and on through October and November, and decided that I&#39;d do this year&#39;s <a target="_blank" rel="noopener" href="https://adventofcode.com/">Advent of Code</a> entirely in Nim as continued exercise in the language.</p>
+<h2 id="Working-through-Advent-of-Code"><a href="#Working-through-Advent-of-Code" class="headerlink" title="Working through Advent of Code"></a>Working through Advent of Code</h2><p>I participated in 2018&#39;s AoC a bit (only finished 11 stars), and wanted to participate more this year. As of writing this, I&#39;m definitely behind - only 18 stars of an available 42 - but I&#39;ve skipped a handful of parts that just didn&#39;t sound interesting to me. You can find my work for this year&#39;s AoC <a target="_blank" rel="noopener" href="https://github.com/celeo/advent2019">on my GitHub</a>.</p>
+<h3 id="Notable-good-parts"><a href="#Notable-good-parts" class="headerlink" title="Notable good parts"></a>Notable good parts</h3><ul>
+<li>Simple syntax</li>
+<li>Good module documentation</li>
+<li>Easy access to <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a> functions like <code>map</code>, <code>filter</code>, and <code>fold</code> through the <a target="_blank" rel="noopener" href="https://nim-lang.github.io/Nim/sequtils.html">sequtils module</a></li>
+<li>Easy file I&#x2F;O (important for reading input for every part)</li>
+<li>Clear separation between mutable and immutable variables&#x2F;parameters helps prevent bugs</li>
+<li>Being able, though not <em>required</em>, to use symbols as proc names</li>
+</ul>
+<h3 id="Things-that-I-don-39-t-like"><a href="#Things-that-I-don-39-t-like" class="headerlink" title="Things that I don&#39;t like"></a>Things that I don&#39;t like</h3><ul>
+<li>Having to create a <code>new&lt;name&gt;</code> proc for simpler object creation syntax is annoying. Example:</li>
+</ul>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span></span><br><span class="line">  <span class="type">Point</span> = <span class="keyword">object</span></span><br><span class="line">    x: <span class="type">int</span></span><br><span class="line">    y: <span class="type">int</span></span><br><span class="line">    steps: <span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">block</span>:</span><br><span class="line">  <span class="keyword">let</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    y = <span class="number">2</span></span><br><span class="line">    <span class="comment"># without a proc to create the object, each variable has to be explicitly assigned</span></span><br><span class="line">    p = <span class="type">Point</span>(x: x, y: y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># helper proc</span></span><br><span class="line"><span class="keyword">proc</span> newPoint(x, y, steps: <span class="type">int</span>): <span class="type">Point</span> =</span><br><span class="line">  <span class="type">Point</span>(x: x, y: y, steps: steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">block</span>:</span><br><span class="line">  <span class="keyword">let</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    y = <span class="number">2</span></span><br><span class="line">    <span class="comment"># now this object can be created via the proc</span></span><br><span class="line">    p = newPoint(x, y)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Writing assertions via <code>doAssert</code> or <code>assert</code> - they properly throw a runtime exception if the assertion fails, but don&#39;t print out any information about the assertion like in Java, JavaScript, Rust, etc. It&#39;s not a good developer UX to have to <em>print both sides</em> of an assertion <em>before the assertion</em> that&#39;s failing, <em>for every assertion</em>, just to debug</li>
+<li>Compiler errors can be hard to understand and point to parts of the code that aren&#39;t actually the problem</li>
+</ul>
+<h2 id="What-I-think-now"><a href="#What-I-think-now" class="headerlink" title="What I think now"></a>What I think now</h2><p>Overall, I really like Nim, and look forward to its future as development continues. There are a number of things that are missing, like a good mocking library, a eslint&#x2F;gofmt&#x2F;rustfmt-style formatting tool, better assertions, better compiler error messages, etc., but the language lets me get to creating a solution for a problem without hassle, just like Python does. One of my biggest critiques of Rust is that I don&#39;t find it suitable for quick-and-dirty problem solving because of the time buy-in that all new projects take to set up (cargo is great, but for example, adding JSON support to a project takes like 3 minutes).</p>
+<p>On Dec 20, the Nim team put out the <a target="_blank" rel="noopener" href="https://nim-lang.org/blog/2019/12/20/community-survey-2019.html">2019 Nim Community Survey</a>, which is a great opportunity for developers to give their feedback on the language.</p>
+<p>I&#39;m planning on continuing using Nim at home and at work for all scripting and quick solutions I need, as well as looking into more complex usages, like web servers and the compile-to-JavaScript feature.</p>
+<h2 id="Learning-resources"><a href="#Learning-resources" class="headerlink" title="Learning resources"></a>Learning resources</h2><p>Here are a handful of resources that will help to learn the language and ecosystem.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://nim-lang.org/">Main website</a></li>
+<li><a target="_blank" rel="noopener" href="https://nim-lang.org/docs/lib.html">Module docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://nim-lang.org/docs/manual.html">Manual</a></li>
+<li><a target="_blank" rel="noopener" href="https://nim-lang.org/docs/nep1.html">Style guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://nim-by-example.github.io/">Getting started</a></li>
+<li><a target="_blank" rel="noopener" href="https://narimiran.github.io/nim-basics/">Ground-up tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/nim-in-action/9781617293436/">Nim book</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/nim/" rel="tag"># nim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/24/Building-Rust-on-CircleCi/" rel="prev" title="Building Rust on CircleCI">
+                  <i class="fa fa-chevron-left"></i> Building Rust on CircleCI
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/24/Thoughts-on-Rust/" rel="next" title="Thoughts on Rust">
+                  Thoughts on Rust <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

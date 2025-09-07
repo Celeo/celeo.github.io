@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Thoughts on the Rust programming language after 6 months of learning and use.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thoughts on Rust">
+<meta property="og:url" content="https://celeo.github.io/2019/12/24/Thoughts-on-Rust/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Thoughts on the Rust programming language after 6 months of learning and use.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-24T22:54:52.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2019/12/24/Thoughts-on-Rust/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2019/12/24/Thoughts-on-Rust/","path":"2019/12/24/Thoughts-on-Rust/","title":"Thoughts on Rust"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Thoughts on Rust | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#My-background"><span class="nav-number">2.</span> <span class="nav-text">My background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Rust"><span class="nav-number">3.</span> <span class="nav-text">Learning Rust</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Documentation"><span class="nav-number">3.1.</span> <span class="nav-text">Documentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler"><span class="nav-number">3.2.</span> <span class="nav-text">Compiler</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-good-parts"><span class="nav-number">4.</span> <span class="nav-text">The good parts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-bad-parts"><span class="nav-number">5.</span> <span class="nav-text">The bad parts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moving-forward"><span class="nav-number">6.</span> <span class="nav-text">Moving forward</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2019/12/24/Thoughts-on-Rust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Thoughts on Rust | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Thoughts on Rust
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-24 14:54:52" itemprop="dateCreated datePublished" datetime="2019-12-24T14:54:52-08:00">2019-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Thoughts on the <a target="_blank" rel="noopener" href="https://www.rust-lang.org/">Rust</a> programming language after 6 months of learning and use.</p>
+<span id="more"></span>
+
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ul>
+<li>My background</li>
+<li>Learning Rust</li>
+<li>The good parts</li>
+<li>The bad parts</li>
+<li>Moving forward</li>
+</ul>
+<h2 id="My-background"><a href="#My-background" class="headerlink" title="My background"></a>My background</h2><p>I&#39;ve always preferred high-level languages. Java, Python, JavaScript, C#, etc. I spend 8 or so months learning C++ in college, but haven&#39;t ever used it outside that class. I find that for the side projects that I work on and the work that I do, I need a language that will help me get things done quickly and accurately, instead of allowing (or requiring) me to micro-manage things like memory usage. To this end, I haven&#39;t needed to really, <em>actually</em> learn a lower level language like C&#x2F;C++.</p>
+<h2 id="Learning-Rust"><a href="#Learning-Rust" class="headerlink" title="Learning Rust"></a>Learning Rust</h2><p>There were many things that drew me to Rust, including it repeatedly winning StackOverflow&#39;s &quot;most loved language&quot;, the great things that people were saying about the language and ecosystem on reddit, HackerNews, and other forums, and the compile-to-binary-that-runs-fast aspect (solving for the few things that I miss having when using Python). Additionally, I had wanted to learn more about functional programming, but had been burned by trying to learn FP through a solely FP language called Idris. I&#39;d read that Rust had FP-like aspects, but made them much more approachable.</p>
+<p>I&#39;m not unique in writing that learning Rust was very tough. As someone who hasn&#39;t written in a lower level language in years, I hadn&#39;t encountered many of the problems that Rust was solving for, like making sure memory was freed at the right time, making sure memory wasn&#39;t accessed by multiple procedures, etc. The languages I used always had runtimes or GCs that handled those processes. Suddenly, I had to think about things that I hadn&#39;t thought about, in ways that didn&#39;t really make sense, as I hadn&#39;t had the pain points of <em>not</em> having the language help me with those issues. Not only did I have to learn about the issues, but I also had to learn about how Rust solved for them.</p>
+<p>There are two really great things about learning Rust: the documentation and the compiler.</p>
+<h3 id="Documentation"><a href="#Documentation" class="headerlink" title="Documentation"></a>Documentation</h3><p>Rust&#39;s documentation is really outstanding. I don&#39;t think that the language would have reached the popularity that it has and continues to expand on if the documentation wasn&#39;t at the quantity and quality that new and current users enjoy today. There are many <a target="_blank" rel="noopener" href="https://www.rust-lanng.org/learn">official writings</a> on learning the language and ecosystem, and also a lot of community-maintained resources that you can find across the web. Learning Rust is not easy, but reading the documentation makes it feel like a much less daunting prospect - you&#39;re not left alone to struggle through it all.</p>
+<h3 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h3><p>Rust&#39;s compiler is really, really impressive, and not only because of the borrow checker. Whenever I write in another language after having experienced the Rust compiler&#39;s error messages, I experience a twinge of longing for those clear, explanatory, colored, and <a target="_blank" rel="noopener" href="https://docs.rust-lang.org/error-index.html">indexed</a>. Any time the compiler complains about an error in your code, if you want more information, you can run the command <code>rustc --explain &lt;error&gt;</code> and get information not just on what tends to cause the error, but also how to most commonly resolve it. Although I had many more errors in my Rust code while learning than in most other languages, the compiler&#39;s ability to pinpoint where exactly the error was, explaining why the code was wrong, and also giving potential solutions meant that I had to search the web for answers less frequently than for other languages.</p>
+<h2 id="The-good-parts"><a href="#The-good-parts" class="headerlink" title="The good parts"></a>The good parts</h2><p>I just highlighted two huge positives, but there are certainly more.</p>
+<p>Extending on the high-quality documentation for the language, I found a majority of the popular libraries that I reached for continued this spirit of being well-documented. Rust&#39;s compiler contains <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rustdoc/index.html">rustdoc</a>, a utility for turning function and variable docstrings into actual webpages, complete with indexing, searching, and everything that I had become used to in the standard library documentation. Library authors were encouraged to use this functionality, as all of Rust&#39;s <a target="_blank" rel="noopener" href="https://crates.io/">public packages (&quot;crates&quot;)</a> get free documentation hosting through <a target="_blank" rel="noopener" href="https://docs.rs/">docs.rs</a>. All library authors have to do is write the docstrings, and the free-to-use Rust documentation site builds and hosts the documentation.</p>
+<p>If you go looking into learning the language, you&#39;ll find many people writing about how open and welcoming the community was. I never really interacted with the community, preferring a &quot;read-only&quot; approach of just consuming information to fuel my learning, but from what I read, that ideal holds true.</p>
+<p>Finally, <a target="_blank" rel="noopener" href="https://docs.rust-lang.org/cargo">cargo</a>, the Rust package manager, is an absolute dream. It handles searching for, getting information on, and downloading dependencies, as well as building, running, and testing projects, and even <a target="_blank" rel="noopener" href="https://github.com/rust-lang/rustfmt">formatting</a> and <a target="_blank" rel="noopener" href="https://github.com/rust-lang/rust-clippy">linting</a>) to help programmers write better code. I wish every other language had a package manager like Cargo.</p>
+<p>Also, <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/macro.unimplemented.html"><code>unimplemented!()</code></a> is awesome.</p>
+<h2 id="The-bad-parts"><a href="#The-bad-parts" class="headerlink" title="The bad parts"></a>The bad parts</h2><p>Rust&#39;s compile time is a bummer. I totally understand that the compiler is getting faster month by month as very smart people work on it, and also that it has a lot to do, so I don&#39;t fault it for being slow. Unfortunately, it contributed to me putting Rust on the shelf instead of giving it a slot on my everyday tool belt.</p>
+<p>Starting a new project in Rust is really quick (thanks, cargo!), but as soon as you start to add dependencies, like the outstanding data (de)serialization library <a target="_blank" rel="noopener" href="https://serde.rs/">serde</a>, compile times start to creep up. For the type of projects that I work on, it was pretty common to need JSON (de)serialization, HTTP calls, and logging. All of these libraries are outstanding, but compiling a no-op project for the first time with these libraries added meant waiting several minutes for everything to get ready. Note that subsequent compiles took significantly less time, as the compiler (I assume) cached the built libraries. This &quot;caching&quot; seemed to be local to the project I was working on, though, which meant that this initial compile effort was repeated for every new project I started, and when learning a language, that can be often. I would say that this initial compile time wouldn&#39;t be an issue for cloning down a large project and building it, but even adding what I&#39;d consider pretty common utilities incurred a time cost more than I&#39;d like.</p>
+<p>And yes, I know that a few minutes isn&#39;t <em>really</em> a lot of time.</p>
+<p>The borrow checker is an incredible feature that is a huge part of the language. I enjoyed having it there when I wrote compliant code, and I appreciate everything that it does for the programmer. Learning to write code that satisfies the checker was a difficult task, but that&#39;s pretty much the biggest hurdle of learning the language. Unfortunately, even after spending months with the language, I&#39;d still run into instances where some code I had written wouldn&#39;t be compliant, and I&#39;d have to spend time satisfying the checker rather than actually moving forward with the project. I&#39;d wager that this is, in fact, my fault, and not the compiler&#39;s, but it still was unfortunate to run into these walls when I just wanted to write a quick little something.</p>
+<h2 id="Moving-forward"><a href="#Moving-forward" class="headerlink" title="Moving forward"></a>Moving forward</h2><p>Like I mentioned at the start, I never really had the <em>need</em> for a language like Rust. Whether it&#39;s a good or bad thing, I still don&#39;t. Rust as a language and ecosystem continue to impress me, and I wish nothing but the best for the teams working on and using the language. I spent time writing a <a target="_blank" rel="noopener" href="https://github.com/Celeo?utf8=%E2%9C%93&tab=repositories&q=&type=&language=rust">number of small programs, libraries, and utilities</a> in Rust to help me learn as well as to have something to show for the effort. I certainly think that working with Rust was overall a positive experience, and I&#39;d encourage anyone on the fence about devoting the time (for it definitely is a notable investment) to learning the language to do so.</p>
+<p>Over time, though, I found myself reaching for Python where others wrote about reaching for Rust, and for Java or JavaScript where people wrote about using Rust. I found myself still not needing the speed and security that Rust has built-in. As a developer, doing what I do right now at work and at home, I don&#39;t need Rust. And I&#39;m okay with that.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/rust/" rel="tag"># rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/21/Nim/" rel="prev" title="Nim">
+                  <i class="fa fa-chevron-left"></i> Nim
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/26/EVE-Online-s-APIs/" rel="next" title="The APIs of Eve Online">
+                  The APIs of Eve Online <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

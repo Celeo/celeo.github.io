@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="vgo is the (newest) official way to managed versioned dependencies in Go. In my most recent project, I’ve decided to use it instead of dep or glide, which I’ve used previously. Taking a leaf out of th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Travis CI, Codecov, and vgo">
+<meta property="og:url" content="https://celeo.github.io/2018/01/01/travis-codecov-vgo/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="vgo is the (newest) official way to managed versioned dependencies in Go. In my most recent project, I’ve decided to use it instead of dep or glide, which I’ve used previously. Taking a leaf out of th">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.493Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2018/01/01/travis-codecov-vgo/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2018/01/01/travis-codecov-vgo/","path":"2018/01/01/travis-codecov-vgo/","title":"Travis CI, Codecov, and vgo"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Travis CI, Codecov, and vgo | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-it-all-to-work"><span class="nav-number">1.</span> <span class="nav-text">Getting it all to work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Getting-vgo-installed-in-the-build"><span class="nav-number">1.1.</span> <span class="nav-text">Getting vgo installed in the build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing-via-vgo"><span class="nav-number">1.2.</span> <span class="nav-text">Testing via vgo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coverage"><span class="nav-number">1.3.</span> <span class="nav-text">Coverage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-config"><span class="nav-number">1.4.</span> <span class="nav-text">Full config</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary"><span class="nav-number">2.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2018/01/01/travis-codecov-vgo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Travis CI, Codecov, and vgo | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Travis CI, Codecov, and vgo
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2018-01-01T00:00:00-08:00">2018-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://github.com/golang/vgo">vgo</a> is the (newest) official way to managed versioned dependencies in Go. In my <a target="_blank" rel="noopener" href="https://github.com/Celeo/dnd">most recent</a> project, I’ve decided to use it instead of dep or glide, which I’ve used previously. Taking a leaf out of the recent work I’ve been doing <em>at</em> work, I’ve hooked that repository up to some free CI tools, including <a href="travis-ci.org">Travis CI</a>.</p>
+<span id="more"></span>
+
+<h2 id="Getting-it-all-to-work"><a href="#Getting-it-all-to-work" class="headerlink" title="Getting it all to work"></a>Getting it all to work</h2><p>The chief problem I had was getting vgo to play nice on Travis. You can’t tell now because I rebased my commit history, but I had a lot of trouble getting Travis to build and test what I actually wanted it to without throwing errors about Go dependencies and GitHub errors.</p>
+<h3 id="Getting-vgo-installed-in-the-build"><a href="#Getting-vgo-installed-in-the-build" class="headerlink" title="Getting vgo installed in the build"></a>Getting vgo installed in the build</h3><p>First off, getting vgo installed, as it doesn’t exist by default on Travis (obviously). Travis has an <strong>install</strong> step that I’m using to install vgo:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">go</span> <span class="string">get</span> <span class="string">-u</span> <span class="string">golang.org/x/vgo</span></span><br></pre></td></tr></table></figure>
+
+<p>That should look very familiar - it’s just installing vgo like any other <strong>go get</strong> command would.</p>
+<h3 id="Testing-via-vgo"><a href="#Testing-via-vgo" class="headerlink" title="Testing via vgo"></a>Testing via vgo</h3><p>By default, Travis runs the test command against the <strong>go</strong> binary, so I’m overriding the <strong>script</strong> step to use vgo instead:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vgo</span> <span class="string">test</span> <span class="string">-v</span> <span class="string">-race</span> <span class="string">-coverprofile=coverage.txt</span> <span class="string">-covermode=atomic</span> <span class="string">./...</span></span><br></pre></td></tr></table></figure>
+
+<p>Note that command also runs the race condition checked (not actually needed for this library) and saves the coverage to a file called <strong>coverage.txt</strong>. That’s up in a bit.</p>
+<p>If you have <em>just this</em> for your vgo test command, it’ll fail, citing the GitHub API rate limits for unauthorized requests. The way to get around this on your dev machine is to edit <strong>~&#x2F;.netrc</strong> with a generated GitHub Personal Access Token. Travis recommends doing this too in the build in their <a target="_blank" rel="noopener" href="https://docs.travis-ci.com/user/languages/go/#Installing-Private-Dependencies">docs</a> for private dependencies, and it can work for vgo’s problems with GitHub rate limits.</p>
+<p>I didn’t want to put a key in a file in my repository, but I still needed that <strong>.netrc</strong> file to be created during my build, so I’m using an <strong>echo</strong> command and output redirection in the <strong>before_install</strong> step in Travis to <em>echo</em> that token into the <strong>.netrc</strong> file. I’m taking the token (and my GitHub login) as hidden environment variables in the job configuration so I don’t have to save them in plain text in the actual repo. The setup for the <strong>.netrc</strong> file looks like this:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">echo</span> <span class="string">-e</span> <span class="string">&quot;machine api.github.com\n  login $&#123;GITHUB_LOGIN&#125;\n  password $&#123;GITHUB_TOKEN&#125;&quot;</span> <span class="string">&gt;</span> <span class="string">~/.netrc</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.netrc</span></span><br></pre></td></tr></table></figure>
+
+<p>With this, vgo has the system configuration it needs to get past GitHub’s rate limits.</p>
+<h3 id="Coverage"><a href="#Coverage" class="headerlink" title="Coverage"></a>Coverage</h3><p>If you <em>just</em> wanted to run unit tests in vgo, then the command would just be <code>vgo test</code> with any other parameters you want to supply, but I’m also calculating coverage, as <a href="Codecov">http://codecov.io</a> is free for open-source repositories (just like Travis) and I’d like to have my repo have a coverage percentage badge as well as a “build: passing” badge.</p>
+<p>Codecov has an <a target="_blank" rel="noopener" href="https://github.com/codecov/example-go">example repo</a> for uploading public (or private) coverage metrics as part of the Travis build, so the end of my <strong>.travis.yml</strong> file looks like:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">after_success:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">bash</span> <span class="string">&lt;(curl</span> <span class="string">-s</span> <span class="string">https://codecov.io/bash)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Full-config"><a href="#Full-config" class="headerlink" title="Full config"></a>Full config</h3><p>My full <strong>.travis.yml</strong> file at time of writing is this:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">go</span></span><br><span class="line"><span class="attr">go:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;1.10.x&quot;</span></span><br><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">echo</span> <span class="string">-e</span> <span class="string">&quot;machine api.github.com\n  login $&#123;GITHUB_LOGIN&#125;\n  password $&#123;GITHUB_TOKEN&#125;&quot;</span> <span class="string">&gt;</span> <span class="string">~/.netrc</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.netrc</span></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">go</span> <span class="string">get</span> <span class="string">-u</span> <span class="string">golang.org/x/vgo</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">vgo</span> <span class="string">test</span> <span class="string">-v</span> <span class="string">-race</span> <span class="string">-coverprofile=coverage.txt</span> <span class="string">-covermode=atomic</span> <span class="string">./...</span></span><br><span class="line"><span class="attr">after_success:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">bash</span> <span class="string">&lt;(curl</span> <span class="string">-s</span> <span class="string">https://codecov.io/bash)</span></span><br></pre></td></tr></table></figure>
+
+<p>And my Travis repo settings has environment variables for <code>CODECOV_TOKEN</code>, <code>GITHUB_LOGIN</code>, and <code>GITHUB_TOKEN</code>.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>vgo was annoying to get running properly, but Travis runs great and Codecov was a breeze. Now that both sites are configured, I get builds and coverage metrics whenever I push, all for free.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/a-git-frontend-with-flask-1/" rel="prev" title="A Git frontend with Flask part 1">
+                  <i class="fa fa-chevron-left"></i> A Git frontend with Flask part 1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/05/08/First-Post/" rel="next" title="First post">
+                  First post <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

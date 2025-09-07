@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="What I&#39;ve learned by writing unit tests in Nim.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unit testing in Nim">
+<meta property="og:url" content="https://celeo.github.io/2020/01/04/Unit-testing-in-Nim/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="What I&#39;ve learned by writing unit tests in Nim.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-05T00:43:58.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="nim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2020/01/04/Unit-testing-in-Nim/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2020/01/04/Unit-testing-in-Nim/","path":"2020/01/04/Unit-testing-in-Nim/","title":"Unit testing in Nim"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Unit testing in Nim | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Initial-attempts"><span class="nav-number">2.</span> <span class="nav-text">Initial attempts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-expect"><span class="nav-number">3.</span> <span class="nav-text">Implementing expect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-check"><span class="nav-number">4.</span> <span class="nav-text">Finding check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing-an-async-proc"><span class="nav-number">5.</span> <span class="nav-text">Testing an async proc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">6.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2020/01/04/Unit-testing-in-Nim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Unit testing in Nim | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unit testing in Nim
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-04 16:43:58" itemprop="dateCreated datePublished" datetime="2020-01-04T16:43:58-08:00">2020-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>What I&#39;ve learned by writing unit tests in <a target="_blank" rel="noopener" href="https://nim-lang.org/">Nim</a>.</p>
+<span id="more"></span>
+
+<h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ol>
+<li>Initial attempts</li>
+<li>Implementing <code>expect</code></li>
+<li>Finding <code>check</code></li>
+<li>Testing an async proc</li>
+<li>Conclusion</li>
+</ol>
+<h2 id="Initial-attempts"><a href="#Initial-attempts" class="headerlink" title="Initial attempts"></a>Initial attempts</h2><p>When a developer creates a new library project, <a target="_blank" rel="noopener" href="https://github.com/nim-lang/nimble">nimble</a> creates a project scaffolding that includes a basic unit test:</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is just an example to get you started. You may wish to put all of your</span></span><br><span class="line"><span class="comment"># tests into a single file, or separate them into multiple `test1`, `test2`</span></span><br><span class="line"><span class="comment"># etc. files (better names are recommended, just make sure the name starts with</span></span><br><span class="line"><span class="comment"># the letter &#x27;t&#x27;).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To run these tests, simply execute `nimble test`.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="type">Downloads</span></span><br><span class="line">test <span class="string">&quot;can add&quot;</span>:</span><br><span class="line">  check add(<span class="number">5</span>, <span class="number">5</span>) == <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>From this, I can see that the <code>test</code> word along with a string description is used to separate tests. Running <code>nimble test</code> runs them and gives an output showing the passing test. Makes sense.</p>
+<h2 id="Implementing-expect"><a href="#Implementing-expect" class="headerlink" title="Implementing expect"></a>Implementing <code>expect</code></h2><p>I expanded on this to write a chunk of tests, and everything pretty much went well. Unfortunately, whenever a test I wrote would fail due to an assertion throwing an exception, I didn&#39;t get information on <em>why</em> the assertion was failing, just that it was. I was used to <a target="_blank" rel="noopener" href="https://jestjs.io/">Jest&#39;s</a> fantastic output, telling me what the parts of the assertion where at the time of evaluation.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/home/arch/Downloads/tests/test1.nim(13) test1</span><br><span class="line">/home/arch/.choosenim/toolchains/nim-1.0.4/lib/system/assertions.nim(27) failedAssertImpl</span><br><span class="line">/home/arch/.choosenim/toolchains/nim-1.0.4/lib/system/assertions.nim(20) raiseAssert</span><br><span class="line">/home/arch/.choosenim/toolchains/nim-1.0.4/lib/system/fatal.nim(39) sysFatal</span><br><span class="line"></span><br><span class="line">Unhandled exception: /home/arch/Downloads/tests/test1.nim(13, 10) `add(5, 5) == expected`  [AssertionError]</span><br><span class="line">[FAILED] can add</span><br><span class="line">Error: execution of an external program failed: &#x27;/home/arch/Downloads/tests/test1 &#x27;</span><br><span class="line">       Tip: 1 messages have been suppressed, use --verbose to show them.</span><br><span class="line">     Error: Execution failed with exit code 1</span><br><span class="line">        ... Command: &quot;/home/arch/.nimble/bin/nim&quot; c --noNimblePath -d:NimblePkgVersion=0.1.0 &quot;-r&quot; &quot;--path:.&quot;  &quot;/home/arch/Downloads/tests/test1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>I went and wrote a <a target="_blank" rel="noopener" href="https://github.com/celeo/expect-nim">library</a> to improve on the assertions, so I&#39;d know what each side where, in order to help me debug and fix tests (or the code). I didn&#39;t <em>want</em> to have to do this, but I couldn&#39;t get information from the assertion, and this was definitely better than <code>echod</code>&#39;ing every variable before asserting.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/home/arch/Downloads/tests/test1.nim(15) test1</span><br><span class="line">/home/arch/.nimble/pkgs/expect-0.3.1/expect.nim(43) expectEqual</span><br><span class="line"></span><br><span class="line">Unhandled exception:</span><br><span class="line">===== Expect Error =====</span><br><span class="line">Left: 10, right: 11</span><br><span class="line">Checked for: equal</span><br><span class="line">========================</span><br><span class="line"> [ExpectError]</span><br><span class="line">[FAILED] can add</span><br></pre></td></tr></table></figure>
+
+<h2 id="Finding-check"><a href="#Finding-check" class="headerlink" title="Finding check"></a>Finding <code>check</code></h2><p>I was diving through the (rather hard to read) <code>unittest</code> module, and found <a target="_blank" rel="noopener" href="https://nim-lang.org/docs/unittest.html#check.m%2Cuntyped"><code>check</code></a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/home/arch/Downloads/tests/test1.nim(14, 18): Check failed: add(5, 5) == expected</span><br><span class="line">add(5, 5) was 10</span><br><span class="line">expected was 11</span><br><span class="line">[FAILED] can add</span><br></pre></td></tr></table></figure>
+
+<p>Fantastic!</p>
+<p>As a result, I&#39;ve archived my expect library with a note to use <code>check</code> instead. Problem solved.</p>
+<h2 id="Testing-an-async-proc"><a href="#Testing-an-async-proc" class="headerlink" title="Testing an async proc"></a>Testing an async proc</h2><p>I wanted to drop this bit in, as I couldn&#39;t really find a clear approach. It turns out that writing a test for an async proc is no different than <em>calling</em> that proc in a normal context - either use an <code>async</code> proc, or something like <a target="_blank" rel="noopener" href="https://nim-lang.org/docs/asyncdispatch.html#waitFor%2CFuture%5BT%5D"><code>waitFor</code></a>:</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest, asyncdispatch</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> doSomething(): <span class="type">Future</span>[<span class="type">string</span>] <span class="meta">&#123;.async.&#125;</span> =</span><br><span class="line">  <span class="built_in">result</span> = <span class="string">&quot;foobar&quot;</span></span><br><span class="line"></span><br><span class="line">test <span class="string">&quot;with async proc&quot;</span>:</span><br><span class="line">  <span class="keyword">proc</span> doTest() <span class="meta">&#123;.async.&#125;</span> =</span><br><span class="line">    <span class="keyword">let</span> val = await doSomething()</span><br><span class="line">    check val == <span class="string">&quot;foobar&quot;</span></span><br><span class="line"></span><br><span class="line">  waitFor(doTest())</span><br><span class="line"></span><br><span class="line">test <span class="string">&quot;witout async proc&quot;</span>:</span><br><span class="line">  <span class="keyword">let</span> val = waitFor(doSomething())</span><br><span class="line">  check val == <span class="string">&quot;foobar&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>I ended up spending <strong>hours</strong> trying to figure out how to make this pattern happen, as I was getting very obscure error messages during runtime about &quot;no handles or timers registered&quot;. Turns out this was an issue with me not setting up a stream correctly. For reference, here&#39;s that information.</p>
+<p>If your code does this:</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span></span><br><span class="line">  asyncdispatch,</span><br><span class="line">  httpclient</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> convertAsync*(response: <span class="type">AsyncResponse</span>): <span class="type">Future</span>[<span class="type">JsonNode</span>] <span class="meta">&#123;.async.&#125;</span> =</span><br><span class="line">  <span class="keyword">let</span> body = await response.body()</span><br><span class="line">  <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<p>then your test needs to look like this:</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span></span><br><span class="line">  asyncdispatch,</span><br><span class="line">  httpclient,</span><br><span class="line">  streams</span><br><span class="line"></span><br><span class="line"><span class="keyword">proc</span> getAsyncResponse(): <span class="type">AsyncResponse</span> =</span><br><span class="line">  echo <span class="string">&quot;getAsyncResponse()&quot;</span></span><br><span class="line">  <span class="built_in">result</span> = <span class="type">AsyncResponse</span>()</span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line">  <span class="built_in">result</span>.bodyStream = newFutureStream[<span class="type">string</span>]()</span><br><span class="line">  waitFor <span class="built_in">result</span>.bodyStream.write(<span class="string">&quot;Hello world&quot;</span>)</span><br><span class="line">  <span class="built_in">result</span>.bodyStream.complete()</span><br></pre></td></tr></table></figure>
+
+<p>I was missing the <code>complete</code> call, which apparently (?) caused the future to not be registered on the global dispatcher.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Writing unit tests in Nim is very simple to get started, thanks to the syntax of the templates in <code>unittest</code> and the scaffolding that&#39;s created for the developer by <code>nimble</code> when creating a new library project.</p>
+<p>The process gets more difficult, however, when the developer needs to move into things like actually seeing the values in an assertion and testing asynchronous procedures. Simple lesson: use <code>check</code>, not <code>assert</code> or <code>doAssert</code>. And, as long as you make sure that your procedures are correctly written, you won&#39;t have to muck through a ton of obscure error messages that don&#39;t do anything to help you through debugging. Tests are used to make sure that code is written correctly; unfortunately in this instance, I had to make sure my code was working correctly before I could run a test.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/nim/" rel="tag"># nim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/26/EVE-Online-s-APIs/" rel="prev" title="The APIs of Eve Online">
+                  <i class="fa fa-chevron-left"></i> The APIs of Eve Online
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/20/sekiro_and_ghost/" rel="next" title="Sekiro and Ghost of Tsushima">
+                  Sekiro and Ghost of Tsushima <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

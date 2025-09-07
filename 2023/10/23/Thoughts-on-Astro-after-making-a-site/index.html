@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="I&#39;ve written an interactive website with Astro; here are my thoughts.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thoughts on Astro after making a site">
+<meta property="og:url" content="https://celeo.github.io/2023/10/23/Thoughts-on-Astro-after-making-a-site/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="I&#39;ve written an interactive website with Astro; here are my thoughts.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-23T19:07:04.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2023/10/23/Thoughts-on-Astro-after-making-a-site/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2023/10/23/Thoughts-on-Astro-after-making-a-site/","path":"2023/10/23/Thoughts-on-Astro-after-making-a-site/","title":"Thoughts on Astro after making a site"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Thoughts on Astro after making a site | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-good"><span class="nav-number">1.</span> <span class="nav-text">The good</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-bad"><span class="nav-number">2.</span> <span class="nav-text">The bad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closing-thoughts"><span class="nav-number">3.</span> <span class="nav-text">Closing thoughts</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2023/10/23/Thoughts-on-Astro-after-making-a-site/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Thoughts on Astro after making a site | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Thoughts on Astro after making a site
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-23 12:07:04" itemprop="dateCreated datePublished" datetime="2023-10-23T12:07:04-07:00">2023-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>I&#39;ve written an interactive website with <a target="_blank" rel="noopener" href="https://astro.build/">Astro</a>; here are my thoughts.</p>
+<span id="more"></span>
+
+<p>Link to repo: <a target="_blank" rel="noopener" href="https://github.com/Celeo/zdv-training-scheduler">github.com&#x2F;celeo&#x2F;zdv-training-scheduler</a>.</p>
+<p>Namely, I have a MPA with React components for interactivity. Other than the Privacy Policy page, all page content includes at least some client-side rendering. The navbar buttons are a React component. There&#39;s a React component on the homepage. The scheduling, admin, and preferences pages are entirely React.</p>
+<p>I&#39;d like to make an early note: it&#39;s entirely possible that I am not using Astro correctly. Perhaps I should be using Solid or Preact, or Alpine and HTMX, or something else entirely.</p>
+<h3 id="The-good"><a href="#The-good" class="headerlink" title="The good"></a>The good</h3><p>There are several things about Astro that I really like:</p>
+<ul>
+<li>No&#x2F;little configuration required</li>
+<li>&quot;Frontend&quot; and &quot;backend&quot; code in a single project</li>
+<li>File-based routing</li>
+</ul>
+<p>Starting an Astro project is easily done with their CLI prompt program, which is both easy to use and clearly designed to be <em>very</em> friendly. Adding node SSR, React, tailwind, etc. are each a single command, with no or only a tiny bit of config changes. Everything just works, which in the frontend space is remarkable.</p>
+<p>Not needing to split my project into two explicit sub-directories for backend and frontend code is nice. Since the entire site is in TypeScript, I&#39;m able to use types in both places. As long as I don&#39;t import a file that uses Node functionality from client-side code, it all works very well.</p>
+<p>This is the first time I&#39;ve used file-based routing. For the pages that the user will visit, I&#39;ve found it very intuitive and simple to use.</p>
+<h3 id="The-bad"><a href="#The-bad" class="headerlink" title="The bad"></a>The bad</h3><ul>
+<li>Unable to use some frontend component libraries</li>
+<li>File-based rounding</li>
+<li>Weird handling of environment variables between dev server and production builds</li>
+<li>Learning curve for client vs server Astro code</li>
+</ul>
+<p>While I am able to use React components styled up with tailwind (thanks to Flowbite for the designs), I&#39;m <em>not</em> able to use component libraries like <a target="_blank" rel="noopener" href="https://mui.com/">Mui</a>, as their approach to component styling is not supported in Astro.</p>
+<p>File-based routing appears in &quot;good&quot; and &quot;bad&quot; - what gives? Well, for pages that the user will land on, I think file-based routing works very well, as noted above. For <em>server</em> endpoints, however, I&#39;m not a fan. I can add a <code>src/pages/api/foo.ts</code> file and call <code>GET /api/foo</code> from my API. I can do any <em>kind</em> of request to that file (GET, POST, etc.) and pass in query parameters without issue. If, however, I then want to follow good API design and be able to call <code>DELETE /api/foo/4</code>, I need to rename <code>src/pages/api/foo.ts</code> to <code>src/pages/api/foo/index.ts</code> and add <code>src/pages/api/foo/[id].ts</code> to receive the new responses. Functionally it works fine, but I find it annoying.</p>
+<p>Environment variables have sapped around 5 hours of my time on this project, resulting in hapless internet searching and a post in Astro&#39;s Discord help channel that went unanswered. In short, environment variables are automatically loaded from adjacent &#39;.env&#39; files in the development environment and are available everywhere in the site, while <em>building</em> the site either bakes the secrets into the generated HTML&#x2F;JS or ignores them entirely. I decided to forego env vars entirely, instead favoring a file config that&#39;s loaded through Node functions at runtime. If you&#39;ll be using Astro to build a site that has a secret (database password, third-party site secret token, etc.) and won&#39;t have full control over the built files (i.e. won&#39;t be publishing a Docker container with the site) I recommend avoiding env vars as much as possible.</p>
+<p>While I can look back at the code and easily see which parts are for the client and which are for the server, this line was quite fuzzy when learning. Due in part to having frontend and backend code in the same project and same language (I usually avoid server-side TS&#x2F;JS in favor of better languages) and having Astro handle &quot;client&quot; and &quot;server&quot; pages, getting used to what code is executed where is challenging. Especially in &quot;.astro&quot; files, the &quot;header&quot; where Astro runs the code as part of the SSR (for applicable setups) process, you&#39;re writing server code in what basically looks like a client page (because that&#39;s what it <em>will</em> be).</p>
+<h3 id="Closing-thoughts"><a href="#Closing-thoughts" class="headerlink" title="Closing thoughts"></a>Closing thoughts</h3><p>I think Astro is a wonderful choice for a static site and sites with limited interactivity. I cannot say for sure, but using Astro without a &quot;typical&quot;&#x2F;modern frontend library like React, Solid, etc. might work quite well; it might actually be a good opportunity for client-side-only Vue (no compile process). I could probably build a site without server endpoints, instead using Alpine or Intercooler and &quot;.astro&quot; files to generate and return HTML rather than JSON.</p>
+<p>If, knowing what I now know, would I have built this site with Astro? No, probably not. But that doesn&#39;t mean I regret this learning experience, because I certainly do not. If I look to build another site, one with less interactivity and more static information, in the future, I&#39;ll happily reach for Astro. For more people, I think whether or not Astro is the best choice (&quot;best&quot;, because I think it&#39;s at least a &quot;good&quot; choice for most use-cases) comes down to what your personal opinion on web &quot;site&quot; vs web &quot;app&quot; is. MPAs&#x2F;webSITEs are easily done on Astro. WebAPPs might be better handled by Next, Nuxt, SolidStart, etc.</p>
+<p>I haven&#39;t mentioned the &quot;BETH&quot; stack using Bun, because I haven&#39;t used it yet.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/30/Implementing-an-OAuth2-flow-in-Astro/" rel="prev" title="Implementing an OAuth 2 flow in Astro">
+                  <i class="fa fa-chevron-left"></i> Implementing an OAuth 2 flow in Astro
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/05/On-Hacking-in-Tabletop-games-1-of-X/" rel="next" title="On Hacking in Tabletop games, 1 of X">
+                  On Hacking in Tabletop games, 1 of X <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

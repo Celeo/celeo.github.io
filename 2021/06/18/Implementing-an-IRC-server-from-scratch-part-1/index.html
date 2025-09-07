@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Let&#39;s implement RFC1459.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Implementing an IRC server from scratch, part 1">
+<meta property="og:url" content="https://celeo.github.io/2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Let&#39;s implement RFC1459.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-18T19:23:28.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.485Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="irc">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/","path":"2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/","title":"Implementing an IRC server from scratch, part 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Implementing an IRC server from scratch, part 1 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tech"><span class="nav-number">1.</span> <span class="nav-text">Tech</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-started"><span class="nav-number">2.</span> <span class="nav-text">Getting started</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-code"><span class="nav-number">3.</span> <span class="nav-text">Writing code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pieces"><span class="nav-number">3.1.</span> <span class="nav-text">Pieces</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">4.</span> <span class="nav-text">Next steps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/06/18/Implementing-an-IRC-server-from-scratch-part-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Implementing an IRC server from scratch, part 1 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Implementing an IRC server from scratch, part 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-18 12:23:28" itemprop="dateCreated datePublished" datetime="2021-06-18T12:23:28-07:00">2021-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Let&#39;s implement <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc1459">RFC1459</a>.</p>
+<span id="more"></span>
+
+<p>With all of the buzz around <a target="_blank" rel="noopener" href="https://www.reddit.com/r/linux/comments/o0263h/all_freenode_channels_and_users_gone/">Freenode&#39;s demise</a>, <a target="_blank" rel="noopener" href="https://libera.chat/">Libera.Chat&#39;s rise</a>, and the renewed (or popularized) interest in IRC, I think it&#39;ll be fun and engaging to implement an IRC server from scratch with RFC1459 to follow.</p>
+<p>Now, I&#39;m not going to implement <em>everything</em>. Probably. My goal is to implement a <em>single</em> server that clients can connect to, join channels, chat, privmsg each other, etc., but I&#39;m not really looking to make server-to-server communication or NickServ&#x2F;ChanServ. Since I&#39;m currently using <a target="_blank" rel="noopener" href="https://hexchat.github.io/">HexChat</a> to connec to IRC servers right now, if I can make use of that and maybe <a target="_blank" rel="noopener" href="https://irssi.org/">irssi</a> to connect to my &quot;simple&quot; implementation of IRC and chat between the clients, I&#39;ll call it a success!</p>
+<h2 id="Tech"><a href="#Tech" class="headerlink" title="Tech"></a>Tech</h2><p>I spent a bit of time deciding what tech I wanted to use. I could certainly do this with Python. I could use Rust; the level of complexity in this program would probably lend itself well to Rust&#39;s great tooling. I could go back to Go, as its exemplary concurrency support would likely make it simple. But, considering I&#39;ve been playing with Elixir over the past few months, and Elixir <em>really</em> makes working with servers&#x2F;services very straightforward, and I really enjoy it as a language, it&#39;s a natural fit.</p>
+<h2 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h2><p>The first thing I wanted to do was have a read over the RFC for IRC and take notes. The first, <em>first</em> thing I wanted to do was find a way to read RFCs that doesn&#39;t melt my eyes. I poked around the web a bit, and found <a target="_blank" rel="noopener" href="https://www.rfcreader.com/">https://www.rfcreader.com/</a>, which makes reading RFCs much nicer, as well as including a handful of other useful features (I&#39;m not making use of any of the features that require log-in, but they seem nice).</p>
+<p>Once I had a read through and <a target="_blank" rel="noopener" href="https://github.com/Celeo/irc_playground/blob/master/notes.md">made a bunch of notes</a>, I needed to get familiar with what this will look like in Elixir. I used a few resources for this:</p>
+<ol>
+<li>the official <a target="_blank" rel="noopener" href="https://elixir-lang.org/getting-started/mix-otp/task-and-gen-tcp.html">Task and gen_tcp</a> tutorial</li>
+<li>the official <a target="_blank" rel="noopener" href="https://elixir-lang.org/getting-started/mix-otp/genserver.html">GenServer</a>, <a target="_blank" rel="noopener" href="https://elixir-lang.org/getting-started/mix-otp/supervisor-and-application.html">supervisor</a>, and <a target="_blank" rel="noopener" href="https://elixir-lang.org/getting-started/mix-otp/dynamic-supervisor.html">dynamic supervisor</a> tutorials</li>
+<li>the docs for <a target="_blank" rel="noopener" href="https://hexdocs.pm/elixir/GenServer.html">GenServer</a>, <a target="_blank" rel="noopener" href="https://hexdocs.pm/elixir/Supervisor.html#content">supervisor</a>, and <a target="_blank" rel="noopener" href="https://hexdocs.pm/elixir/DynamicSupervisor.html#content">dynamic supervisor</a></li>
+<li>info on the differences between GenServer, Task, etc. <a target="_blank" rel="noopener" href="https://www.reddit.com/r/elixir/comments/mcnl65/difference_between_genserver_supervisor_task_and/">1</a>, <a target="_blank" rel="noopener" href="https://elixirforum.com/t/tasks-vs-genserver/27864">2</a></li>
+<li>info on handling TCP connections, <a target="_blank" rel="noopener" href="http://www.robgolding.com/blog/2019/05/21/tcp-genserver-elixir/">1</a>, <a target="_blank" rel="noopener" href="https://medium.com/blackode/quick-easy-tcp-genserver-with-elixir-and-erlang-10189b25e221">2</a>, <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40973079/managing-multiple-tcp-connections-in-active-mode-from-one-genserver">3</a></li>
+<li>how to stop a GenServer, <a target="_blank" rel="noopener" href="https://elixirforum.com/t/stopping-child-genserver-in-dynamicsupervisor-gracefully-without-restarting-it/17741/3">1</a>, <a target="_blank" rel="noopener" href="https://alexcastano.com/how-to-stop-a-genserver-in-elixir/">2</a></li>
+</ol>
+<h2 id="Writing-code"><a href="#Writing-code" class="headerlink" title="Writing code"></a>Writing code</h2><p>My first goal was to follow that first linked tutorial and implement a TCP server. Starting a new Elixir project is simple with <code>mix new [name]</code>. I didn&#39;t need any dependencies, so I could get right to following the tutorial. I implemented the tutorial in <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/commit/5ac9f8e365f395de99a7f6b8c272aaff539e0ea4">5ac9f...</a> and <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/commit/c804c07b54076b051bb3349fee06a2b33899fad6">c804c...</a>.</p>
+<p>After that, I knew that I wanted to move from <code>Tasks</code> to <code>GenServers</code>, as I want to be able to communicate with these &quot;processes&quot;, as well as have them hold state. This involved swapping <code>Tasks</code> and the <code>Task Supervisor</code> for <code>GenServers</code> and a <code>Dynamic Supervisor</code>. I did this work in <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/commit/2cafd8c81947f4df098fcd16495a69050bf804bb">2cafd...</a>. I&#39;ll break down what the project currently looks like.</p>
+<h3 id="Pieces"><a href="#Pieces" class="headerlink" title="Pieces"></a>Pieces</h3><p>First, we need an <code>Application</code> to launch and start the supervisor tree. <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/2cafd8c81947f4df098fcd16495a69050bf804bb/lib/app.ex">app.ex</a> does this. Implementing an application is very simple - you need <code>use Application</code> in your module, as well as to implement <code>start(type, args)</code>.</p>
+<p>Here, I&#39;m getting the port to run on from the &quot;PORT&quot; environment variable with a fallback to a static value:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">port = <span class="title class_">String</span>.to_integer(<span class="title class_">System</span>.get_env(<span class="string">&quot;PORT&quot;</span>) || <span class="variable">@default_port</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The next bit here sets up the processes that will be entered into the supervisor tree:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">children = [</span><br><span class="line">  &#123;<span class="title class_">DynamicSupervisor</span>, <span class="symbol">name:</span> <span class="title class_">IRC</span>.<span class="title class_">DynamicSupervisor</span>, <span class="symbol">strategy:</span> <span class="symbol">:one_for_one</span>&#125;,</span><br><span class="line">  <span class="title class_">Supervisor</span>.child_spec(&#123;<span class="title class_">Task</span>, <span class="keyword">fn</span> -&gt; <span class="title class_">IRC</span>.<span class="title class_">Listener</span>.accept(port) <span class="keyword">end</span>&#125;, <span class="symbol">restart:</span> <span class="symbol">:permanent</span>),</span><br><span class="line">  <span class="title class_">IRC</span>.<span class="title class_">Server</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>The first item in the list is a <code>Dynamic Supervisor</code> with a name. This will hold connections with clients. The next is a <code>Task</code> that runs a function (getting the port) to wait for connections from clients. This task will always be restarted if it fails (<code>restart: :permanent</code>). This process doesn&#39;t have any state, so it doesn&#39;t need to be a <code>GenServer</code>. Finally, a module referencing a server.</p>
+<p>That server is in <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/2cafd8c81947f4df098fcd16495a69050bf804bb/lib/server.ex">server.ex</a> and is <em>very</em> simple right now, just implementing the minimums of a <code>GenServer</code> module.</p>
+<p>The listener in <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/2cafd8c81947f4df098fcd16495a69050bf804bb/lib/listener.ex">listener.ex</a> has a little more to it. Remember that this is ran via a <code>Task</code>. The <code>accept</code> function here sets up the TCP server:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@listen_args [:binary, packet: :line, active: true, reuseaddr: true]</span><br><span class="line"># -snip-</span><br><span class="line">  &#123;:ok, socket&#125; = :gen_tcp.listen(port, @listen_args)</span><br></pre></td></tr></table></figure>
+
+<p>and then calls <code>loop_acceptor</code> to loop indefinitely to take new connections and fire off a new <code>GenServer</code> process to hold that connection, which is registered to the <code>Dynamic Supervisor</code> in the application supervisor tree:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">:ok</span>, client&#125; = <span class="symbol">:gen_tcp</span>.accept(socket)</span><br><span class="line">&#123;<span class="symbol">:ok</span>, pid&#125; = <span class="title class_">DynamicSupervisor</span>.start_child(<span class="title class_">IRC</span>.<span class="title class_">DynamicSupervisor</span>, &#123;<span class="title class_">IRC</span>.<span class="title class_">ClientConnection</span>, &#123;client&#125;&#125;)</span><br><span class="line"><span class="symbol">:ok</span> = <span class="symbol">:gen_tcp</span>.controlling_process(client, pid)</span><br></pre></td></tr></table></figure>
+
+<p>This code (1) waits for and takes a new connection, (2) creates a new GenServer process for that client, and (3) then assigns the controlling pid for the socket connection to that new process. Not too complicated, and it&#39;s not too dissimilar from the <code>Task</code>-oriented code directly from the tutorial.</p>
+<p>Finally, in <a target="_blank" rel="noopener" href="https://github.com/Celeo/simple_irc_server/blob/2cafd8c81947f4df098fcd16495a69050bf804bb/lib/client_connection.ex">client_connection.ex</a>, the first interesting line is the second line of the file:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title class_">GenServer</span>, <span class="symbol">restart:</span> <span class="symbol">:transient</span></span><br></pre></td></tr></table></figure>
+
+<p>Here, we&#39;re declaring this module as a <code>GenServer</code>, but passing an argument to this (which is passed to the child_spec) that tells the <code>Dynamic Supervisor</code> <em>not</em> to restart connections if they fail. I don&#39;t want the <em>server</em> to attempt to reconnect to clients if clients disconnect; I want the clients to try to reconnect to the server, and the server to just drop the connection if something disconnects it.</p>
+<p>I&#39;ll copy the other interesting parts of this file here:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Normal messages from the client.</span></span><br><span class="line"><span class="variable">@impl</span> <span class="literal">true</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_info</span></span>(&#123;<span class="symbol">:tcp</span>, _socket, message&#125;, state) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">IO</span>.inspect(message)</span><br><span class="line">  &#123;<span class="symbol">:noreply</span>, state&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Socket closed</span></span><br><span class="line"><span class="variable">@impl</span> <span class="literal">true</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_info</span></span>(&#123;<span class="symbol">:tcp_closed</span>, _socket&#125;, state) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">Logger</span>.info(<span class="string">&quot;Socket has been closed&quot;</span>)</span><br><span class="line">  &#123;<span class="symbol">:stop</span>, <span class="symbol">:normal</span>, state&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Socket had an error</span></span><br><span class="line"><span class="variable">@impl</span> <span class="literal">true</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_info</span></span>(&#123;<span class="symbol">:tcp_error</span>, _socket, reason&#125;, state) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">Logger</span>.info(<span class="string">&quot;Connection closed: <span class="subst">#&#123;reason&#125;</span>&quot;</span>)</span><br><span class="line">  &#123;<span class="symbol">:noreply</span>, state&#125;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Other event</span></span><br><span class="line"><span class="variable">@impl</span> <span class="literal">true</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_info</span></span>(_event, state) <span class="keyword">do</span></span><br><span class="line">  &#123;<span class="symbol">:noreply</span>, state&#125;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>I&#39;ve commented before each method implementing <code>handle_info</code>. Because of the <code>active: true</code> argument I&#39;m passing to <code>:gen_tcp.listen</code> in &quot;listener.ex&quot;, the GenServer will get packages from the client in its <code>handle_info</code> callback. This isn&#39;t the only way to do this; you could use <code>active: false</code> and then explicitly poll the socket for data. For one tutorial I read on implementing a Redis client, this is fine, as data will only come back after going on. For an IRC server though, communication is driven by clients, so we need to be able to receive data at the same time as processing other things.</p>
+<h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps"></a>Next steps</h2><p>What&#39;s next? Well, probably command parsing, at least the <em>very</em> basic commands that are involved with connecting and sending messages. Then I&#39;ll need to start the command framework for the server, where it can receive commands and process them accordingly. Somewhere in there, I&#39;ll be creating a large data structure with numeric reply codes, strings, and messages. Regardless of what I go for next, I&#39;ll be translating a lot of information from the RFC into code. I could look for Elixir libraries that implement these details themselves and import from them, and I would if were doing this project as a way to get a server running and <em>then</em> do something with it. Here though, the entire goal is to make the server from &quot;scratch&quot; and so I won&#39;t be importing any such libraries.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/irc/" rel="tag"># irc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/15/Character-roles-in-MMORPGs/" rel="prev" title="Character roles in MMORPGs">
+                  <i class="fa fa-chevron-left"></i> Character roles in MMORPGs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/01/IRC-part-2/" rel="next" title="IRC, part 2">
+                  IRC, part 2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

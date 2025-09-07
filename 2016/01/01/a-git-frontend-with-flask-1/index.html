@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Now here&#39;s a project that I&#39;ve wanted to do for a while. Finally, some progress!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Git frontend with Flask part 1">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-1/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Now here&#39;s a project that I&#39;ve wanted to do for a while. Finally, some progress!">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-1/","path":"2016/01/01/a-git-frontend-with-flask-1/","title":"A Git frontend with Flask part 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>A Git frontend with Flask part 1 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#First-steps"><span class="nav-number">1.</span> <span class="nav-text">First steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Setting-up-the-app"><span class="nav-number">2.</span> <span class="nav-text">Setting up the app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-integration"><span class="nav-number">3.</span> <span class="nav-text">Git integration</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="A Git frontend with Flask part 1 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A Git frontend with Flask part 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Now here&#39;s a project that I&#39;ve wanted to do for a while. Finally, some progress!</p>
+<span id="more"></span>
+
+<p>Making a web frontend to a Git repo has been on the TODO list for a while. Git is my source control of choice, and I&#39;ve used a handful of different websites to display my code: GitHub, Bitbucket, GitLab, and several others I&#39;ve forgotten. In Windows, I use SourceTree, a GUI application to manage Git repositories that really works well. In Linux, I&#39;m comfortable enough with (or patient enough to learn new tricks in) the CLI.</p>
+<h2 id="First-steps"><a href="#First-steps" class="headerlink" title="First steps"></a>First steps</h2><p>The first step was finding a library that would let me interface with a local Git repository. I didn&#39;t need to change anything, but I needed full read access to the repo. My first though was to just fork out the commands to the Git CLI, but this wouldn&#39;t allow for more than 1 person to view the repo on the web at once - what if a user switched branches?</p>
+<p>So, onward to a search that, per usual, landed me on Stack Overflow. I tried a few different libraries before settling on GitPython (readthedocs, source). It seemed to have what I wanted: the ability to view the contents of the repo without changing or relying upon the current state of the repo on the drive.</p>
+<p>I installed it and opened the Python interpreter and got to work. The second step of this project was to identify the common data I&#39;d need from the library and the code to get those data.</p>
+<p>I knew that I&#39;d need the following from the start:</p>
+<ul>
+<li>Get branches</li>
+<li>Get a commit log</li>
+<li>Get commit information (author, date, message)</li>
+</ul>
+<p>Of course, these weren&#39;t enough for the full web app, but it was enough to start.</p>
+<h2 id="Setting-up-the-app"><a href="#Setting-up-the-app" class="headerlink" title="Setting up the app"></a>Setting up the app</h2><p>I&#39;m using Flask for the backend framework, the included Jinja for the template renderer, Bootstrap 3 for the CSS framework (I&#39;m no web designer, I&#39;ll take any help I can get to make the page look presentable), and SQLAlchemy for my database ORM connected to a little SQLite database (I&#39;m only keeping track of the names of and paths to the repositories presented on the app).</p>
+<p>That DB model is the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Repository(db.Model):</span><br><span class="line">    __tablename__ = &#x27;codewall_repository&#x27;</span><br><span class="line"></span><br><span class="line">    id = db.Column(db.Integer, primary_key=True)</span><br><span class="line">    name = db.Column(db.String, unique=True)</span><br><span class="line">    path = db.Column(db.String, unique=True)</span><br><span class="line">    public = db.Column(db.Boolean, default=True)</span><br><span class="line"></span><br><span class="line">    def __init__(self, name, path, public=True):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.path = path</span><br><span class="line">        self.public = public</span><br></pre></td></tr></table></figure>
+
+<p>It&#39;s pretty simple, no surprises here. The name column stores the name of the repository and the path column stores the path to the physical files on the drive. Finally, the public column is a &quot;should this repository be shown on the index page&quot; toggle.</p>
+<h2 id="Git-integration"><a href="#Git-integration" class="headerlink" title="Git integration"></a>Git integration</h2><p>The GitPython library allows us to create a Repo object by passing its constructor that path. So, let&#39;s add that to the model:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from git import Repo</span><br><span class="line"></span><br><span class="line">@property</span><br><span class="line">def git_repo(self):</span><br><span class="line">    git_repo = Repo(self.path)</span><br></pre></td></tr></table></figure>
+
+<p>This is good for processing from the backend route, but not the template, so, going off of what I noted earlier, I added some helper methods that allow the templates to get the data that they need from the model that&#39;s passed to render_template:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">    def files(self, path=&#x27;&#x27;, commit=&#x27;HEAD&#x27;):</span><br><span class="line">        repo = Repo(self.path)</span><br><span class="line">        if not path:</span><br><span class="line">            items = repo.tree(repo.commit(commit)).traverse(depth=1)</span><br><span class="line">        else:</span><br><span class="line">            path_item = repo.tree(repo.commit(commit))[path]</span><br><span class="line">            if path_item.type == &#x27;blob&#x27;:</span><br><span class="line">                return []</span><br><span class="line">            items = list(path_item.traverse(depth=1))</span><br><span class="line">        return sorted([CodeFile(item) for item in items], key=lambda x: not x.is_directory)</span><br><span class="line"></span><br><span class="line">    def branches(self):</span><br><span class="line">        return Repo(self.path).branches</span><br><span class="line"></span><br><span class="line">    def commits(self, branch=&#x27;master&#x27;, offset=0, per_page=20):</span><br><span class="line">        offset, per_page = int(offset), int(per_page)</span><br><span class="line">        print(&#x27;Getting commits for repo &#123;&#125;, offset=&#123;&#125;, per_page=&#123;&#125;&#x27;.format(self.name, offset, per_page))</span><br><span class="line">        return list(Repo(self.path).iter_commits(branch, max_count=per_page, skip=offset * per_page))</span><br><span class="line"></span><br><span class="line">    def commit_count(self, branch=&#x27;master&#x27;):</span><br><span class="line">        return len(list(Repo(self.path).iter_commits(branch)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class CodeFile:</span><br><span class="line"></span><br><span class="line">    def __init__(self, item):</span><br><span class="line">        self.item = item</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def is_directory(self):</span><br><span class="line">        return self.item.type == &#x27;tree&#x27;</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def name(self):</span><br><span class="line">        if self.item.type == &#x27;tree&#x27;:</span><br><span class="line">            return &#x27;%s/&#x27; % self.item.name</span><br><span class="line">        return self.item.name</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def path(self):</span><br><span class="line">        return self.item.path</span><br></pre></td></tr></table></figure>
+
+<p>The files method allows the template to get all the files under a path (whether top-level or otherwise) for a specific commit. In practice, this is used to navigate the repository. branches returns the branches, commits, lists Commit objects for the navigating through the commits, and commit_count returns the total number of commits in the repository. The CodeFile class is a wrapper around the Blob and Tree objects for ease of use in the templates.</p>
+<p>That&#39;s enough to navigate through the files and commits in the repository, so let&#39;s move to the templates.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/a-git-frontend-with-flask-2/" rel="prev" title="A Git frontend with Flask part 2">
+                  <i class="fa fa-chevron-left"></i> A Git frontend with Flask part 2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/01/01/travis-codecov-vgo/" rel="next" title="Travis CI, Codecov, and vgo">
+                  Travis CI, Codecov, and vgo <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

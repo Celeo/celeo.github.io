@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Using websockets to communicate the progress of a task ran in a separate thread.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask, flask-socketio, Celery, and Redis - background task processing">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Using websockets to communicate the progress of a task ran in a separate thread.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/","path":"2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/","title":"Flask, flask-socketio, Celery, and Redis - background task processing"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flask, flask-socketio, Celery, and Redis - background task processing | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Setting-up-the-app"><span class="nav-number">1.</span> <span class="nav-text">Setting up the app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Routes"><span class="nav-number">2.</span> <span class="nav-text">Routes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Templates"><span class="nav-number">3.</span> <span class="nav-text">Templates</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Development-bumps"><span class="nav-number">4.</span> <span class="nav-text">Development bumps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/flask-flask-socketio-celery-and-redis-background-task-processing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flask, flask-socketio, Celery, and Redis - background task processing | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flask, flask-socketio, Celery, and Redis - background task processing
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Using websockets to communicate the progress of a task ran in a separate thread.</p>
+<span id="more"></span>
+
+<p>This article is to celebrate the 2.0 release of <a target="_blank" rel="noopener" href="https://flask-socketio.readthedocs.io/en/latest/">flask-socketio</a>, specifically the fix of <a target="_blank" rel="noopener" href="https://github.com/miguelgrinberg/Flask-SocketIO/issues/47">Issue #47</a>, which now allows the server to emit a message to connected websocket clients from a Celery task.</p>
+<p>The full source of this app can be found <a target="_blank" rel="noopener" href="https://git.celeodor.com/Celeo/Flask-sockets-celery-redis">here</a>. If you look, you&#39;ll see many similarities to flask-socketio&#39;s sample app.</p>
+<h2 id="Setting-up-the-app"><a href="#Setting-up-the-app" class="headerlink" title="Setting up the app"></a>Setting up the app</h2><p>We&#39;ll get the imports out of the way:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask, render_template</span><br><span class="line">from flask_socketio import SocketIO, emit</span><br><span class="line">from datetime import timedelta</span><br><span class="line">from celery import Celery</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">import eventlet</span><br></pre></td></tr></table></figure>
+
+<p>Note the last one: <code>import eventlet</code>. Eventlet is an asynchronous concurrent networking library. The next line is to enable the usage of a background thread:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eventlet.monkey_patch()</span><br></pre></td></tr></table></figure>
+
+<p>Next, generic app setup:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app = Flask(__name__)</span><br><span class="line">app.config.from_pyfile(&#x27;config.cfg&#x27;)</span><br><span class="line">app.permanent_session_lifetime = timedelta(days=14)</span><br></pre></td></tr></table></figure>
+
+<p>and the flask-socketio setup:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socketio = SocketIO(app, async_mode=&#x27;eventlet&#x27;, message_queue=app.config[&#x27;SOCKETIO_REDIS_URL&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>The &#39;SOCKETIO_REDIS_URL&#39; value is defined in the app&#39;s config file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SQLALCHEMY_DATABASE_URI = &#x27;sqlite:///../data.db&#x27;</span><br><span class="line">SQLALCHEMY_TRACK_MODIFICATIONS = False</span><br><span class="line">CSRF_ENABLED = True</span><br><span class="line">SECRET_KEY = &#x27;super-secret-key&#x27;</span><br><span class="line">SOCKETIO_REDIS_URL = &#x27;redis://localhost:6379/0&#x27;</span><br><span class="line">CELERY_BROKER_URL = &#x27;redis://localhost:6379/0&#x27;</span><br><span class="line">CELERY_RESULT_BACKEND = &#x27;redis://localhost:6379/0&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Back to the app, we&#39;ll setup Celery:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">celery = Celery(app.name, broker=app.config[&#x27;CELERY_BROKER_URL&#x27;])</span><br><span class="line">celery.conf.update(app.config)</span><br></pre></td></tr></table></figure>
+
+<p>which completes the setup. We have a Flask application with flask-socketio using eventlet to handle the websocket connections, and Celery setup to handle background tasks.</p>
+<h2 id="Routes"><a href="#Routes" class="headerlink" title="Routes"></a>Routes</h2><p>This small app only has one page: the index page, defined simply as:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/&#x27;)</span><br><span class="line">def index():</span><br><span class="line">    return render_template(&#x27;index.html&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>That&#39;s not all that&#39;s in app.py, of course. We have an endpoint at <code>/bg</code> to run the background task:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/bg&#x27;)</span><br><span class="line">def start_background_thread():</span><br><span class="line">    background_task.delay(app.config[&#x27;SOCKETIO_REDIS_URL&#x27;])</span><br><span class="line">    return &#x27;Started&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>That background task is a Celery task:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@celery.task()</span><br><span class="line">def background_task(url):</span><br><span class="line">    local_socketio = SocketIO(message_queue=url)</span><br><span class="line">    local_socketio.emit(&#x27;my response&#x27;, &#123;&#x27;data&#x27;: &#x27;background task starting ...&#x27;&#125;, namespace=&#x27;/test&#x27;)</span><br><span class="line">    time.sleep(10)</span><br><span class="line">    local_socketio.emit(&#x27;my response&#x27;, &#123;&#x27;data&#x27;: &#x27;background task complete!&#x27;&#125;, namespace=&#x27;/test&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>Here we&#39;re using flask-socketio&#39;s 2.0 release feature in the initialization of a SocketIO object, passing a message_queue. Note that it&#39;s the same as when we initialized the &quot;master&quot; SocketIO object as part of the app&#39;s setup. Then, we emit a message, wait 10 seconds to simulate a background task, and emit a message declaring completion.</p>
+<p>Finally, we have a method to respond to messages sent by the frontend:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@socketio.on(&#x27;my event&#x27;, namespace=&#x27;/test&#x27;)</span><br><span class="line">def test_message(message):</span><br><span class="line">    emit(&#x27;my response&#x27;, &#123;&#x27;data&#x27;: &#x27;Backend saw &quot;&#x27; + message[&#x27;data&#x27;] + &#x27;&quot; from the frontend&#x27;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>This method echoes messages back to the frontend with a confirmation.</p>
+<h2 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h2><p>The base.html template is pretty simple, the noteworthy section being the JavaScript to setup the websocket connection:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function()&#123;</span><br><span class="line">    namespace = &#x27;/test&#x27;;</span><br><span class="line">    socket = io.connect(&#x27;http://&#x27; + document.domain + &#x27;:&#x27; + location.port + namespace);</span><br><span class="line">    socket.on(&#x27;connect&#x27;, function() &#123;</span><br><span class="line">        socket.emit(&#x27;my event&#x27;, &#123;data: &#x27;I\&#x27;m connected!&#x27;&#125;);</span><br><span class="line">        $(&#x27;#log&#x27;).append(&#x27;Connected&lt;br&gt;&#x27;);</span><br><span class="line">    &#125;);</span><br><span class="line">    socket.on(&#x27;my response&#x27;, function(msg) &#123;</span><br><span class="line">        console.log(&#x27;Received: &#x27; + msg.data);</span><br><span class="line">        $(&#x27;#log&#x27;).append(&#x27;Received: &#x27; + msg.data + &#x27;&lt;br&gt;&#x27;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>This block is wrapped in a jQuery <code>$(document).ready</code> function so it&#39;s only executed once the page has finished loading. A variable called socket is created that is the frontend&#39;s connection to the websocket server. We setup two event listeners: one for when a connection is made, and the other for receiving &#39;my response&#39; messages from the backend. Each logs the message, and the connection listener additionally messages the backend.</p>
+<p>The index.html template has a textbox and button so the user can manually send messages to the backend through the websocket, a button to test the background thread functionality, and a log area to record messages from the backend.</p>
+<p>The additional JavaScript in the head supports these:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function() &#123;</span><br><span class="line">    $(&#x27;#send_message&#x27;).on(&#x27;click&#x27;, function() &#123;</span><br><span class="line">        socket.emit(&#x27;my event&#x27;, &#123;data: $(&#x27;#message&#x27;).val()&#125;);</span><br><span class="line">        $(&#x27;#log&#x27;).append(&#x27;Sent: &#x27; + $(&#x27;#message&#x27;).val() + &#x27;&lt;br&gt;&#x27;);</span><br><span class="line">    &#125;);</span><br><span class="line">    $(&#x27;#background&#x27;).on(&#x27;click&#x27;, function() &#123;</span><br><span class="line">        console.log(&#x27;1&#x27;);</span><br><span class="line">        $.get(&quot;&#123;&#123; url_for(&#x27;start_background_thread&#x27;) &#125;&#125;&quot;);</span><br><span class="line">        console.log(&#x27;2&#x27;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>When the first button, the one connected to the textbox, is clicked, the value of the textbox is sent through <code>socket.emit(&#39;my event&#39;, &#123;data: $(&#39;#message&#39;).val()&#125;);</code>.</p>
+<p>When the second button is clicked, a &#39;1&#39; is logged to the console, a GET request is sent to the URL for the background_task endpoint, and then a &#39;2&#39; is logged. The logging is to prove that the call isn&#39;t blocking.</p>
+<h2 id="Development-bumps"><a href="#Development-bumps" class="headerlink" title="Development bumps"></a>Development bumps</h2><p>This is a simple proof of concept app that uses websockets and mock processing of a background task. Once completed, it doesn&#39;t look like it could have too many problems, but there were several hurdles that I had to get over while developing it.</p>
+<p> #1. from time import sleep</p>
+<p>Originally, I was importing sleep straight from time instead of importing the entire time module and calling time.sleep, per usual. I found that, when I did this, the call to sleep was blocking the main processing thread, not just the background thread.</p>
+<p> #2. Not running the separate Celery worker task</p>
+<p>This one was from a failure to read all the documentation available to me, but I originally wasn&#39;t running the Celery worker (present in the repository as start_worker.sh) and couldn&#39;t figure out why the background task wasn&#39;t being processed.</p>
+<p> #3. Not installing redis beforehand</p>
+<p>This one is a bit embarassing, but I was operating under the impression that I had installed redis sometime in the past. I hadn&#39;t. Be sure that you don&#39;t waste the time that I did.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/prest-to-preston/" rel="prev" title="Prest to Preston">
+                  <i class="fa fa-chevron-left"></i> Prest to Preston
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/prest-refresh-tokens/" rel="next" title="Prest refresh tokens">
+                  Prest refresh tokens <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

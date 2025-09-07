@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Initial thoughts on Svelte from someone who&#39;s played with many frameworks, likes compile-time processing, but has been (mostly) happy with React for several years.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Initial thoughts on Svelte">
+<meta property="og:url" content="https://celeo.github.io/2021/01/18/Initial-thoughts-on-Svelte/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Initial thoughts on Svelte from someone who&#39;s played with many frameworks, likes compile-time processing, but has been (mostly) happy with React for several years.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-19T01:04:23.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.485Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="webdev">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2021/01/18/Initial-thoughts-on-Svelte/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2021/01/18/Initial-thoughts-on-Svelte/","path":"2021/01/18/Initial-thoughts-on-Svelte/","title":"Initial thoughts on Svelte"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Initial thoughts on Svelte | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-Svelte"><span class="nav-number">2.</span> <span class="nav-text">Enter, Svelte</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-TypeScript-and-ESLint"><span class="nav-number">3.</span> <span class="nav-text">Problems with TypeScript and ESLint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-Prettier"><span class="nav-number">4.</span> <span class="nav-text">Problems with Prettier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems-with-snowpack-maybe"><span class="nav-number">5.</span> <span class="nav-text">Problems with snowpack (maybe)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">6.</span> <span class="nav-text">Next steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-x2F-22-x2F-21-edit"><span class="nav-number">7.</span> <span class="nav-text">1&#x2F;22&#x2F;21 edit</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/01/18/Initial-thoughts-on-Svelte/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Initial thoughts on Svelte | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Initial thoughts on Svelte
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-18 17:04:23" itemprop="dateCreated datePublished" datetime="2021-01-18T17:04:23-08:00">2021-01-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Initial thoughts on Svelte from someone who&#39;s played with many frameworks, likes compile-time processing, but has been (mostly) happy with React for several years.</p>
+<span id="more"></span>
+
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>I&#39;ve heard murmurings of Svelte, about how it was the hot new thing, and how it would disrupt the established React-focused web development patterns that blah blah blah. It&#39;s new. In the webdev world, something <em>being</em> new is itself nothing new.</p>
+<p>Briefly, I want to mention the path I took to becoming comfortable with the current&#x2F;modern web development process. I started with jQuery, like most people. I never really got into jQuery UI. I wanted to look into the new hotness of creating JavaScript-focused websites instead of (what&#39;s now called) SSR (which was the default back then, instead of the SEO-enabling hotness that people are adding <em>back</em> to modern webapps). I found trying to learn node, Angular, and TypeScript all at once just too much for what I wanted to do. I tried React, but it didn&#39;t help with the node-driven development process, and jumping from &quot;I write complete HTML pages&quot; to &quot;if you&#39;re not using 100 components, you&#39;re wrong&quot; was too much. I then found Vue, and was actually able to get into its mindset. Vue let me start simple, by just adding extra functionality to existing sites, and then eventually move into SPAs, <code>.vue</code> files, node, webpack, etc. From there, I went back to React some time later as I wanted to become at least proficient due to its increasingly-common appearance in the software industry. Taking what I learned from Vue with regards to components, node, webpack, etc. let me get into React with much less frustration and confusion than I had previously had. Given this lower barrier to entry, I was able to move forward, and I have been using React for professional and hobby web development for years.</p>
+<p>For the most part, I&#39;m happy with the developer experience I get with React, webpack, eslint, prettier, jest, and TypeScript. In a vast ecosystem of seemingly thousands of tools, many of which do the same or similar things with different approaches, finding a &quot;stack&quot; (maybe, &quot;group&quot;?) of tools that work <em>for you</em> and enable <em>you</em> to build apps is a very important task. For me, it&#39;s that bunch that let me write webapps without wanting to delete node and throw money at something like <a target="_blank" rel="noopener" href="https://gemini.circumlunar.space/">Gemini</a> (though I probably perhaps still should). Why then, look outside that space of things I like for something new? It&#39;s half because that&#39;s something I&#39;ve done for years to large success, and half because that&#39;s sort of expected with the webdev world.</p>
+<h2 id="Enter-Svelte"><a href="#Enter-Svelte" class="headerlink" title="Enter, Svelte"></a>Enter, Svelte</h2><p>First off, take a look at the <a target="_blank" rel="noopener" href="https://svelte.dev/tutorial">official tutorial</a> - it&#39;s really quite great. Next, take note that Svelte is the highest in <a target="_blank" rel="noopener" href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/">satisfaction and interest</a> in the 2020 State of JS survey (which itself is great, and this year&#39;s results site is <em>beautiful</em>).</p>
+<p>I wanted to combine my learning Svelte with learning <a target="_blank" rel="noopener" href="https://www.snowpack.dev/">snowpack</a>, another <a target="_blank" rel="noopener" href="https://2020.stateofjs.com/en-US/technologies/build-tools/">high-ranking tool from the survey</a>, being top in interest and second in satisfaction (snowpack uses esbuild, which got #1 in satisfaction). I&#39;m still not sure if that was an intelligent decision, but it&#39;s the one I made. It seems to work okay, but the Svelte tutorials seem significantly focused on rollup (which is something I&#39;ve never used before; I used webpack). Snowpack has a scaffolding tool calling <a target="_blank" rel="noopener" href="https://github.com/snowpackjs/snowpack/tree/main/create-snowpack-app/cli">create-snowpack-app</a> (CSA) that can be used to set up projects in a number of frameworks, including Svelte. I also took time to go through the first few chapters of Svelte&#39;s interactive tutorial.</p>
+<p>The first thing I noted when starting learning Svelte is that it <em>writes</em> like Vue <code>.vue</code> files, where the template, logic, and styling are all in a single file. In React, the &quot;template&quot; (JSX) and logic are usually in the same file, but the styles are often in separate files that webpack takes care of bundling up. Additionally, because React uses JSX instead of this more &quot;template&quot; approach (also seen in Vue), there&#39;s a loss of clarity between the &quot;how&quot; and the &quot;what&quot;. (I&#39;d say that this is just, like, <em>my opinion</em>, but this entire blog is my opinion, so ... &#x2F;shrug)</p>
+<p>I&#39;m going to write there that Svelte performs fine in most cases that I&#39;ve done so far, though those cases aren&#39;t particularly complicated. Svelte&#39;s reactivity with the <code>$:</code> operator is simple enough to do, but there&#39;s really any <em>perceived</em> benefit <em>to the developer</em> over Vue&#39;s computed properties or a <code>useEffect</code> hook with dependencies in React. Obviously they all perform differently at runtime, but from a developer&#39;s view, eh. What Svelte does <strong>not</strong> do well with, is the &quot;extra&quot; tools that I&#39;ve becoming happy and comfortable with.</p>
+<h2 id="Problems-with-TypeScript-and-ESLint"><a href="#Problems-with-TypeScript-and-ESLint" class="headerlink" title="Problems with TypeScript and ESLint"></a>Problems with TypeScript and ESLint</h2><p>Writing Svelte components (are they still called components?) in TypeScript blocks the developer from using ESLint on those files. Yeah. Not wanting to give up either, I&#39;ve opted <em>for now</em> to give up TypeScript and still use ESLint (snowpack lets me write ES201# which gets transpiled to the old nasty).</p>
+<h2 id="Problems-with-Prettier"><a href="#Problems-with-Prettier" class="headerlink" title="Problems with Prettier"></a>Problems with Prettier</h2><p>I added prettier and Svelte&#39;s prettier plugin to my project, configured VSCode to autoformat on save, and saved, which promptly blew up parts of my template markup, which caused my component to fail to render. No problem, I can fix that easy enough, right? No. I spent more time fighting prettier and Svelte disagreeing than I spent <strong>writing the webapp</strong>. I <em>can</em> make do without Prettier, and just use ESLint to enforce (and auto-fix) styling things that prettier covers (even though prettier does it better) as the stuff I&#39;m working on is side-project (at best).</p>
+<h2 id="Problems-with-snowpack-maybe"><a href="#Problems-with-snowpack-maybe" class="headerlink" title="Problems with snowpack (maybe)"></a>Problems with snowpack (maybe)</h2><p>For this, I don&#39;t know if it&#39;s the combination of Svelte and snowpack that&#39;s being annoying, or what. This frustration has to deal with errors. Sometimes, when my component has an error, I&#39;ll get an error screen in my browser pointing it out (like React). Sometimes, the webapp will <em>start</em> to render&#x2F;mount&#x2F;whatever and the site&#39;s background color will be set, but there won&#39;t be anything actually there. I have to go to the terminal running snowpack to see the error. This isn&#39;t dissimilar to webpack, so it&#39;s not a problem.</p>
+<p>The main frustration comes when <strong>I can&#39;t figure out <em>when</em> each of these scenarios has occurred</strong> without looking at the browser, refreshing a few times, then looking at the devtools console, then looking at my terminal window. Big time loss.</p>
+<h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps"></a>Next steps</h2><p>There are tools I&#39;m willing to swap out or abandon for learning Svelte, like snowpack for rollup, but there are things that I <em>won&#39;t</em> leave behind in modern webdev, like ESLint and TypeScript. If Svelte isn&#39;t mature enough to support these extremely commonplace tools, then perhaps it&#39;s not mature enough for me to learn it.</p>
+<p>I&#39;m not trying to sound boisterous or authoritative, or make sound like anyone <em>remotely</em> important in the webdev world, but just an honest statement - if it&#39;s not ready, then that&#39;s <strong>fine</strong> - I&#39;ll come back later. But with Svelte&#39;s 3.0 release just days ago, I&#39;m really confused <em>why</em> these (again, super common) tools don&#39;t work. Does the Svelte community not like them? Do they not need them (like in Elm)? <em>I</em> like them, though, and <em>I</em> need (kinda) them, so maybe Svelte just isn&#39;t for me (or at least, not yet?).</p>
+<p>Regardless, Svelte has some really neat concepts, and I wish the absolute best for the project.</p>
+<h2 id="1-x2F-22-x2F-21-edit"><a href="#1-x2F-22-x2F-21-edit" class="headerlink" title="1&#x2F;22&#x2F;21 edit"></a>1&#x2F;22&#x2F;21 edit</h2><p>The testing functionality for Svelte components is ... lacking. This is a big problem for me as I <em>like</em> writing tests, and I expect it to be a huge problem if Svelte wants to break out of &quot;hobby&quot; and into &quot;professional&quot;.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/webdev/" rel="tag"># webdev</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/01/Hacktoberfest-is-here/" rel="prev" title="Hacktoberfest is here!">
+                  <i class="fa fa-chevron-left"></i> Hacktoberfest is here!
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/30/Payment-models-in-MMORPGS/" rel="next" title="Payment models in MMOs">
+                  Payment models in MMOs <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="I recently came across a small community building custom &quot;start pages&quot; for their browsers.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom Chrome start page">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/custom-chrome-start-page/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="I recently came across a small community building custom &quot;start pages&quot; for their browsers.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/custom-chrome-start-page/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/custom-chrome-start-page/","path":"2016/01/01/custom-chrome-start-page/","title":"Custom Chrome start page"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Custom Chrome start page | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">1.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weather"><span class="nav-number">2.</span> <span class="nav-text">Weather</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Moving-forward"><span class="nav-number">3.</span> <span class="nav-text">Moving forward</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/custom-chrome-start-page/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Custom Chrome start page | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Custom Chrome start page
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>I recently came across a small community building custom &quot;start pages&quot; for their browsers.</p>
+<span id="more"></span>
+
+<p>When you open a new page in your browser of choice, it can be configured to show several different pages. I use Chrome, so I installed the <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna/related">New Tab Redirect</a> extension to allow me to show any page, including a file on my local PC.</p>
+<p>I&#39;ve been working with <a target="_blank" rel="noopener" href="https://vuejs.org/">Vue.js</a> lately, so I wanted to take the opportunity to build a web page that I could use for my start page, like the people over at <a target="_blank" rel="noopener" href="https://www.reddit.com/r/startpages/">&#x2F;r&#x2F;startpages</a> are doing.</p>
+<p>Repo link: <a target="_blank" rel="noopener" href="https://github.com/Celeo/Start_page">github.com&#x2F;Celeo&#x2F;Start_page</a></p>
+<p>I have all the sites that I need to visit either on my bookmarks bar (which is always showing) or in muscle memory, so I didn&#39;t want to have a bunch of links on my start page, although this is a common usecase of the page and it works well for many people. There are only 2 things I&#39;m really interested in: the time and the weather.</p>
+<p>Now sure, I could just look at my taskbar for the time and go to any number of weather sites (or look outside) for the weather, but I wanted to add <em>something</em> to this page.</p>
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><p>Adding the time to the page is the simplest: <a target="_blank" rel="noopener" href="http://momentjs.com/">Moment.js</a> is an easy way to access the time and display it in a variety of formats. I added a data field in my Vue object for the time:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">time</span>: <span class="title function_">moment</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>Vue will take care of updating the DOM when the object is changed, but it won&#39;t update on its own:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> <span class="variable language_">this</span>.<span class="property">time</span> = <span class="title function_">moment</span>(), <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Just add the variable to the template and you&#39;ll have the up-to-date time (and&#x2F;or date!) on the start page.</p>
+<h3 id="Weather"><a href="#Weather" class="headerlink" title="Weather"></a>Weather</h3><p>Weather is a bit more tricky. I tried querying a variety of sites straight from the page but was repeatedly met with <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a> problems. I needed to query the weather from a server, not a webpage. Luckily, <a target="_blank" rel="noopener" href="http://expressjs.com/">Express</a> is a simple web framework for Node. I created a small, single-endpoint web app that I could run in the background on my workstation without any performance problems, just to be the go-between for my start page and the remote weather API, for which I&#39;m using <a target="_blank" rel="noopener" href="https://darksky.net/dev/">Dark Sky</a>.</p>
+<p>The server <em>could</em> have it&#39;s own configuration file, but I found it easier to abstract that behavior on the server&#39;s side and leave it to the client to send the server all the configuration information it needs as part of the request (mainly because I was tired of fighting with getting files to be in the right places during development and deployment, but this is the better approach regardless).</p>
+<p>The server, when it receives a request from the client (the start page), sends a request over to Dark Sky for the weather, gets that response, parses it for the information the client wants, and sends a response back to the start page. The start page then takes this information, stores it in local storage for caching, and Vue updates the DOM. The information is cached for two reasons:</p>
+<ol>
+<li>Weather doesn&#39;t change very fast</li>
+<li>Dark Sky has daily API access limits</li>
+</ol>
+<h3 id="Moving-forward"><a href="#Moving-forward" class="headerlink" title="Moving forward"></a>Moving forward</h3><p>I decided to use the <a target="_blank" rel="noopener" href="https://github.com/vuejs-templates/webpack-simple/">webpack-simple</a> <a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-cli">vue-cli</a> template for the Vue app and bundle it all with webpack. To use the start page, I pointed New Tab Redirect at Webpack&#39;s build target <strong>index.html</strong>. Running the sever is a simple as using whichever mechanism your OS has for running console apps in the background without a window.</p>
+<p>To update the client app, just pull from Github and rebuild. To update the server app, you&#39;ll have to kill the background process, build, and start it again.</p>
+<p>I started to use Google&#39;s Maps API to track the time it&#39;d take me to get home from work, which would only show on the page after 4 PM, but it seems that Google sends the same time, regardless of the traffic, so it&#39;s not accurate.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/docker-nginx-and-flask-its-a-circus/" rel="prev" title="Docker, Nginx, and Flask - it's a Circus!">
+                  <i class="fa fa-chevron-left"></i> Docker, Nginx, and Flask - it's a Circus!
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/a-git-frontend-with-flask-4-git-server-integration/" rel="next" title="A Git frontend with Flask part 4">
+                  A Git frontend with Flask part 4 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

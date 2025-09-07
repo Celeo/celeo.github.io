@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="In this article, I&#39;ll be going over the commit and inspect pages. The commit page is responsible for showing the changes made in a commit, and the inspect page is responsible for showing the conte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Git frontend with Flask part 3">
+<meta property="og:url" content="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-3/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="In this article, I&#39;ll be going over the commit and inspect pages. The commit page is responsible for showing the changes made in a commit, and the inspect page is responsible for showing the conte">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-01T22:38:54.489Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="old_blog">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-3/","path":"2016/01/01/a-git-frontend-with-flask-3/","title":"A Git frontend with Flask part 3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>A Git frontend with Flask part 3 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-page"><span class="nav-number">1.</span> <span class="nav-text">Commit page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Backend-method"><span class="nav-number">1.0.1.</span> <span class="nav-text">Backend method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-template"><span class="nav-number">1.0.2.</span> <span class="nav-text">The template</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspect-page"><span class="nav-number">2.</span> <span class="nav-text">Inspect page</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Backend-method-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">Backend method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-template-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">The template</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Running"><span class="nav-number"></span> <span class="nav-text">Running</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2016/01/01/a-git-frontend-with-flask-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="A Git frontend with Flask part 3 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A Git frontend with Flask part 3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-01-01T00:00:00-08:00">2016-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>In this article, I&#39;ll be going over the commit and inspect pages. The commit page is responsible for showing the changes made in a commit, and the inspect page is responsible for showing the contents of a file.</p>
+<span id="more"></span>
+
+<p>Keep in mind that this is a very simple web app by design - I wanted to get it stable, then write about it, then update it, then write about the updates.</p>
+<h2 id="Commit-page"><a href="#Commit-page" class="headerlink" title="Commit page"></a>Commit page</h2><h4 id="Backend-method"><a href="#Backend-method" class="headerlink" title="Backend method"></a>Backend method</h4><p>This time, I&#39;ll start with the backend method as it&#39;s not as simple as the one for browsing the repository. The method decoration and definition is:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/repo/&lt;repo_name&gt;/&lt;commit_sha&gt;&#x27;)</span><br><span class="line">def commit(repo_name, commit_sha):</span><br></pre></td></tr></table></figure>
+
+<p>Coming in, I get the name of the repository so I can get the DB model Repository, and the SHA of the commit to get the commit object from GitPython.</p>
+<p>First, I&#39;ll check the <code>repo_name</code> argument:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo = Repository.query.filter_by(name=repo_name).first()</span><br><span class="line">if not repo:</span><br><span class="line">    abort(404)</span><br></pre></td></tr></table></figure>
+
+<p>Pretty simple, and pretty jarring to the user (should definitely be updated later, probably with a <code>flash</code> of a message).</p>
+<p>Next, I&#39;ll grab some information from GitPython:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commit = repo.git_repo.commit(commit_sha)</span><br><span class="line">all_commits = list(repo.git_repo.iter_commits())</span><br><span class="line">current_commit_index = all_commits.index(commit)</span><br></pre></td></tr></table></figure>
+
+<p>Here, I grab the commit object, the list of all commits, and the index of the commit that the URL supplied. Next, I need to look forward and backward for the next and previous commits, respectively, for navigation:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">previous_commit, next_commit = None, None</span><br><span class="line">if current_commit_index + 1 &lt; len(all_commits):</span><br><span class="line">    previous_commit = all_commits[current_commit_index + 1]</span><br><span class="line">if current_commit_index &gt; 0:</span><br><span class="line">    next_commit = all_commits[current_commit_index - 1]</span><br></pre></td></tr></table></figure>
+
+<p>I&#39;m just taking the index that I got before and getting the next and previous items in the list. Next, get the data from the commit:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff_raw = Markup.escape(repo.git_repo.git.diff(previous_commit, commit))</span><br></pre></td></tr></table></figure>
+
+<p>I&#39;m calling GitPython&#39;s <code>repo.git.diff</code>, passing the previous_commit and the commit that the user is actually attempting to see in order to get the changes made by that commit. This data comes as a string, then passed to Flask&#39;s Markup (from flask import Markup) to escape any HTML, as I&#39;ll be adding HTML to the string before passing it to the template to be rendered (and making use of the |safe template filter).</p>
+<p>Here&#39;s that &quot;markup&quot;:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">diff, color = &#x27;&#x27;, None</span><br><span class="line">for line in diff_raw.splitlines():</span><br><span class="line">    if line.startswith(&#x27;+++&#x27;) or line.startswith(&#x27;---&#x27;):</span><br><span class="line">        continue</span><br><span class="line">    elif line.startswith(&#x27;+&#x27;):</span><br><span class="line">        color = &#x27;add&#x27;</span><br><span class="line">    elif line.startswith(&#x27;-&#x27;):</span><br><span class="line">        color = &#x27;remove&#x27;</span><br><span class="line">    elif line.startswith(&#x27;diff --git&#x27;):</span><br><span class="line">        color = &#x27;divider&#x27;</span><br><span class="line">    elif line.startswith(&#x27;@@&#x27;) or line.startswith(&#x27;index &#x27;) or \</span><br><span class="line">            line.startswith(&#x27;deleted file mode &#x27;) or line.startswith(&#x27;new file mode&#x27;):</span><br><span class="line">        color = &#x27;info&#x27;</span><br><span class="line">    else:</span><br><span class="line">        color = &#x27;none&#x27;</span><br><span class="line">    diff += &#x27;&lt;div class=&quot;code_row diff_%s&quot;&gt;%s&lt;/div&gt;&#x27; % (color, line)</span><br></pre></td></tr></table></figure>
+
+<p>I&#39;m wrapping each of the lines in the output with a div with a class dependent on the contents of the line. If the line starts with a +, denoting that it was added in the commit, then I color the line green. Reversely, if the line starts with a -, denoting removal, then the line becomes red. &quot;Information&quot; lines, lines that denote where and which file was changed, are in gray. All other lines are not colored.</p>
+<p>Finally, the call to render:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">return render_template(&#x27;commit.html&#x27;, repo=repo, commit=commit,</span><br><span class="line">    previous_commit=previous_commit, next_commit=next_commit, diff=diff)</span><br></pre></td></tr></table></figure>
+
+<p>This is just passing the data the method has collected to render_template.</p>
+<h4 id="The-template"><a href="#The-template" class="headerlink" title="The template"></a>The template</h4><p>The template, though not as large as the <code>repo.html</code> template, is still a bit lengthy. Here is that file in full.</p>
+<p>The first item of note is the title:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;&lt;span title=&quot;&#123;&#123; commit.hexsha &#125;&#125;&quot;&gt;&#123;&#123; commit.hexsha|sha &#125;&#125;&lt;/span&gt; by &#123;&#123; commit.author &#125;&#125; on &#123;&#123; commit.authored_date|date &#125;&#125;&lt;/h3&gt;</span><br></pre></td></tr></table></figure>
+
+<p>This uses two custom template filters. The first to condense the full SHA into 7 characters, and the second to parse the timestamp into a date:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@app.template_filter(&#x27;sha&#x27;)</span><br><span class="line">def filter_sha(s):</span><br><span class="line">    return s[:7]</span><br><span class="line"></span><br><span class="line">@app.template_filter(&#x27;date&#x27;)</span><br><span class="line">def filter_date(s):</span><br><span class="line">    return datetime.fromtimestamp(int(s)).strftime(&#x27;%b %d, %Y at %I:%M:%S&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>Next, there&#39;re the previous and next commit links that were found in the backend method:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;row&quot;&gt;</span><br><span class="line">    &lt;h4 class=&quot;pull-left&quot;&gt;</span><br><span class="line">    &#123;% if previous_commit %&#125;</span><br><span class="line">        &lt;a href=&quot;&#123;&#123; url_for(&#x27;commit&#x27;, repo_name=repo.name, commit_sha=previous_commit.hexsha) &#125;&#125;&quot;&gt;&amp;lt; Previous commit&lt;/a&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">    &lt;/h4&gt;</span><br><span class="line">    &lt;h4 class=&quot;pull-right&quot;&gt;</span><br><span class="line">    &#123;% if next_commit %&#125;</span><br><span class="line">        &lt;a href=&quot;&#123;&#123; url_for(&#x27;commit&#x27;, repo_name=repo.name, commit_sha=next_commit.hexsha) &#125;&#125;&quot;&gt;Next commit &amp;gt;&lt;/a&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">    &lt;/h4&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>Note the if checks - if the variable is None, then the link isn&#39;t shown at all. The next bit is a table of the commit data which is pretty simple: just getting the data from the Commit object from GitPython.</p>
+<p>Yes, that&#39;s it. A pre block (which is formatted by Bootstrap) and the data passed through Jinja&#39;s |safe filter. The classes added in the backend are defined in a CSS file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">div.code_row &#123;</span><br><span class="line">    margin: 0;</span><br><span class="line">    padding: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.diff_add &#123;</span><br><span class="line">    padding: 2px;</span><br><span class="line">    background-color: rgba(0, 255, 0, 0.5);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.diff_remove &#123;</span><br><span class="line">    padding: 2px;</span><br><span class="line">    background-color: rgba(255, 0, 0, 0.5);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.diff_divider &#123;</span><br><span class="line">    padding: 2px;</span><br><span class="line">    margin-top: 2em;</span><br><span class="line">    background-color: rgba(99, 99, 99, 0.5);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.diff_info &#123;</span><br><span class="line">    padding: 2px;</span><br><span class="line">    background-color: rgba(99, 99, 99, 0.5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Inspect-page"><a href="#Inspect-page" class="headerlink" title="Inspect page"></a>Inspect page</h2><h4 id="Backend-method-1"><a href="#Backend-method-1" class="headerlink" title="Backend method"></a>Backend method</h4><p>The backend method here is a bit shorter:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/repo/&lt;repo_name&gt;/inspect/&lt;path:code_path&gt;&#x27;)</span><br><span class="line">def inspect(repo_name, code_path):</span><br><span class="line">    repo = Repository.query.filter_by(name=repo_name).first()</span><br><span class="line">    if not repo:</span><br><span class="line">        abort(404)</span><br><span class="line">    f = repo.git_repo.head.commit.tree[code_path]</span><br><span class="line">    data = f.data_stream.read().decode(&#x27;UTF-8&#x27;)</span><br><span class="line">    up_directory = code_path[:code_path.rfind(&#x27;/&#x27;)]</span><br><span class="line">    return render_template(&#x27;inspect.html&#x27;, repo=repo, code_path=code_path, up_directory=up_directory, data=data)</span><br></pre></td></tr></table></figure>
+
+<p>First up, there&#39;s the check for the valid DB model entry. Next, I get the blob for the file that the user is trying to see with the call to repo.git_repo.head.commit.tree[code_path]. This f variable now points to a Blob object. I make use if the .data_stream.read().decode method to get the contents of the file. up_directory is used for navigating back to the user&#39;s previous place in the repository. The data is passed to the render call, and off to the template.</p>
+<h4 id="The-template-1"><a href="#The-template-1" class="headerlink" title="The template"></a>The template</h4><p>The inspect.html template is pretty small; it&#39;s only a few elements. First, I grab the Code-Prettify JavaScript file from a CDN to add syntax highlighting to the code:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block head %&#125;</span><br><span class="line">&lt;script src=&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js&quot; defer&gt;&lt;/script&gt;</span><br><span class="line">&#123;% endblock head %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This isn&#39;t in the content block like all the other templates (except base.html) have been - I&#39;m adding this script to the HTML head.</p>
+<p>Next, the Bootstrap breadcrumb so the user can go back:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ol class=&quot;breadcrumb&quot;&gt;</span><br><span class="line">    &lt;li&gt;&lt;a href=&quot;&#123;&#123; url_for(&#x27;repo&#x27;, repo_name=repo.name, code_path=up_directory) &#125;&#125;&quot; class=&quot;active&quot;&gt;Back to repo&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Then I show the path to the current file and its contents:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;&#123;&#123; code_path &#125;&#125;&lt;/h3&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;code_block&quot;&gt;</span><br><span class="line">    &lt;pre class=&quot;prettyprint&quot;&gt;</span><br><span class="line">&#123;&#123; data &#125;&#125;</span><br><span class="line">    &lt;/pre&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Code-Prettify requires the prettyprint class to be added to the pre element, and the code_block class to the parent is defined in a custom CSS file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div.code_block &gt; pre &#123;</span><br><span class="line">    padding: 1em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The formatting of the <code>pre</code> block here, without the padding added through the code_block class, is very tight and the edges of the code are a bit difficult to see. A little padding solves this problem.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>That&#39;s the bulk of the app! I&#39;ve noted several places where improvements need to be made, but it&#39;s stable as-is. For a bit of a &quot;Yo, dawg&quot;, I&#39;m currently running the app at <a target="_blank" rel="noopener" href="https://git.celeodor.com/">https://git.celeodor.com</a> and you can browse it&#39;s source from the app itself.</p>
+<h1 id="Running"><a href="#Running" class="headerlink" title="Running"></a>Running</h1><p>If you want to run the app, just do the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git clone http://bitbucket.org/Celeo/CodeWall</span><br><span class="line">$ cd CodeWall</span><br><span class="line">$ virtualenv env</span><br><span class="line">$ . env/bin/activate</span><br><span class="line">$ pip install -r requirements.txt</span><br><span class="line">$ ./run.sh</span><br></pre></td></tr></table></figure>
+
+<p>This will run the app through gunicorn on port 5000. Production&#x2F;public running should include a reverse proxy to serve the static files. I use Nginx.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/programming/" rel="tag"># programming</a>
+              <a href="/tags/old-blog/" rel="tag"># old_blog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/01/01/assassins-creed-syndicate/" rel="prev" title="Assassin's Creed: Syndicate">
+                  <i class="fa fa-chevron-left"></i> Assassin's Creed: Syndicate
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/01/01/a-git-frontend-with-flask-2/" rel="next" title="A Git frontend with Flask part 2">
+                  A Git frontend with Flask part 2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
