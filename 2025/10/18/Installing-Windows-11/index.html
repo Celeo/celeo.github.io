@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"celeo.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Microsoft broke several ways of upgrading from 10 to 11 just in time to EOL Windows 10, and sometimes you don&#39;t have or want to use TPM or a Microsoft account.I don&#39;t know how to keep your fil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Installing Windows 11">
+<meta property="og:url" content="https://celeo.github.io/2025/10/18/Installing-Windows-11/index.html">
+<meta property="og:site_name" content="Etchings">
+<meta property="og:description" content="Microsoft broke several ways of upgrading from 10 to 11 just in time to EOL Windows 10, and sometimes you don&#39;t have or want to use TPM or a Microsoft account.I don&#39;t know how to keep your fil">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-18T19:55:24.000Z">
+<meta property="article:modified_time" content="2025-10-18T19:56:02.738Z">
+<meta property="article:author" content="Matt Boulanger">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://celeo.github.io/2025/10/18/Installing-Windows-11/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://celeo.github.io/2025/10/18/Installing-Windows-11/","path":"2025/10/18/Installing-Windows-11/","title":"Installing Windows 11"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Installing Windows 11 | Etchings</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Etchings</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-github"><a href="https://github.com/Celeo" rel="section" target="_blank"><i class="fa fa-link fa-fw"></i>GitHub</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Matt Boulanger</p>
+  <div class="site-description" itemprop="description">Personal blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2025/10/18/Installing-Windows-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Installing Windows 11 | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Installing Windows 11
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-10-18 12:55:24 / Modified: 12:56:02" itemprop="dateCreated datePublished" datetime="2025-10-18T12:55:24-07:00">2025-10-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Microsoft broke several ways of upgrading from 10 to 11 just in time to EOL Windows 10, and sometimes you don&#39;t have or want to use TPM or a Microsoft account.<br>I don&#39;t know how to <em>keep your files</em> while installing Windows 11, but if you still want to install 11, here&#39;s what I did:</p>
+<span id="more"></span>
+
+<ol>
+<li>Back up your files; this will wipe your HDD&#x2F;SDD&#x2F;M2 drive</li>
+<li>Back. Up. Your. Files.</li>
+<li>If you have multiple drives, you can move Steam &amp; GOG games to the secondary drive for basically instant importing them back into Steam or GOG Galaxy.</li>
+<li>Download the Windows 11 .iso file from Microsoft <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/software-download/windows11">here</a></li>
+<li>Download <a target="_blank" rel="noopener" href="https://rufus.ie/en/">Rufus</a> to write the .iso to a USB flash drive</li>
+<li>Plug a USB flash drive into your computer</li>
+<li>Run Rufus, select the USB flash drive and the Windows 11 .iso file</li>
+<li>You can set various configurations here</li>
+<li>Start the process, wait for it to complete, and eject the USB flash drive</li>
+<li>Shut down your computer</li>
+<li>Unplug any <em>additional</em> drives you have connected, like <code>D:\</code>, <code>E:\</code>, etc.</li>
+<li>With the USB flash drive still plugged in, boot your computer, and press whatever key your BIOS tells you to push to interrupt the boot or change settings or whatever. If you make it to the Windows 10 login screen, you did it wrong.</li>
+<li>In your BIOS, make sure UEFI Safe Boot is enabled (depends on your motherboard)</li>
+<li>Boot from the USB drive (depends on your motherboard)</li>
+<li>Go through the process to install Windows 11</li>
+<li>Click &quot;I don&#39;t have a product key&quot; when prompted to enter one</li>
+<li>If you need to repartition your <code>C:\</code> drive, I deleted all the partitions, leaving the whole drive as &quot;empty&quot; or &quot;available&quot; or whatever, and selected that space and pressed &quot;Next&quot;</li>
+<li>Follow the rest of the process. Your computer will reboot several times.</li>
+<li>When you get into Windows 11 actual, you can remove the USB flash drive</li>
+<li>Run Windows Update. This will take a long time. Meanwhile ...</li>
+<li>Go through and shut off all the crap that Microsoft wants you to sync&#x2F;share&#x2F;etc.</li>
+<li>Uninstall all the crap that Microsoft thinks you need but you don&#39;t</li>
+<li>Wait for updates to complete; reboot a few times</li>
+<li>To bypass the account login, follow the instructions <a target="_blank" rel="noopener" href="https://github.com/massgravel/Microsoft-Activation-Scripts">here</a></li>
+<li>Reboot after doing that</li>
+<li>I&#39;ve found <a target="_blank" rel="noopener" href="https://windhawk.net/">Windhawk</a> to be great for un-fucking the start menu, and <a target="_blank" rel="noopener" href="https://github.com/TranslucentTB/TranslucentTB">TranslucentTB</a> to be nice for visuals. I always use <a target="_blank" rel="noopener" href="https://ninite.com/">Nanite</a> to install regular programs I&#39;ll need.</li>
+<li>Shut down, plug in any additional drive(s), and boot back up. Windows should recognize them. Download Steam, GOG Galaxy, etc. and locate your installed games on those spare drives.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/06/Initial-thoughts-on-Silksong/" rel="prev" title="Initial thoughts on Silksong">
+                  <i class="fa fa-chevron-left"></i> Initial thoughts on Silksong
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt Boulanger</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
