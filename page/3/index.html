@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -143,6 +143,100 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2022/07/23/Quick-thoughts-on-language-tooling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Matt Boulanger">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Etchings">
+      <meta itemprop="description" content="Personal blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Etchings">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/23/Quick-thoughts-on-language-tooling/" class="post-title-link" itemprop="url">Quick thoughts on language tooling</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-23 20:40:12" itemprop="dateCreated datePublished" datetime="2022-07-23T20:40:12-07:00">2022-07-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>I like Zig&#39;s syntax more than Nim&#39;s, but Nim is much further along.</p>
+<p>Yeah, Zig isn&#39;t 1.0 yet, but it seems like most new (relative) languages having the tooling squared away.</p>
+<p>Zig does cross-compiling better than Rust, probably almost as good as Go, so that&#39;s cool.</p>
+<p>Before Go sorted out package versions, it still had go get, which worked well enough for most people.</p>
+<p>Looks like Zig tells people to go the &quot;.&#x2F;vendor&#x2F;&quot; route, cloning in your dependencies. Not awful, but without at least some tooling, kind of a bummer.</p>
+<p>I like having a standard, official package management solution. Python has many usable package managers, all of which have their own merits. It took me years to find <code>poetry</code>, which is my (current) favorite.</p>
+<p>Go had a lot as well, before they sorted everything out.</p>
+<p>Rust? <code>cargo</code>. Done.</p>
+<p>Heck, even JavaScript has <code>npm</code> leading the pack, with some folks on <code>yarn</code> or <code>pnpm</code>. And, <code>npm</code> rips off the features that the other managers introduce after a while, so there&#39;s no major reason to switch off of <code>npm</code> for most people.</p>
+<p>Nim has <code>nimble</code>.</p>
+<p>Elixir has <code>mix</code>.</p>
+<p>Technically you could install all Python packages to your global scope, but that is a pretty sure-fire way to dork up your entire system.</p>
+<p>Zig likes to promote that their language compiler is also a compiler for any C program, and that&#39;s dandy, but still - fragmentation. Every Zig project comes with a build file that is 22 SLOC!</p>
+<p>Rust allows the customization of its build process via a build file, but it&#39;s rarely required!</p>
+<p>Go has programs that can bake extra stuff into the binary. I haven&#39;t used one in a looong time, but I remember them&#x2F;it being fairly simple.</p>
+<p>Python ... doesn&#39;t compile, which will probably forever bug me.</p>
+<p>TypeScript doesn&#39;t either, not technically. Can webpack it down to a all-in-one runnable node file and distribute that, though still requires the user to have the runtime installed. Most devs will, sure, but users? Very unlikely. Deno moves to solve that with their executable builds, but they&#39;re still sort of buggy.</p>
+<p>Java .jars don&#39;t count if Python doesn&#39;t.</p>
+<p>Plus like holy crap, ever unzip an enterprise jar? It&#39;s like GBs of stuff. I stopped the unzip one time after like 50 GB.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -880,82 +974,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://celeo.github.io/2021/12/18/Porting-old-blog-posts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Matt Boulanger">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Etchings">
-      <meta itemprop="description" content="Personal blog">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Etchings">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/18/Porting-old-blog-posts/" class="post-title-link" itemprop="url">Porting old blog posts</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-12-18 23:00:17" itemprop="dateCreated datePublished" datetime="2021-12-18T23:00:17-08:00">2021-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-08-01 15:38:54" itemprop="dateModified" datetime="2025-08-01T15:38:54-07:00">2025-08-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>I&#39;ve moved posts from my <a target="_blank" rel="noopener" href="https://github.com/Celeo/Blog">old blog</a> over here. They can be found via the <a href="/tags/old-blog/">&quot;old_blog&quot; tag</a>. Due to not having the information about when each article was posted any more precise than the year, I&#39;ve just assigned each article the posting date of Jan 1 at midnight of the year I wrote it.</p>
-
       
     </div>
 
